@@ -439,7 +439,7 @@ TEST(pore_id_tests, compute_volumes_cavity) {
     lining_residues(g_cav);
 
     EXPECT_EQ(1, g_cav.clusters.size());
-    EXPECT_EQ(1, g_cav.clusters[0]->lining_residues.size());
+    EXPECT_EQ(1, g_cav.clusters[0].lining_residues.size());
 
     for (int x = g_cav.min.x; x < g_cav.max.x; x++) {
         for (int y = g_cav.min.y; y < g_cav.max.y; y++) {
@@ -472,7 +472,7 @@ TEST(pore_id_tests, compute_volumes_pore) {
     lining_residues(g_pore);
 
     EXPECT_EQ(1, g_pore.clusters.size());
-    EXPECT_EQ(1, g_pore.clusters[0]->lining_residues.size());
+    EXPECT_EQ(1, g_pore.clusters[0].lining_residues.size());
 
     for (int x = g_pore.min.x; x < g_pore.max.x; x++) {
         for (int y = g_pore.min.y; y < g_pore.max.y; y++) {
@@ -511,10 +511,10 @@ TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
     lining_residues(g_pore);
 
     EXPECT_EQ(2, g_pore.clusters.size());
-    EXPECT_EQ(1, g_pore.clusters[0]->lining_residues.size());
-    EXPECT_EQ(1, g_pore.clusters[1]->lining_residues.size());
-    EXPECT_TRUE(g_pore.clusters[0]->pore);
-    EXPECT_FALSE(g_pore.clusters[1]->pore);
+    EXPECT_EQ(1, g_pore.clusters[0].lining_residues.size());
+    EXPECT_EQ(1, g_pore.clusters[1].lining_residues.size());
+    EXPECT_TRUE(g_pore.clusters[0].pore);
+    EXPECT_FALSE(g_pore.clusters[1].pore);
 
     for (int x = g_pore.min.x; x < g_pore.max.x; x++) {
         for (int y = g_pore.min.y; y < g_pore.max.y; y++) {
@@ -527,10 +527,10 @@ TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
                         EXPECT_TRUE(state < IN_CLUSTER);
                     } else {
                         EXPECT_TRUE(state >= IN_CLUSTER);
-                        EXPECT_TRUE(std::find(g_pore.clusters[0]->boxes.begin(), g_pore.clusters[0]->boxes.end(),
-                                              Vec<int>(x, y, z)) != g_pore.clusters[0]->boxes.end());
-                        EXPECT_FALSE(std::find(g_pore.clusters[1]->boxes.begin(), g_pore.clusters[1]->boxes.end(),
-                                               Vec<int>(x, y, z)) != g_pore.clusters[1]->boxes.end());
+                        EXPECT_TRUE(std::find(g_pore.clusters[0].boxes.begin(), g_pore.clusters[0].boxes.end(),
+                                              Vec<int>(x, y, z)) != g_pore.clusters[0].boxes.end());
+                        EXPECT_FALSE(std::find(g_pore.clusters[1].boxes.begin(), g_pore.clusters[1].boxes.end(),
+                                               Vec<int>(x, y, z)) != g_pore.clusters[1].boxes.end());
 
                     }
                 } else if (12 <= x && x <= 21 && 3 <= y && y <= 12 && 3 <= z && z <= 12 && state != OCCUPIED) {
@@ -541,15 +541,15 @@ TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
                         EXPECT_TRUE(state >= IN_CLUSTER);
                         if (b == Vec<int>(12, 7, 8) || b == Vec<int>(12, 8, 7) || b == Vec<int>(12, 8, 8)
                             || b == Vec<int>(12, 8, 9) || b == Vec<int>(12, 9, 8)) {
-                            EXPECT_FALSE(std::find(g_pore.clusters[1]->boxes.begin(), g_pore.clusters[1]->boxes.end(),
-                                                   Vec<int>(x, y, z)) != g_pore.clusters[1]->boxes.end());
-                            EXPECT_TRUE(std::find(g_pore.clusters[0]->boxes.begin(), g_pore.clusters[0]->boxes.end(),
-                                                  Vec<int>(x, y, z)) != g_pore.clusters[0]->boxes.end());
+                            EXPECT_FALSE(std::find(g_pore.clusters[1].boxes.begin(), g_pore.clusters[1].boxes.end(),
+                                                   Vec<int>(x, y, z)) != g_pore.clusters[1].boxes.end());
+                            EXPECT_TRUE(std::find(g_pore.clusters[0].boxes.begin(), g_pore.clusters[0].boxes.end(),
+                                                  Vec<int>(x, y, z)) != g_pore.clusters[0].boxes.end());
                         } else {
-                            EXPECT_TRUE(std::find(g_pore.clusters[1]->boxes.begin(), g_pore.clusters[1]->boxes.end(),
-                                                  Vec<int>(x, y, z)) != g_pore.clusters[1]->boxes.end());
-                            EXPECT_FALSE(std::find(g_pore.clusters[0]->boxes.begin(), g_pore.clusters[0]->boxes.end(),
-                                                   Vec<int>(x, y, z)) != g_pore.clusters[0]->boxes.end());
+                            EXPECT_TRUE(std::find(g_pore.clusters[1].boxes.begin(), g_pore.clusters[1].boxes.end(),
+                                                  Vec<int>(x, y, z)) != g_pore.clusters[1].boxes.end());
+                            EXPECT_FALSE(std::find(g_pore.clusters[0].boxes.begin(), g_pore.clusters[0].boxes.end(),
+                                                   Vec<int>(x, y, z)) != g_pore.clusters[0].boxes.end());
                         }
                     }
                 } else {
@@ -594,7 +594,7 @@ TEST(pore_id_tests, compute_volumes_cavity_standalone) {
     lining_residues(g_cav);
 
     EXPECT_EQ(1, g_cav.clusters.size());
-    EXPECT_EQ(1, g_cav.clusters[0]->lining_residues.size());
+    EXPECT_EQ(1, g_cav.clusters[0].lining_residues.size());
 
     for (int x = g_cav.min.x; x < g_cav.max.x; x++) {
         for (int y = g_cav.min.y; y < g_cav.max.y; y++) {
@@ -623,8 +623,8 @@ TEST(pore_id_tests, compute_volumes_pore_standalone) {
     lining_residues(g_pore);
 
     EXPECT_EQ(1, g_pore.clusters.size());
-    EXPECT_EQ(1, g_pore.clusters[0]->lining_residues.size());
-    EXPECT_TRUE(g_pore.clusters[0]->pore);
+    EXPECT_EQ(1, g_pore.clusters[0].lining_residues.size());
+    EXPECT_TRUE(g_pore.clusters[0].pore);
 
     for (int x = g_pore.min.x; x < g_pore.max.x; x++) {
         for (int y = g_pore.min.y; y < g_pore.max.y; y++) {
@@ -656,14 +656,14 @@ TEST(pore_id_tests, compute_volumes_pore_plus_standalone) {
     lining_residues(g_pore);
 
     EXPECT_EQ(2, g_pore.clusters.size());
-    EXPECT_EQ(1, g_pore.clusters[0]->lining_residues.size());
-    EXPECT_TRUE(g_pore.clusters[0]->pore);
-    EXPECT_EQ(1, g_pore.clusters[1]->lining_residues.size());
-    EXPECT_FALSE(g_pore.clusters[1]->pore);
-    EXPECT_TRUE(g_pore.clusters[0]->pore);
-    EXPECT_FALSE(g_pore.clusters[1]->pore);
-    EXPECT_TRUE(g_pore.clusters[0]->size() >= 130);
-    EXPECT_TRUE(g_pore.clusters[1]->size() >= 110);
+    EXPECT_EQ(1, g_pore.clusters[0].lining_residues.size());
+    EXPECT_TRUE(g_pore.clusters[0].pore);
+    EXPECT_EQ(1, g_pore.clusters[1].lining_residues.size());
+    EXPECT_FALSE(g_pore.clusters[1].pore);
+    EXPECT_TRUE(g_pore.clusters[0].pore);
+    EXPECT_FALSE(g_pore.clusters[1].pore);
+    EXPECT_TRUE(g_pore.clusters[0].size() >= 130);
+    EXPECT_TRUE(g_pore.clusters[1].size() >= 110);
 
     for (int x = g_pore.min.x; x < g_pore.max.x; x++) {
         for (int y = g_pore.min.y; y < g_pore.max.y; y++) {
@@ -674,11 +674,11 @@ TEST(pore_id_tests, compute_volumes_pore_plus_standalone) {
                 if (state >= IN_CLUSTER) {
                     EXPECT_TRUE(3 <= x && x <= 21 && 3 <= y && y <= 12 && 3 <= z && z <= 12);
 
-                    if (std::find(g_pore.clusters[0]->boxes.begin(), g_pore.clusters[0]->boxes.end(),
-                                  Vec<int>(x, y, z)) != g_pore.clusters[0]->boxes.end()) {
+                    if (std::find(g_pore.clusters[0].boxes.begin(), g_pore.clusters[0].boxes.end(),
+                                  Vec<int>(x, y, z)) != g_pore.clusters[0].boxes.end()) {
                         EXPECT_TRUE(3 <= x && x <= 12 && 3 <= y && y <= 12 && 3 <= z && z <= 12);
-                    } else if (std::find(g_pore.clusters[1]->boxes.begin(), g_pore.clusters[1]->boxes.end(),
-                                         Vec<int>(x, y, z)) != g_pore.clusters[1]->boxes.end()) {
+                    } else if (std::find(g_pore.clusters[1].boxes.begin(), g_pore.clusters[1].boxes.end(),
+                                         Vec<int>(x, y, z)) != g_pore.clusters[1].boxes.end()) {
                         EXPECT_TRUE(12 <= x && x <= 21 && 3 <= y && y <= 12 && 3 <= z && z <= 12);
                     }
                 }

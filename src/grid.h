@@ -31,6 +31,8 @@ struct PoreBox {
 
     // constructor
     explicit PoreBox(const Vec<int> &box_coordinates) : coord(box_coordinates) {}
+    // equality (for testing)
+    bool operator==(const Vec<int> &vec) const { return coord == vec;}
 };
 
 // a cluster of boxes that forms a pore or cavity

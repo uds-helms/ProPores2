@@ -464,50 +464,48 @@ TEST_F(ProteinGridTest, add_atom_pair) {
 }
 
 TEST_F(ProteinGridTest, new_cluster) {
-    std::shared_ptr<PoreCluster> too_small = small.new_cluster();
-    std::shared_ptr<PoreCluster> cavity = small.new_cluster();
-    std::shared_ptr<PoreCluster> pore = small.new_cluster();
+    small.new_cluster();
+    small.new_cluster();
+    small.new_cluster();
     EXPECT_EQ(3, small.clusters.size());
-    EXPECT_EQ(0, small.clusters[0]->id);
-    EXPECT_EQ(1, small.clusters[1]->id);
-    EXPECT_EQ(2, small.clusters[2]->id);
-    too_small->pore = true;
-    pore->pore = true;
-    cavity->pore = false;
-    EXPECT_EQ("0_pore", too_small->name());
-    EXPECT_EQ("2_pore", pore->name());
-    EXPECT_EQ("1_cavity", cavity->name());
+    EXPECT_EQ(0, small.clusters[0].id);
+    EXPECT_EQ(1, small.clusters[1].id);
+    EXPECT_EQ(2, small.clusters[2].id);
+    small.clusters[0].pore = true;
+    small.clusters[2].pore = true;
+    small.clusters[1].pore = false;
+    EXPECT_EQ("0_pore", small.clusters[0].name());
+    EXPECT_EQ("2_pore", small.clusters[2].name());
+    EXPECT_EQ("1_cavity", small.clusters[1].name());
 
     for (size_t i = 0; i < 30; i++) {
-        cavity->add_box(i, Vec<int>(0, 0, 0));
-        pore->add_box(i, Vec<int>(0, 0, 0));
+        small.clusters[1].add_box(i, Vec<int>(0, 0, 0));
+        small.clusters[2].add_box(i, Vec<int>(0, 0, 0));
     }
-    EXPECT_EQ(30, cavity->size());
-    EXPECT_EQ(30, pore->size());
-    EXPECT_EQ(0, too_small->size());
+
+    EXPECT_EQ(30, small.clusters[1].size());
+    EXPECT_EQ(30, small.clusters[2].size());
+    EXPECT_EQ(0, small.clusters[0].size());
     for (size_t i = 0; i < 30; i++) {
-        EXPECT_TRUE(cavity->has_index(i));
-        EXPECT_TRUE(pore->has_index(i));
-        EXPECT_FALSE(too_small->has_index(i));
-        cavity->add_box(i, Vec<int>(0, 0, 0));
-        pore->add_box(i, Vec<int>(0, 0, 0));
+        EXPECT_TRUE(small.clusters[1].has_index(i));
+        EXPECT_TRUE(small.clusters[2].has_index(i));
+        EXPECT_FALSE(small.clusters[0].has_index(i));
+        small.clusters[1].add_box(i, Vec<int>(0, 0, 0));
+        small.clusters[2].add_box(i, Vec<int>(0, 0, 0));
     }
-    EXPECT_EQ(30, cavity->size());
-    EXPECT_EQ(30, pore->size());
-    EXPECT_EQ(0, too_small->size());
+    EXPECT_EQ(30, small.clusters[1].size());
+    EXPECT_EQ(30, small.clusters[2].size());
+    EXPECT_EQ(0, small.clusters[0].size());
 
     small.filter_pores(30, REMOVE_NOTHING);
     EXPECT_EQ(2, small.clusters.size());
-    EXPECT_EQ(0, small.clusters[0]->id);
-    EXPECT_EQ(1, small.clusters[1]->id);
-    EXPECT_EQ(0, cavity->id);
-    EXPECT_EQ(1, pore->id);
-    EXPECT_FALSE(small.clusters[0]->pore);
-    EXPECT_TRUE(small.clusters[1]->pore);
+    EXPECT_EQ(0, small.clusters[0].id);
+    EXPECT_EQ(1, small.clusters[1].id);
+    EXPECT_FALSE(small.clusters[0].pore);
+    EXPECT_TRUE(small.clusters[1].pore);
     small.filter_pores(30, REMOVE_CAVITIES);
     EXPECT_EQ(1, small.clusters.size());
-    EXPECT_EQ(0, small.clusters[0]->id);
-    EXPECT_EQ(0, pore->id);
+    EXPECT_EQ(0, small.clusters[0].id);
     small.filter_pores(30, REMOVE_PORES);
     EXPECT_EQ(0, small.clusters.size());
     EXPECT_EQ(0, small.next_cluster_id);

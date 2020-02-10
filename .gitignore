@@ -1,6 +1,5 @@
 # Project exclude paths
 /cmake-build-release/
-/input
 /output
 /.idea/
 

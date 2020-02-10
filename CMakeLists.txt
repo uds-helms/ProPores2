@@ -17,3 +17,5 @@ add_subdirectory(tests)
 target_link_libraries(propores propores_source)
 target_compile_features(propores PUBLIC cxx_std_17)
 target_compile_features(propores_source PUBLIC cxx_std_17)
+
+install (TARGETS propores RUNTIME DESTINATION bin)

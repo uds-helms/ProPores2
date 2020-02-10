@@ -1,0 +1,2 @@
+add_subdirectory(test_src)
+add_subdirectory(lib/googletest)

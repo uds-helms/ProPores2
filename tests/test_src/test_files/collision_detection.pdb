@@ -1,0 +1,5 @@
+ATOM  12345 H    ALA A1234    0       0       0
+ATOM  12345 H    ALA A1234    8       0       0
+ATOM  12345 H    ALA A1234    16      0       0
+ATOM  12345 C    ALA A1234    0       2.7     0
+ATOM  12345 C    ALA A1234    16      3.7     0

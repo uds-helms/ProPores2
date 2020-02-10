@@ -1,0 +1,24 @@
+// should work
+ATOM  3     C    ***  17      0.1234561.12345 2.1
+// should work
+ATOM  ****  C    ***  17      0.1234561.12345 2.123456
+// should work
+ATOM  3     C    ***  ****    0.1234561.12345 2.123456
+// should not work, wrong atom type
+ATOM  3     D   AALA A 173i   0.1234561.12345 2.1234560.12341.2345
+// should not work, wrong residue type
+ATOM  3     H   ABLR B 173i   0.1234561.12345 2.1234560.12341.2345
+// should work
+ATOM  3     H    GLU B 173i   -0.123451.12345 2.1234560.12341.2345
+// should work
+ATOM  3     H   AGLU B 173i   -0.123451.12345 2.1234560.1234
+// should work
+ATOM  3     CA   GLU B 173i   -0.123451.12345 2.1234560.1234
+// should not work
+HETATM3     CA  AGLU B 173i   -0.123451.12345 2.1234560.1234
+// should not work
+BLA   3     CA  AGLU B 173i   -0.123451.12345 2.1234560.1234
+// should work
+ATOM  12345 CABCAALA A1234i   12345678-1234567123456780.0001123456          EL+-
+// should work if keep alternatives is enabled
+ATOM  12345 CABCBALA A1234i   12345678-1234567123456780.0001123456          EL+-

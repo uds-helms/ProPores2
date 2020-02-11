@@ -624,7 +624,7 @@ void pore_ID(ProteinGrid &grid, const Settings &settings) {
     // 1. for each empty grid box involved in a pore/cavity, compute if it's at the protein surface, in touch with
     //    residues, in touch with another cluster or in the cluster centre
     // 2. if the cluster touches the background, it is a pore, otherwise it is a cavity
-    if (settings.run_axis_trace) label_pore_boxes(grid);
+    if (settings.run_axis_trace || settings.run_axis_trace_preparation) label_pore_boxes(grid);
     classify_clusters(grid);
     // remove pores/cavities that are too small, or only keep pores or cavities
     grid.filter_pores(settings.volume_threshold, settings.remove_tag);

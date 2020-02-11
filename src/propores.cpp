@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     // run pore/cavity identification, if specified
     if (settings.run_pore_id) {
         auto pore_id_start = std::chrono::high_resolution_clock::now();
-        print("Pore-ID");
+        print("\nPore-ID");
         // PDB parsing and grid construction
         ProteinGrid grid = ProteinGrid(settings);
         print(1, pore_id_start, "> loaded protein with " + std::to_string(grid.atoms.size()) + " atoms in");
@@ -57,8 +57,7 @@ int main(int argc, char *argv[]) {
 
     // determine the axes of pores and cavities
     if (settings.run_axis_trace) {
-        if (settings.run_pore_id) std::cout << std::endl;
-        print("Axis-Trace");
+        print("\nAxis-Trace");
         // if pore-ID was not performed at the start of this run, obtain the cluster(s) from user provided file(s)
         if (!settings.run_pore_id) {
             auto axis_loading_start = std::chrono::high_resolution_clock::now();
@@ -78,8 +77,7 @@ int main(int argc, char *argv[]) {
 
     // open gates between neighbouring pores/cavities
     if (settings.run_gate_open) {
-        if (settings.run_pore_id || settings.run_axis_trace) std::cout << std::endl;
-        print("Gate-Open");
+        print("\nGate-Open");
         // if pore-ID was not performed at the start of this run, obtain the potential gates from user provided file(s)
         if (!settings.run_pore_id) {
             auto gate_loading_start = std::chrono::high_resolution_clock::now();

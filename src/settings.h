@@ -402,7 +402,7 @@ private:
         print_option("-b <decimal>", "Grid box length in Angstrom (= resolution). [default: 1.0]");
         print_option("-s <decimal>", "Solvent radius in Angstrom. [default: 1.0]");
         print_option("-p <decimal>", "Probe radius in Angstrom. [default: 1.0]");
-        print_option("-v <decimal>", "Volume threshold for pores/cavities in cubic Angstrom. [default: 11.5]");
+        print_option("-v <decimal>", "Volume threshold for pores/cavities in cubic Angstrom. [default: 50]");
         print_option("--cylinder-ray-trace", "Faster for smaller proteins or larger grid box lengths. "
                                              "Increased RAM usage. [default: autodetect]");
         print_option("--cylinder-standalone", "Potentially faster for larger proteins or smaller grid box lengths. "

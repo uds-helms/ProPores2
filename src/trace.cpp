@@ -247,11 +247,9 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
         if (min_index == -1) {
             throw std::runtime_error("Dijkstra: starting point has no matching end point.");
         }
-
         // add the end point to the list of starting points. that it is automatically used as the new axis end point in
         // the next step
         grid.starting_points.push_back(grid.coordinates[min_index]);
-
         // if the start point was part of the only valid surface patch, run trace again now that the end point is
         // determined. this allows to run trace as in the 2+ surface patches case.
         if (grid.has_surface_patch) {

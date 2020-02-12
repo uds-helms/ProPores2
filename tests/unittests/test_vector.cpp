@@ -152,10 +152,12 @@ TEST_F(VectorTest, length) {
 }
 
 TEST_F(VectorTest, unit) {
-    EXPECT_ANY_THROW(int_zero.unit());
+    // prevent no-discard compiler warning
+    Vec<double> b;
+    EXPECT_ANY_THROW(b = int_zero.unit());
     EXPECT_EQ(Vec<double>(1 / sqrt(3.0), 1 / sqrt(3.0), 1 / sqrt(3)), int_one.unit());
     EXPECT_EQ(Vec<double>(1 / sqrt(14.0), 2 / sqrt(14.0), 3 / sqrt(14.0)), int_one_two_three.unit());
-    EXPECT_ANY_THROW(double_zero.unit());
+    EXPECT_ANY_THROW(b = double_zero.unit());
     EXPECT_EQ(Vec<double>(1.0 / sqrt(3.0), 1.0 / sqrt(3.0), 1.0 / sqrt(3.0)), double_one.unit());
     EXPECT_EQ(Vec<double>(1.5 / sqrt(20.75), 2.5 / sqrt(20.75), 3.5 / sqrt(20.75)), double_one_two_three.unit());
 }

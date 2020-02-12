@@ -20,4 +20,4 @@ target_link_libraries(propores propores_source)
 # make sure that the code gets compiled with C++17
 target_compile_features(propores PUBLIC cxx_std_17)
 # setup the installation
-install (TARGETS propores RUNTIME DESTINATION ${CMAKE_BINARY_DIR}/..)
+install (TARGETS propores RUNTIME DESTINATION ${CMAKE_SOURCE_DIR})

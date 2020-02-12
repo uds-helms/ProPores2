@@ -11,4 +11,4 @@ target_link_libraries(propores_tests propores_source)
 # make sure that the code gets compiled with C++17
 target_compile_features(propores_tests PUBLIC cxx_std_17)
 # setup the installation
-install (TARGETS propores_tests RUNTIME DESTINATION ${CMAKE_BINARY_DIR}/../tests/unittests)
+install (TARGETS propores_tests RUNTIME DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})

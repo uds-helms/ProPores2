@@ -21,6 +21,7 @@
 #define PROPORES_VECTOR_H
 
 #include <cmath>
+#include <tuple>
 #include <ostream>
 #include <exception>
 #include <algorithm>

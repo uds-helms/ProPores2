@@ -171,7 +171,7 @@ int min_index(const std::vector<double> &scores, const std::vector<uint8_t> &vis
 
     for (size_t i = 0; i < scores.size(); i++) {
         // skip boxes that have already been visited or have a score of infinity (= not (yet) reachable)
-        if (visited[i] || isinf(scores[i])) continue;
+        if (visited[i] || std::isinf(scores[i])) continue;
         // if the current box has a lower score, set it as the new minimum
         if (scores[i] < min_score) {
             min_idx = i;
@@ -250,7 +250,8 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
         // iterate over all boxes that are part of the pore/cavity and lay on its outer layer. make sure they are not
         // the start point and do not have a score of infinity
         for (size_t i = 0; i < grid.size(); i++) {
-            if (grid.at(i) == UNCLASSIFIED || grid.at(i) == ON_CLUSTER_INSIDE || i == start_index || isinf(scores[i])) {
+            if (grid.at(i) == UNCLASSIFIED || grid.at(i) == ON_CLUSTER_INSIDE || i == start_index
+                || std::isinf(scores[i])) {
                 continue;
             }
             // adjusted the box score by dividing it by the length of the path to the power of 1.5 to favour longer

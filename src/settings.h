@@ -365,9 +365,10 @@ private:
     }
 
     void print_help(const std::string &msg) const {
-        std::cout << "PROPORES 2.0" << std::endl;
+        std::cout << "PROPORES 2.0 Copyright (C) 2020 Markus Hollander" << std::endl;
         print_text("Identification of protein pores, cavities and channels with options for axis determination and "
                    "opening connections between neighbouring pores.");
+        print_text("License: GNU General Public License version 3 or later.");
         std::cout << std::endl;
 
         if (!msg.empty()) {

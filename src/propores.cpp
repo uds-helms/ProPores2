@@ -10,14 +10,17 @@
 int main(int argc, char *argv[]) {
     // parse and check input parameters
     Settings settings = Settings(argc, argv);
-    // initialise
+    // initialisation of gates and pore/cavity box clusters
     std::vector<Gate> gates;
     std::vector<PoreCluster> clusters;
+    // header
+    std::string header = "\nPROPORES 2.0 Copyright (C) 2020 Markus Hollander";
     // start the run time clock
     auto initial = std::chrono::high_resolution_clock::now();
     // PORE-ID
     // run pore/cavity identification, if specified
     if (settings.run_pore_id) {
+        print(header);
         auto pore_id_start = std::chrono::high_resolution_clock::now();
         print("\nPore-ID");
         // PDB parsing and grid construction
@@ -57,6 +60,7 @@ int main(int argc, char *argv[]) {
 
     // determine the axes of pores and cavities
     if (settings.run_axis_trace) {
+        if (!settings.run_pore_id) print(header);
         print("\nAxis-Trace");
         // if pore-ID was not performed at the start of this run, obtain the cluster(s) from user provided file(s)
         if (!settings.run_pore_id) {
@@ -77,6 +81,7 @@ int main(int argc, char *argv[]) {
 
     // open gates between neighbouring pores/cavities
     if (settings.run_gate_open) {
+        if (!settings.run_pore_id && !settings.run_axis_trace) print(header);
         print("\nGate-Open");
         // if pore-ID was not performed at the start of this run, obtain the potential gates from user provided file(s)
         if (!settings.run_pore_id) {

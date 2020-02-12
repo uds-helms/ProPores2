@@ -2,6 +2,7 @@
 /cmake-build-release/
 /output
 /.idea/
+copyright_header.txt
 
 # Prerequisites
 *.d

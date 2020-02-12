@@ -420,8 +420,8 @@ private:
 
         std::cout << "Pore-ID options:" << std::endl;
         print_option("-b <decimal>", "Grid box length in Angstrom (= resolution). [default: 1.0]");
-        print_option("-s <decimal>", "Solvent radius in Angstrom. [default: 1.0]");
-        print_option("-p <decimal>", "Probe radius in Angstrom. [default: 1.0]");
+        print_option("-s <decimal>", "Solvent radius in Angstrom. [default: 1.2]");
+        print_option("-p <decimal>", "Probe radius in Angstrom. [default: 1.4]");
         print_option("-v <decimal>", "Volume threshold for pores/cavities in cubic Angstrom. [default: 50]");
         print_option("--cylinder-ray-trace", "Faster for smaller proteins or larger grid box lengths. "
                                              "Increased RAM usage. [default: autodetect]");
@@ -448,7 +448,7 @@ private:
         print_option("-ct <decimal>", "Van der Waals radius overlap tolerance (clash tolerance) for rotamer generation "
                                       "in Angstrom. Lowering the clash tolerance can substantially speed up the "
                                       "gate-open runtime, but too low values can also eliminate all potential "
-                                      "rotamers. [default: 0.5]");
+                                      "rotamers. [default: 0.75]");
         print_option("-gs <path>", "Path to a file with information for opening the gate between a single pair of "
                                    "two pores/cavities. Only needed if gate-open is not run together with pore ID. "
                                    "[default: none]");

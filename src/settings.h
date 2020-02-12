@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2020 Markus Hollander (markus.hollander@bioinformatik.uni-saarland.de). All rights reserved.
+ *
+ * This file is part of PROPORES 2.0. PROPORES was originally developed by Po-Hsien Lee (2011) in Perl under the terms
+ * of the GNU General Public License version 3 or higher. The approach was published as:
+ * Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational
+ * repositioning of gating residues. Proteins, 80, 2:421-32. https://www.ncbi.nlm.nih.gov/pubmed/22095919
+ *
+ * PROPORES 2.0 is a C++ implementation of the approach outlined in Lee (2012) by Markus Hollander and Moomal Aziz.
+ * It is a free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the license, or (at your option) any later version.
+ *
+ * PROPORES 2.0 is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If not, see
+ * <https://www.gnu.org./licenses/>.
+*/
+
 #ifndef PROPORES_SETTINGS_H
 #define PROPORES_SETTINGS_H
 
@@ -40,7 +59,6 @@ struct Settings {
     // PORE ID
     // threshold for the minimum volume of a pore/cavity in Angstrom
     double volume_threshold = 50;
-    // TODO
     // highest number of grid boxes before switching from cylinder trace to cylinder standalone
     size_t box_threshold = 1500000;
     // highest number og atoms before switching from cylinder trace to cylinder standalone
@@ -365,8 +383,7 @@ private:
     }
 
     void print_help(const std::string &msg) const {
-        print_text("PROPORES 2.0 Copyright (C) 2020 Markus Hollander");
-        print_text("License: GNU General Public License version 3 or later.");
+        print_text("PROPORES 2.0 Copyright (C) 2020 Markus Hollander [GNU General Public License v3]");
         print_text("Identification of protein pores, cavities and channels with options for axis determination and "
                    "opening connections between neighbouring pores.");
         std::cout << std::endl;
@@ -378,6 +395,8 @@ private:
 
         std::cout << "Usage:" << std::endl;
         std::cout << sep << "propores <run command(s)> -i <path> -o <path> [options...]" << std::endl << std::endl;
+        std::cout << "Example: " << std::endl;
+        std::cout << sep << "propores pore-id axis-trace -i input/1EA5_R.pdb -o output" << std::endl << std::endl;
 
         std::cout << "Run commands (at least one, space separated):" << std::endl;
         print_option("pore-id", "Run pore/cavity identification.");

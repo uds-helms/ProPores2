@@ -365,10 +365,10 @@ private:
     }
 
     void print_help(const std::string &msg) const {
-        std::cout << "PROPORES 2.0 Copyright (C) 2020 Markus Hollander" << std::endl;
+        print_text("PROPORES 2.0 Copyright (C) 2020 Markus Hollander");
+        print_text("License: GNU General Public License version 3 or later.");
         print_text("Identification of protein pores, cavities and channels with options for axis determination and "
                    "opening connections between neighbouring pores.");
-        print_text("License: GNU General Public License version 3 or later.");
         std::cout << std::endl;
 
         if (!msg.empty()) {
@@ -397,7 +397,7 @@ private:
         print_option("--name <string>", "Name for the output sub-directory and  all output files. [default: PDB name]");
         print_option("--skip-H-atoms", "Ignore H-atoms in the input PDB file. [default: false]");
         print_option("--keep-alternative", "Load alternative locations of atoms in addition to the primary location. "
-                                           "[default: false");
+                                           "[default: false]");
 
         std::cout << "Pore-ID options:" << std::endl;
         print_option("-b <decimal>", "Grid box length in Angstrom (= resolution). [default: 1.0]");

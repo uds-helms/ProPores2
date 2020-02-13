@@ -1,8 +1,6 @@
 DIR="build/"
 if [ -d "$DIR" ]; then
-  cd "$DIR"
-  rmdir -v -rf delete
-  cd ..
+  rmd -rf "$DIR"
   mkdir "$DIR"
 fi
 cmake -S . -B build

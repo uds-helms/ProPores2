@@ -3,6 +3,6 @@ if [ -d "$DIR" ]; then
   rm -rf "$DIR"
   mkdir "$DIR"
 fi
-cmake -S . -B build
-cmake --build build --config Release --target install
+cmake -S . -B "$DIR"
+cmake --build "$DIR" --config Release --target install
 chmod +x propores

@@ -192,7 +192,7 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
     // initialise the trace back to the 1D box index outside the grid
     std::vector<size_t> trace_back(grid.size(), grid.size());
     // initialise the path lengths to infinity
-    std::vector<unsigned int> lengths(grid.size(), INFINITY);
+    std::vector<double> lengths(grid.size(), INFINITY);
 
     // STARTING POINT INITIALISATION
     // 1D index of the starting point box (start = the index of the starting point in the starting point list)

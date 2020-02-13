@@ -136,8 +136,6 @@ struct Settings {
         std::string gate_input_single = get_option("-gs");
         std::string gate_input_dir = get_option("-gd");
 
-        std::cout << "test" << std::endl;
-
         if (help_short || help_long) print_help("");
 
         if (!run_pore_id && !run_axis_trace && !run_gate_open) print_help("No program part(s) specified.");

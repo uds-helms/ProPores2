@@ -50,7 +50,7 @@ and on MacOS and Linux:
 ```
 ./propores <run command(s)> -i <path> -o <path> [options...]
 ```
-The three run commands are `pore-id´, ´axis-trace` and `gate-open`.
+The three run commands are `pore-id´, ´axis-trace` and `gate-open`, and at least one of them has to be given. The input protein PDB file `-i` and the output directory `-o` are always required. To see a full list of available options, run `propores.exe -h` or `propores.exe --help`. Some use case examples are listed below.
 
 ### Example 1: Only Pore Identification
 Running only pore identification with 0.5 Angstrom resolution, with the option to run axis trace and gate opening at a later point.
@@ -96,5 +96,3 @@ The approach was designed by Po-Hsien Lee and published as:
 >Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational repositioning of gating residues. Proteins, 80, 2:421-32. https://www.ncbi.nlm.nih.gov/pubmed/22095919
 
 The original version was implemented by Po-Hsien Lee (2011) in Perl. PROPORES 2.0 is a faster and more memory-efficient C++ implementation by Markus Hollander and Moomal Aziz.
-
-## FAQ

@@ -5,10 +5,9 @@ PROPORES 2.0 is a C++ command line tool for analysing pores (and cavities) in pr
 
 **Pore Identification:** Identifies all pores in a given protein PDB file, and for each pore generates a tab-separated file with lining residues and a pseudo PDB file with the empty space within the pore. The pseudo PDB file can be used for visualising the pore together with the protein. 
 
-**Axis Determination:** 
+**Axis Trace:** Determines the axis of a pore and writes it into a pseudo PDB file for visualisation. Some pores have multiple axes, in which cases several output files are generated.
 
-**Gate Opening:**
-
+**Gate Opening:** Rotates the shared lining residues of two neighbouring pores in an effort to open the gate between them as much as possible. The result is a PDB file of the entire protein with the rotated residues.
 
 ## Step 1: Installation
 The installation requires a C++17 compiler and CMake 3.15 or newer.
@@ -20,7 +19,9 @@ The installation requires a C++17 compiler and CMake 3.15 or newer.
 4. Open the PROPORES folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the PROPORES folder.
 
 ### MacOS and Linux
-1. Install a C++17 compiler, or update an existing C++ compiler if necessary. If you are using the GCC compiler, you need GCC-9 (and G++9) or newer. Some older Ubuntu long-term support versions, e.g. Ubuntu 18.04 LTS, do not provide GCC-9 in their package manager. In that case, you can install GCC-9 as follows:
+1. Install a C++17 compiler, or update an existing C++ compiler if necessary. If you are using the GCC compiler, you need GCC-9 (and G++9) or newer. 
+
+   Some older Ubuntu long-term support versions, e.g. Ubuntu 18.04 LTS, do not provide GCC-9 in their package manager. In that case, you can install GCC-9 as follows:
    ```
    sudo apt update
    sudo apt install build-essential

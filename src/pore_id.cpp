@@ -593,7 +593,7 @@ void output_pores(ProteinGrid &grid, const Settings &settings) {
         pdb_file.close();
         // LINING RESIDUES
         // create the lining residues file path and open the empty file
-        std::ofstream lining((settings.lining_path / fs::path(name + ".list")).string());
+        std::ofstream lining((settings.lining_path / fs::path(name + ".tsv")).string());
         // for each lining residue, write the chain, residue ID and residue type in tab-separated format
         for (const auto &[chain, res_id, res_type]: cluster.lining_residues) {
             lining << chain << "\t" << res_id << "\t" << to_str(res_type) << std::endl;

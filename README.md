@@ -14,7 +14,7 @@ The installation requires a C++17 compiler and CMake 3.15 or newer.
 
 ### Windows 7 and 10
 1. Install a C++17 compiler, or update an existing C++ compiler if necessary. [Microsoft provides a tutorial for installing the Visual C++ compiler.](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2019)
-2. Install CMake 3.15 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install)
+2. Install CMake 3.15 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install) This should add `cmake` to the environment variables but might require a restart of the computer to take effect.
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
 4. Open the PROPORES folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the PROPORES folder.
 
@@ -42,10 +42,55 @@ The installation requires a C++17 compiler and CMake 3.15 or newer.
 
 
 ## Step 2: Running PROPORES
+Open the terminal (or command prompt) and navigate to the PROPORES folder with the `propores` executable. The general command setup on Windows is
+```
+propores.exe <run command(s)> -i <path> -o <path> [options...]
+```
+and on MacOS and Linux:
+```
+./propores <run command(s)> -i <path> -o <path> [options...]
+```
+The three run commands are `pore-id´, ´axis-trace` and `gate-open`.
 
+### Example 1: Only Pore Identification
+Running only pore identification with 0.5 Angstrom resolution, with the option to run axis trace and gate opening at a later point.
+```
+propores.exe pore-id -i input/1EA5_R.pdb -o output --name example -b 0.5 --axis-preparation --gate-preparation
+```
+This writes the pore identification output, as well as files for independent axis trace and gate opening, to the folder `output/example/` in the PROPORES folder.
+
+### Example 2: Only Axis Trace
+Running only axis trace based on previously generated files. For a single pore:
+```
+propores.exe axis-trace -i input/1EA5_R.pdb -o output --name example -ts output/example/axis_trace_input/0_pore.tsv
+```
+and for all pores in a directory:
+```
+propores.exe axis-trace -i input/1EA5_R.pdb -o output --name example -td output/example/axis_trace_input
+```
+This writes the axes to the folder `output/example/axes`.
+
+### Example 3: Only Gate Opening
+Running only opening based on previously generated files. For a single pore:
+```
+propores.exe gate-open -i input/1EA5_R.pdb -o output --name example -gs output/example/gate_open_input/0_pore.tsv
+```
+and for all pores in a directory:
+```
+propores.exe gate-open -i input/1EA5_R.pdb -o output --name example -td output/example/gate_open_input
+```
+While most gates can be opened within seconds, some gates have a very large number of possible residue configurations and can therefore take a lot longer. PROPORES estimates the difficulty of each gate based on the residue composition, and gates can be skipped based on that difficulty:
+```
+propores.exe gate-open -i input/1EA5_R.pdb -o output --name example -td output/example/gate_open_input --skip-hard-gates
+```
+This writes the protein versions with open gates to the folder `output/example/gate_open`.
+
+### Example 4: Everything at Once
+```
+propores.exe pore-id axis-trace gate-open -i input/1EA5_R.pdb -o output --name example -b 0.5 --skip-hard-gates
+```
 
 ## Attribution
-
 The approach was designed by Po-Hsien Lee and published as:
 
 >Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational repositioning of gating residues. Proteins, 80, 2:421-32. https://www.ncbi.nlm.nih.gov/pubmed/22095919

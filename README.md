@@ -1,6 +1,13 @@
 # PPROPORS 2.0
 
 ## Introduction
+PROPORES 2.0 is a C++ command line tool for analysing pores (and cavities) in proteins. It provides three components that can be run together or individually:
+
+**Pore Identification:** Identifies all pores in a given protein PDB file, and for each pore generates a tab-separated file with lining residues and a pseudo PDB file with the empty space within the pore. The pseudo PDB file can be used for visualising the pore together with the protein. 
+
+**Axis Determination:** 
+
+**Gate Opening:**
 
 
 ## Step 1: Installation
@@ -28,12 +35,13 @@ The installation requires a C++17 compiler and CMake 3.15 or newer.
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
 4. Open the PROPORES folder in the terminal and run 
    ```
-   sh install_macos_linux.sh
+   sh install_linux_macOS.sh
    ```
    This creates the executable `propores` in the PROPORES folder.
 
 
 ## Step 2: Running PROPORES
+
 
 ## Attribution
 

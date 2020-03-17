@@ -22,10 +22,3 @@ if __name__ == '__main__':
     root = tk.Tk()
     app_gui = gui.GUI(root)
     root.mainloop()
-    # extract and set the proper working directory
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-    # build and run the GUI
-    root = tk.Tk()
-    app_gui = gui.GUI(root)
-    root.mainloop()

@@ -50,7 +50,7 @@ and on MacOS and Linux:
 ```
 ./propores <run command(s)> -i <path> -o <path> [options...]
 ```
-The three run commands are `pore-id´, ´axis-trace` and `gate-open`, and at least one of them has to be given. The input protein PDB file `-i` and the output directory `-o` are always required. To see a full list of available options, run `propores.exe -h` or `propores.exe --help`. Some use case examples are listed below.
+The three run commands are `pore-id`, `axis-trace` and `gate-open`, and at least one of them has to be given. The input protein PDB file `-i` and the output directory `-o` are always required. To see a full list of available options, run `propores.exe -h` or `propores.exe --help`. Some use case examples are listed below.
 
 ### Example 1: Only Pore Identification
 Running only pore identification with 0.5 Angstrom resolution, with the option to run axis trace and gate opening at a later point.

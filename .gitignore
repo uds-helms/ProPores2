@@ -3,6 +3,10 @@
 /output
 /.idea/
 
+# Notes
+*.pdf
+*.xls
+
 # Prerequisites
 *.d
 

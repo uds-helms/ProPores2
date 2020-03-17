@@ -1,0 +1,785 @@
+Linux:
+  Default:
+    Analysis:
+      PWM number of sequence threshold: 5
+      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
+      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
+      TFBS random mutations: 15
+      gene path: example_data/mutation_analysis/artificial/genes.tsv
+      genes of interest (name long): genes of interest
+      genes of interest (name short): GoI
+      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
+      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
+      other genes (name long): other genes
+      other genes (name short): other
+      output directory: results/mutation_analysis/
+      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
+      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
+      relative promoter start: -100
+      substitution matrix path: substitution_matrices/PAM10.tsv
+    NGS:
+      BWA executable: /usr/bin/bwa
+      SAMTools executable: /usr/bin/samtools
+      VarScan executable: /usr/bin/varscan
+      output directory: results/NGS/
+      p-value: 0.05
+      quality control cut-off: 30
+      reads directory: example_data/NGS/reads
+      reference genome path: example_data/NGS/ref_genome.fasta
+    PATRIC:
+      input file: example_data/PATRIC/resistance.csv
+      output file: results/PATRIC/resistance.tsv
+    RegulonDB:
+      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
+      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
+      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
+      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
+      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
+      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
+      TU input: example_data/regulonDB/artificial_TUs.tsv
+      gene input: example_data/regulonDB/artificial_genes.tsv
+      operon input: example_data/regulonDB/artificial_operons.tsv
+      output directory: results/regulonDB/
+      promoter input: example_data/regulonDB/artificial_promoters.tsv
+    UniProt:
+      input file: example_data/UniProt/s_aureus_domains_shortened.txt
+      output file: results/UniProt/domains.tsv
+    VCF Merger:
+      input directory: example_data/vcf_merger/
+      output file: results/vcf_merger/mutation.tsv
+  GUI:
+    colours:
+      description text: '#4F81BD'
+      description title: '#4F81BD'
+      section title: '#C0504D'
+      sub-section title: '#76923D'
+    fonts:
+      check button:
+      - Calibri
+      - 10
+      description text:
+      - Calibri
+      - 10
+      description title:
+      - Calibri
+      - 14
+      - bold
+      entry field label:
+      - Calibri
+      - 10
+      entry field text:
+      - Calibri
+      - 9
+      file chooser button:
+      - Calibri
+      - 9
+      run button:
+      - Calibri
+      - 9
+      section title:
+      - Calibri
+      - 14
+      - bold
+      status line:
+      - Calibri
+      - 10
+      sub-section title:
+      - Calibri
+      - 10
+      - bold
+    heights:
+      description frame: 250
+    styles:
+      theme: clam
+    widths:
+      description frame: 400
+      description text: 390
+      file/directory chooser button: 3
+      file/directory entry field: 30
+      left settings button: 15
+      number entry field: 15
+      right settings button: 15
+      run button: 20
+      save/cancel button: 15
+      separator line width: 1
+      status box: 50
+      status box border: 1
+    x-margins:
+      column: 20
+      description text:
+      - 0
+      - 0
+      description title:
+      - 0
+      - 0
+      empty check button:
+      - 10
+      - 0
+      entry field label:
+      - 0
+      - 10
+      entry field text:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 0
+      - 0
+      separator:
+      - 0
+      - 0
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      window left: 5
+      window right: 10
+    y-margins:
+      column:
+      - 0
+      - 0
+      description text:
+      - 0
+      - 0
+      description title:
+      - 15
+      - 0
+      empty check button:
+      - 0
+      - 0
+      entry field label:
+      - 0
+      - 0
+      entry field text:
+      - 2
+      - 2
+      field name:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 15
+      - 0
+      separator:
+      - 10
+      - 10
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      window bottom: 10
+  User:
+    Analysis:
+      PWM number of sequence threshold: 5
+      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
+      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
+      TFBS random mutations: 15
+      gene path: example_data/mutation_analysis/artificial/genes.tsv
+      genes of interest (name long): genes of interest
+      genes of interest (name short): GoI
+      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
+      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
+      other genes (name long): other genes
+      other genes (name short): other
+      output directory: results/mutation_analysis/
+      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
+      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
+      relative promoter start: -100
+      substitution matrix path: substitution_matrices/PAM10.tsv
+    NGS:
+      BWA executable: /usr/bin/bwa
+      SAMTools executable: /usr/bin/samtools
+      VarScan executable: /usr/bin/varscan
+      output directory: results/NGS/
+      p-value: 0.05
+      quality control cut-off: 30
+      reads directory: example_data/NGS/reads
+      reference genome path: example_data/NGS/ref_genome.fasta
+    PATRIC:
+      input file: example_data/PATRIC/resistance.csv
+      output file: results/PATRIC/resistance.tsv
+    RegulonDB:
+      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
+      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
+      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
+      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
+      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
+      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
+      TU input: example_data/regulonDB/artificial_TUs.tsv
+      gene input: example_data/regulonDB/artificial_genes.tsv
+      operon input: example_data/regulonDB/artificial_operons.tsv
+      output directory: results/regulonDB/
+      promoter input: example_data/regulonDB/artificial_promoters.tsv
+    UniProt:
+      input file: example_data/UniProt/s_aureus_domains_shortened.txt
+      output file: results/UniProt/domains.tsv
+    VCF Merger:
+      input directory: example_data/vcf_merger/
+      output file: results/vcf_merger/mutation.tsv
+Mac OS X:
+  Default:
+    Analysis:
+      PWM number of sequence threshold: 5
+      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
+      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
+      TFBS random mutations: 15
+      gene path: example_data/mutation_analysis/artificial/genes.tsv
+      genes of interest (name long): genes of interest
+      genes of interest (name short): GoI
+      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
+      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
+      other genes (name long): other genes
+      other genes (name short): other
+      output directory: results/mutation_analysis/
+      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
+      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
+      relative promoter start: -100
+      substitution matrix path: substitution_matrices/PAM10.tsv
+    NGS:
+      BWA executable: /usr/bin/bwa
+      SAMTools executable: /usr/bin/samtools
+      VarScan executable: /usr/bin/varscan
+      output directory: results/NGS/
+      p-value: 0.05
+      quality control cut-off: 30
+      reads directory: example_data/NGS/reads
+      reference genome path: example_data/NGS/ref_genome.fasta
+    PATRIC:
+      input file: example_data/PATRIC/resistance.csv
+      output file: results/PATRIC/resistance.tsv
+    RegulonDB:
+      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
+      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
+      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
+      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
+      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
+      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
+      TU input: example_data/regulonDB/artificial_TUs.tsv
+      gene input: example_data/regulonDB/artificial_genes.tsv
+      operon input: example_data/regulonDB/artificial_operons.tsv
+      output directory: results/regulonDB/
+      promoter input: example_data/regulonDB/artificial_promoters.tsv
+    UniProt:
+      input file: example_data/UniProt/s_aureus_domains_shortened.txt
+      output file: results/UniProt/domains.tsv
+    VCF Merger:
+      input directory: example_data/vcf_merger/
+      output file: results/vcf_merger/mutation.tsv
+  GUI:
+    colours:
+      description text: '#4F81BD'
+      description title: '#4F81BD'
+      section title: '#C0504D'
+      sub-section title: '#76923D'
+    fonts:
+      check button:
+      - Calibri
+      - 12
+      description text:
+      - Calibri
+      - 12
+      description title:
+      - Calibri
+      - 16
+      - bold
+      entry field label:
+      - Calibri
+      - 12
+      entry field text:
+      - Calibri
+      - 10
+      file chooser button:
+      - Calibri
+      - 12
+      run button:
+      - Calibri
+      - 12
+      section title:
+      - Calibri
+      - 16
+      - bold
+      status line:
+      - Calibri
+      - 12
+      sub-section title:
+      - Calibri
+      - 12
+      - bold
+    heights:
+      description frame: 210
+    styles:
+      theme: aqua
+    widths:
+      description frame: 400
+      description text: 390
+      file/directory chooser button: 3
+      file/directory entry field: 30
+      left settings button: 15
+      number entry field: 15
+      right settings button: 15
+      run button: 20
+      save/cancel button: 15
+      separator line width: 1
+      status box: 50
+      status box border: 1
+    x-margins:
+      column: 20
+      description text:
+      - 0
+      - 0
+      description title:
+      - 0
+      - 0
+      empty check button:
+      - 10
+      - 0
+      entry field label:
+      - 0
+      - 10
+      entry field text:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 0
+      - 0
+      separator:
+      - 0
+      - 0
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      window left: 5
+      window right: 10
+    y-margins:
+      column:
+      - 0
+      - 0
+      description text:
+      - 0
+      - 0
+      description title:
+      - 15
+      - 0
+      empty check button:
+      - 0
+      - 0
+      entry field label:
+      - 0
+      - 0
+      entry field text:
+      - 2
+      - 2
+      field name:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 15
+      - 0
+      separator:
+      - 10
+      - 10
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      window bottom: 20
+  User:
+    Analysis:
+      PWM number of sequence threshold: 5
+      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
+      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
+      TFBS random mutations: 15
+      gene path: example_data/mutation_analysis/artificial/genes.tsv
+      genes of interest (name long): genes of interest
+      genes of interest (name short): GoI
+      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
+      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
+      other genes (name long): other genes
+      other genes (name short): other
+      output directory: results/mutation_analysis/
+      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
+      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
+      relative promoter start: -100
+      substitution matrix path: substitution_matrices/PAM10.tsv
+    NGS:
+      BWA executable: /usr/bin/bwa
+      SAMTools executable: /usr/bin/samtools
+      VarScan executable: /usr/bin/varscan
+      output directory: results/NGS/
+      p-value: 0.05
+      quality control cut-off: 30
+      reads directory: example_data/NGS/reads
+      reference genome path: example_data/NGS/ref_genome.fasta
+    PATRIC:
+      input file: example_data/PATRIC/resistance.csv
+      output file: results/PATRIC/resistance.tsv
+    RegulonDB:
+      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
+      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
+      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
+      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
+      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
+      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
+      TU input: example_data/regulonDB/artificial_TUs.tsv
+      gene input: example_data/regulonDB/artificial_genes.tsv
+      operon input: example_data/regulonDB/artificial_operons.tsv
+      output directory: results/regulonDB/
+      promoter input: example_data/regulonDB/artificial_promoters.tsv
+    UniProt:
+      input file: example_data/UniProt/s_aureus_domains_shortened.txt
+      output file: results/UniProt/domains.tsv
+    VCF Merger:
+      input directory: example_data/vcf_merger/
+      output file: results/vcf_merger/mutation.tsv
+Run:
+  Default:
+    clean up NGS output directory: true
+    delete old analysis output: true
+    open NGS output directory: true
+    open analysis output directory: true
+    open parser output directory: true
+    run TFBS analysis: true
+    run adjust operon promoters: true
+    run coding region analysis: true
+    run genes of interest analysis: true
+    run protein domain analysis: true
+    run regulation analysis: true
+  User:
+    clean up NGS output directory: true
+    delete old analysis output: true
+    open NGS output directory: true
+    open analysis output directory: true
+    open parser output directory: true
+    run TFBS analysis: true
+    run adjust operon promoters: true
+    run coding region analysis: true
+    run genes of interest analysis: true
+    run protein domain analysis: true
+    run regulation analysis: true
+Windows:
+  Default:
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: ./propores.exe
+      Propores executable: propores.exe
+      keep alternative locations: false
+      output directory: results/
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0
+  GUI:
+    colours:
+      description text: '#4F81BD'
+      description title: '#4F81BD'
+      section title: '#C0504D'
+      sub-section title: '#76923D'
+    fonts:
+      check button:
+      - Calibri
+      - 12
+      description text:
+      - Calibri
+      - 11
+      description title:
+      - Calibri
+      - 16
+      - bold
+      entry field label:
+      - Calibri
+      - 12
+      entry field text:
+      - Calibri
+      - 10
+      file chooser button:
+      - Calibri
+      - 11
+      option menu:
+      - Calibri
+      - 11
+      radiobutton:
+      - Calibri
+      - 12
+      run button:
+      - Calibri
+      - 12
+      section title:
+      - Calibri
+      - 16
+      - bold
+      status line:
+      - Calibri
+      - 12
+      sub-section title:
+      - Calibri
+      - 12
+      - bold
+      title check button:
+      - Calibri
+      - 16
+      - bold
+    heights:
+      description frame: 10000
+    styles:
+      theme: vista
+    widths:
+      description frame: 400
+      description text: 390
+      file/directory chooser button: 3
+      file/directory entry field: 30
+      left settings button: 15
+      number entry field: 15
+      right settings button: 15
+      run button: 20
+      save/cancel button: 15
+      separator line width: 1
+      status box: 50
+      status box border: 1
+    x-margins:
+      column: 20
+      description text:
+      - 0
+      - 0
+      description title:
+      - 0
+      - 0
+      empty check button:
+      - 10
+      - 0
+      entry field label:
+      - 0
+      - 10
+      entry field text:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 0
+      - 0
+      separator:
+      - 0
+      - 0
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      title check button:
+      - 0
+      - 0
+      window left: 5
+      window right: 10
+    y-margins:
+      column:
+      - 0
+      - 0
+      description text:
+      - 0
+      - 0
+      description title:
+      - 15
+      - 0
+      empty check button:
+      - 0
+      - 0
+      entry field label:
+      - 0
+      - 0
+      entry field text:
+      - 2
+      - 2
+      field name:
+      - 0
+      - 0
+      file chooser button:
+      - 0
+      - 0
+      left settings button:
+      - 0
+      - 0
+      right settings button:
+      - 0
+      - 0
+      run button:
+      - 0
+      - 0
+      section title:
+      - 15
+      - 0
+      separator:
+      - 10
+      - 10
+      status box frame:
+      - 0
+      - 0
+      subsection title:
+      - 0
+      - 0
+      text check button:
+      - 0
+      - 0
+      text separator:
+      - 0
+      - 0
+      title check button:
+      - 15
+      - 0
+      window bottom: 10
+  User:
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: ./propores.exe
+      Propores executable: propores.exe
+      keep alternative locations: false
+      output directory: results/
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0

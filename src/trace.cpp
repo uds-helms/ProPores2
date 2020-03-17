@@ -138,7 +138,7 @@ void compute_starting_points(PoreGrid &grid, const size_t min_size) {
                     }
                 }
                 // skip surface patches that do not pass the minimum size threshold
-                if (patch.size() < min_size) continue;
+                if (patch.size() * grid.box_length_sq < min_size) continue;
 
                 // compute the box in the surface patch with the largest possible radius
                 Vec<int> max_radius_vec = patch[0];

@@ -435,8 +435,8 @@ private:
                                            "neighbouring pores/cavities. [default: false]");
 
         std::cout << std::endl << "Axis-trace options:" << std::endl;
-        print_option("-spt <number>", "Threshold for the minimum number of grid boxes in pore surface patches. "
-                                      "[default: 30]");
+        print_option("-spt <number>", "Minimum area of a pore surface patch  in Angstrom for it to count as a potential "
+                                      "pore axis origin. [default: 30]");
         print_option("-ts <path>", "Path to a file with information for determining the axis of a single "
                                    "pore/cavity. Only needed if axis trace is not run together with pore ID. "
                                    "[default: none]");

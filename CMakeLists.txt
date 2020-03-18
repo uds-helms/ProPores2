@@ -1,5 +1,12 @@
 # minimum version required for target_compile_features
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.1)
+
+# use the newest version between 3.1 and 3.15
+if(${CMAKE_VERSION} VERSION_LESS 3.15)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+else()
+    cmake_policy(VERSION 3.15)
+endif()
 # set project information
 project(Propores VERSION 2.0 LANGUAGES CXX)
 # set release type

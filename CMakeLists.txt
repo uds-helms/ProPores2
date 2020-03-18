@@ -2,6 +2,11 @@
 cmake_minimum_required(VERSION 3.15)
 # set project information
 project(Propores VERSION 2.0 LANGUAGES CXX)
+# set release type
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 # add the source code and test sub-directories
 add_subdirectory(src)
 add_subdirectory(tests)

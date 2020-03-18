@@ -852,10 +852,12 @@ class GeneralSection:
         self.master = master
         self.title = TLabel(master, gui.key.gr_title)
 
+        # PDB input file and output directory
         self.pdb = ReadFileInput(master, gui.key.pdb, cfg.user.pdb_path)
         self.out_dir = DirInput(master, gui.key.out_dir, cfg.user.out_dir)
         self.out_name = TextInput(master, gui.key.out_name, cfg.user.out_name)
 
+        # PROPORES executable
         self.exe = ExeInput(master, gui.key.exe, cfg.user.exe, 'propores')
         self.skip_h = LCheckbutton(master, gui.key.h_atoms, cfg.user.skip_h)
         self.keep_alternative = LCheckbutton(master, gui.key.keep_alt, cfg.user.keep_alternative)
@@ -865,7 +867,7 @@ class GeneralSection:
 
     def place(self, row):
         """
-        Places the NGS section widgets in the main application window.
+        Places the general section widgets in the main application window.
         :param row: start row of the section
         """
         self.title.place(row)
@@ -882,7 +884,7 @@ class GeneralSection:
 
     def mouse_over(self, desc):
         """
-        Activates mouse-over behaviour to each widget of the NGS section.
+        Activates mouse-over behaviour to each widget of the general section.
         :param desc: description box
         """
         self.title.mouse_over(desc)
@@ -949,20 +951,14 @@ class GUI:
         """
         Sets up the menu bar with sub-menus for settings, the file parser and help.
         """
-        """ MENU BAR """
         menubar = tk.Menu(self.app)
         # set the menu as the menu bar of the application window
         self.app.configure(menu=menubar)
 
-        """ SETTINGS MENU"""
-        # settings menu
-        settings = tk.Menu(menubar, tearoff=0)
-        # save settings, restore default settings and restore + save default settings
-        settings.add_command(label=gui.desc[gui.key.ms_save].label, command=self.save)
-        settings.add_command(label=gui.desc[gui.key.ms_def].label, command=self.default)
-        settings.add_command(label=gui.desc[gui.key.ms_save_def].label, command=self.save_default)
-        # add the settings menu to the menu bar
-        menubar.add_cascade(label=gui.desc[gui.key.ms_title].label, menu=settings)
+        # add settings options to the menu bar
+        menubar.add_command(label=gui.desc[gui.key.ms_save].label, command=self.save)
+        menubar.add_command(label=gui.desc[gui.key.ms_def].label, command=self.default)
+        menubar.add_command(label=gui.desc[gui.key.ms_save_def].label, command=self.save_default)
 
         return menubar
 
@@ -1100,10 +1096,10 @@ class GUI:
 
     def validate(self):
         """
-
-        :return:
+        Check if user input of enabled components is valid.
+        :return: True if all enabled inputs are valid, False otherwise
         """
-        ''' GENERAL SECTION '''
+        # General: Propores exectuable, input PDB file and output directory
         if not self.general.exe.validate():
             return False
 
@@ -1113,7 +1109,7 @@ class GUI:
         if not self.general.out_name.validate():
             return False
 
-        """ PORE ID """
+        # Pore ID: resolution, solvent and probe radius, volume threshold
         if self.pore_id.title.var.get():
             if not self.pore_id.resolution.validate():
                 return False
@@ -1127,7 +1123,7 @@ class GUI:
             if not self.pore_id.volume.validate():
                 return False
 
-        """ AXIS """
+        # Axis Trace: surface area threshold and input
         if self.axis.title.var.get():
             if not self.axis.surface.validate():
                 return False
@@ -1138,97 +1134,119 @@ class GUI:
                 if self.axis.selection.get() == 0:
                     if not self.axis.single_input.validate():
                         return False
+                # directory input
                 elif self.axis.selection.get() == 1:
                     if not self.axis.directory_input.validate():
                         return False
 
-        """ GATE """
+        # Gate Opening: clash tolerance and input
         if self.gate.title.var.get():
             if not self.gate.clash.validate():
                 return False
 
+            # only check gate input if pore ID is not enabled
             if not self.pore_id.title.var.get():
                 # single file input
                 if self.gate.selection.get() == 0:
                     if not self.gate.single_input.validate():
                         return False
+                # directory input
                 elif self.axis.selection.get() == 1:
                     if not self.gate.directory_input.validate():
                         return False
 
-
         return True
 
     def run(self):
+        """
+        Run all enabled PROPORES components.
+        """
+        # at least one component needs to be enabled, show an error message if that is not the case
         if not self.pore_id.title.var.get() and not self.axis.title.var.get() and not self.gate.title.var.get():
             messagebox.showerror('Input Error',
-                                 'Please enable at least one of Pore ID, '
-                                 'Axis Trace or Gate Opening.'.format(gui.desc[self.key].label))
+                                 'Please enable at least one of Pore ID, Axis Trace or Gate Opening.')
             return
 
+        # check if the input of all enabled components is valid, show an error message if that is not the case
         if not self.validate():
-            messagebox.showerror('Input Error',
-                                 'PROPORES could not be run due to erroneous input.'.format(gui.desc[self.key].label))
+            messagebox.showerror('Input Error', 'PROPORES could not be run due to erroneous input.')
             return
 
+        # setup the command line arguments for PROPORES, starting with the executable, PDB input and output directory
         args = [adjust_file_path(self.general.exe.var.get()),
                 '-i', quote(adjust_file_path(self.general.pdb.var.get())),
                 '-o', quote(adjust_dir_path(self.general.out_dir.var.get()))]
 
+        # set the output name, if specified
         if self.general.out_name.var.get():
             args += ['--name', self.general.out_name.var.get()]
 
+        # set the flag for skipping H-atoms during PDB parsing, if specified
         if self.general.skip_h.var.get():
             args += ['--skip-H-atoms']
 
+        # set the flag for keeping during PDB parsing, if specified
         if self.general.keep_alternative.var.get():
             args += ['--keep-alternative']
 
+        # check if Pore ID is enabled for running
         if self.pore_id.title.var.get():
+            # add Pore ID flag, resolution, solvent and probe radius, volume threshold
             args += ['pore-id',
                      '-b', quote(self.pore_id.resolution.var.get()),
                      '-s', quote(self.pore_id.solvent.var.get()),
                      '-p', quote(self.pore_id.probe.var.get()),
                      '-v', quote(self.pore_id.volume.var.get())]
 
+            # check preparation flags for axis trace and gate opening
             if self.pore_id.gate_prep.var.get():
                 args += ['--axis-preparation']
-
             if self.pore_id.axis_prep.var.get():
                 args += ['--gate-preparation']
 
+            # set mutually exclusive computation mode flag, if auto-detect is disabled
             if self.pore_id.computation_mode.var.get() == cfg.options.cylinder_ray_trace:
                 args += ['--cylinder-ray-trace']
             elif self.pore_id.computation_mode.var.get() == cfg.options.cylinder_standalone:
                 args += ['--cylinder-standalone']
 
+            # set pore type flag, if only a specific type is selected
             if self.pore_id.pore_type.var.get() == cfg.options.pore_only:
                 args += ['--only-pores']
             elif self.pore_id.pore_type.var.get() == cfg.options.cavity_only:
                 args += ['--only-cavities']
 
+        # check if axis trace is enabled
         if self.axis.title.var.get():
+            # add axis trace flag and surface area threshold
             args += ['axis-trace',
                      '-spt', quote(self.axis.surface.var.get())]
 
+            # if pore ID is not enabled, check for single file or directory input
             if not self.pore_id.title.var.get():
                 # single file input
                 if self.axis.selection.get() == 0:
                     args += ['-ts', quote(adjust_file_path(self.axis.single_input.var.get()))]
+                # directory input
                 elif self.axis.selection.get() == 1:
                     args += ['-td', quote(adjust_dir_path(self.axis.directory_input.var.get()))]
 
+        # check if gate open is enabled
         if self.gate.title.var.get():
+            # add gate open flag and clash tolerance
             args += ['gate-open',
                      '-ct', quote(self.gate.clash.var.get())]
 
+            # if pore ID is not enabled, check for single file or directory input
             if not self.pore_id.title.var.get():
-                # single input
+                # single file input
                 if self.gate.selection.get() == 0:
                     args += ['-gs', quote(adjust_file_path(self.gate.single_input.var.get()))]
+                # directory input
                 elif self.gate.selection.get() == 1:
                     args += ['-gd', quote(adjust_dir_path(self.gate.directory_input.var.get()))]
 
+            # check if difficulty restrictions are applied and if yes, if difficulty re-estimation is desired
             if self.gate.difficulty.var.get() == cfg.options.difficulty_medium:
                 args += ['--skip-medium-gates']
                 if self.gate.re_estimate.var.get():
@@ -1238,10 +1256,10 @@ class GUI:
                 if self.gate.re_estimate.var.get():
                     args += ['--re-estimate']
 
+        # run PROPORES with the command line options and report errors
         try:
             run(args=args, shell=True)
             self.open(adjust_dir_path(self.general.out_dir.var.get()))
-
         except Exception:
             messagebox.showerror('PROPORES Error',
                                  'An unhandled exception occurred while trying to run PROPORES.\n\n'

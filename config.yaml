@@ -555,11 +555,11 @@ Windows:
       run: false
       single input: ''
     General:
-      PDB path: input/1EA5_R.pdb
-      PROPORES executable: ./propores.exe
+      PDB path: C:/Users/Markus/OneDrive/Projects/Propores/input/1EA5_R.pdb
+      PROPORES executable: C:/Users/Markus/OneDrive/Projects/Propores/propores.exe
       Propores executable: propores.exe
       keep alternative locations: false
-      output directory: results/
+      output directory: C:/Users/Markus/OneDrive/Projects/Propores/results
       output name: ''
       skip H atoms: false
     Pore ID:
@@ -766,11 +766,11 @@ Windows:
       run: false
       single input: ''
     General:
-      PDB path: input/1EA5_R.pdb
-      PROPORES executable: ./propores.exe
+      PDB path: C:/Users/Markus/OneDrive/Projects/Propores/input/1EA5_R.pdb
+      PROPORES executable: C:/Users/Markus/OneDrive/Projects/Propores/propores.exe
       Propores executable: propores.exe
       keep alternative locations: false
-      output directory: results/
+      output directory: C:/Users/Markus/OneDrive/Projects/Propores/results
       output name: ''
       skip H atoms: false
     Pore ID:

@@ -643,10 +643,9 @@ class GuiConfig:
 
         """ MENU BAR """
         # settings
-        d[self.key.ms_title] = GuiEntity(label='Settings')
-        d[self.key.ms_save] = GuiEntity(label='Save current settings')
-        d[self.key.ms_def] = GuiEntity(label='Restore default settings')
-        d[self.key.ms_save_def] = GuiEntity(label='Restore and save default settings')
+        d[self.key.ms_save] = GuiEntity(label='Save')
+        d[self.key.ms_def] = GuiEntity(label='Default')
+        d[self.key.ms_save_def] = GuiEntity(label='Default+Save')
 
         """ OTHERS """
         d[self.key.g_desc] = GuiEntity(label='Description',

@@ -60,6 +60,12 @@ Linux:
       file chooser button:
       - Calibri
       - 9
+      option menu:
+      - Calibri
+      - 9
+      radiobutton:
+      - Calibri
+      - 10
       run button:
       - Calibri
       - 9
@@ -74,8 +80,12 @@ Linux:
       - Calibri
       - 10
       - bold
+      title check button:
+      - Calibri
+      - 14
+      - bold
     heights:
-      description frame: 250
+      description frame: 1000
     styles:
       theme: clam
     widths:
@@ -138,6 +148,9 @@ Linux:
       text separator:
       - 0
       - 0
+      title check button:
+      - 0
+      - 0
       window left: 5
       window right: 10
     y-margins:
@@ -191,6 +204,9 @@ Linux:
       - 0
       text separator:
       - 0
+      - 0
+      title check button:
+      - 15
       - 0
       window bottom: 10
   User:
@@ -290,6 +306,12 @@ Mac OS X:
       file chooser button:
       - Calibri
       - 12
+      option menu:
+      - Calibri
+      - 11
+      radiobutton:
+      - Calibri
+      - 12
       run button:
       - Calibri
       - 12
@@ -304,8 +326,12 @@ Mac OS X:
       - Calibri
       - 12
       - bold
+      title check button:
+      - Calibri
+      - 16
+      - bold
     heights:
-      description frame: 210
+      description frame: 1000
     styles:
       theme: aqua
     widths:
@@ -368,6 +394,9 @@ Mac OS X:
       text separator:
       - 0
       - 0
+      title check button:
+      - 0
+      - 0
       window left: 5
       window right: 10
     y-margins:
@@ -421,6 +450,9 @@ Mac OS X:
       - 0
       text separator:
       - 0
+      - 0
+      title check button:
+      - 15
       - 0
       window bottom: 20
   User:

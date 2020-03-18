@@ -4,6 +4,7 @@ import yaml
 import traceback
 from shutil import which
 from sys import platform
+from copy import deepcopy
 from tkinter import messagebox
 from collections import defaultdict
 
@@ -153,7 +154,7 @@ def find_exe(names, path):
     return adjust_file_path(given_exe_path)
 
 
-def adjust_dir_path(path):
+def adjust_dir_path(path, abs=False, rel=False):
     """
     Replaces backlashes with forward slashes and adds a forward slash at the end if missing.
     :param path: directory path
@@ -167,18 +168,31 @@ def adjust_dir_path(path):
     if path[-1] != '/':
         path += '/'
 
-    return os.path.abspath(path).replace('\\', '/')
+    if abs:
+        return os.path.abspath(path).replace('\\', '/')
+
+    if rel:
+        return os.path.relpath(path).replace('\\', '/')
+
+    return path.replace('\\', '/')
 
 
-def adjust_file_path(path):
+def adjust_file_path(path, abs=False, rel=False):
     """
     Replaces backlashes with forward slashes.
     :param path: file path
     :return:  adjusted file path
     """
-    if path:
+    if not path:
+        return path
+
+    if abs:
         return os.path.abspath(path).replace('\\', '/')
-    return path
+
+    if rel:
+        return os.path.relpath(path).replace('\\', '/')
+
+    return path.replace('\\', '/')
 
 
 """ GUI CONFIGURATION """
@@ -277,7 +291,7 @@ class UserConfig:
     Analysis, NGS and converter input paths, settings and output directories.
     """
     def __init__(self, cfg_dict):
-        self.cfg_dict = cfg_dict.copy()                                                     # type: dict
+        self.cfg_dict = deepcopy(cfg_dict)                                                     # type: dict
 
         # general
         self.pdb_path = adjust_file_path(cfg_dict['General']['PDB path'])                   # type: str
@@ -356,7 +370,7 @@ class UserConfig:
         self.cfg_dict['Gate open']['difficulty'] = self.skip_difficulty
         self.cfg_dict['Gate open']['intput selection'] = int(self.gate_selection)
 
-        return self.cfg_dict.copy()
+        return deepcopy(self.cfg_dict)
 
 
 class GuiConfig:

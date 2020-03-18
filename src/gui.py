@@ -1173,9 +1173,9 @@ class GUI:
             return
 
         # setup the command line arguments for PROPORES, starting with the executable, PDB input and output directory
-        args = [adjust_file_path(self.general.exe.var.get()),
-                '-i', quote(adjust_file_path(self.general.pdb.var.get())),
-                '-o', quote(adjust_dir_path(self.general.out_dir.var.get()))]
+        args = [adjust_file_path(self.general.exe.var.get(), abs=True),
+                '-i', quote(adjust_file_path(self.general.pdb.var.get(), abs=True)),
+                '-o', quote(adjust_dir_path(self.general.out_dir.var.get(), abs=True))]
 
         # set the output name, if specified
         if self.general.out_name.var.get():
@@ -1226,10 +1226,10 @@ class GUI:
             if not self.pore_id.title.var.get():
                 # single file input
                 if self.axis.selection.get() == 0:
-                    args += ['-ts', quote(adjust_file_path(self.axis.single_input.var.get()))]
+                    args += ['-ts', quote(adjust_file_path(self.axis.single_input.var.get(), abs=True))]
                 # directory input
                 elif self.axis.selection.get() == 1:
-                    args += ['-td', quote(adjust_dir_path(self.axis.directory_input.var.get()))]
+                    args += ['-td', quote(adjust_dir_path(self.axis.directory_input.var.get(), abs=True))]
 
         # check if gate open is enabled
         if self.gate.title.var.get():
@@ -1241,10 +1241,10 @@ class GUI:
             if not self.pore_id.title.var.get():
                 # single file input
                 if self.gate.selection.get() == 0:
-                    args += ['-gs', quote(adjust_file_path(self.gate.single_input.var.get()))]
+                    args += ['-gs', quote(adjust_file_path(self.gate.single_input.var.get(), abs=True))]
                 # directory input
                 elif self.gate.selection.get() == 1:
-                    args += ['-gd', quote(adjust_dir_path(self.gate.directory_input.var.get()))]
+                    args += ['-gd', quote(adjust_dir_path(self.gate.directory_input.var.get(), abs=True))]
 
             # check if difficulty restrictions are applied and if yes, if difficulty re-estimation is desired
             if self.gate.difficulty.var.get() == cfg.options.difficulty_medium:
@@ -1259,7 +1259,7 @@ class GUI:
         # run PROPORES with the command line options and report errors
         try:
             run(args=args, shell=True)
-            self.open(adjust_dir_path(self.general.out_dir.var.get()))
+            self.open(adjust_dir_path(self.general.out_dir.var.get(), abs=True))
         except Exception:
             messagebox.showerror('PROPORES Error',
                                  'An unhandled exception occurred while trying to run PROPORES.\n\n'

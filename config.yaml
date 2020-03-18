@@ -1,52 +1,39 @@
 Linux:
   Default:
-    Analysis:
-      PWM number of sequence threshold: 5
-      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
-      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
-      TFBS random mutations: 15
-      gene path: example_data/mutation_analysis/artificial/genes.tsv
-      genes of interest (name long): genes of interest
-      genes of interest (name short): GoI
-      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
-      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
-      other genes (name long): other genes
-      other genes (name short): other
-      output directory: results/mutation_analysis/
-      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
-      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
-      relative promoter start: -100
-      substitution matrix path: substitution_matrices/PAM10.tsv
-    NGS:
-      BWA executable: /usr/bin/bwa
-      SAMTools executable: /usr/bin/samtools
-      VarScan executable: /usr/bin/varscan
-      output directory: results/NGS/
-      p-value: 0.05
-      quality control cut-off: 30
-      reads directory: example_data/NGS/reads
-      reference genome path: example_data/NGS/ref_genome.fasta
-    PATRIC:
-      input file: example_data/PATRIC/resistance.csv
-      output file: results/PATRIC/resistance.tsv
-    RegulonDB:
-      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
-      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
-      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
-      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
-      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
-      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
-      TU input: example_data/regulonDB/artificial_TUs.tsv
-      gene input: example_data/regulonDB/artificial_genes.tsv
-      operon input: example_data/regulonDB/artificial_operons.tsv
-      output directory: results/regulonDB/
-      promoter input: example_data/regulonDB/artificial_promoters.tsv
-    UniProt:
-      input file: example_data/UniProt/s_aureus_domains_shortened.txt
-      output file: results/UniProt/domains.tsv
-    VCF Merger:
-      input directory: example_data/vcf_merger/
-      output file: results/vcf_merger/mutation.tsv
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: propores
+      keep alternative locations: false
+      output directory: results
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0
   GUI:
     colours:
       description text: '#4F81BD'
@@ -207,102 +194,76 @@ Linux:
       - 0
       window bottom: 10
   User:
-    Analysis:
-      PWM number of sequence threshold: 5
-      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
-      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
-      TFBS random mutations: 15
-      gene path: example_data/mutation_analysis/artificial/genes.tsv
-      genes of interest (name long): genes of interest
-      genes of interest (name short): GoI
-      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
-      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
-      other genes (name long): other genes
-      other genes (name short): other
-      output directory: results/mutation_analysis/
-      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
-      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
-      relative promoter start: -100
-      substitution matrix path: substitution_matrices/PAM10.tsv
-    NGS:
-      BWA executable: /usr/bin/bwa
-      SAMTools executable: /usr/bin/samtools
-      VarScan executable: /usr/bin/varscan
-      output directory: results/NGS/
-      p-value: 0.05
-      quality control cut-off: 30
-      reads directory: example_data/NGS/reads
-      reference genome path: example_data/NGS/ref_genome.fasta
-    PATRIC:
-      input file: example_data/PATRIC/resistance.csv
-      output file: results/PATRIC/resistance.tsv
-    RegulonDB:
-      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
-      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
-      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
-      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
-      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
-      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
-      TU input: example_data/regulonDB/artificial_TUs.tsv
-      gene input: example_data/regulonDB/artificial_genes.tsv
-      operon input: example_data/regulonDB/artificial_operons.tsv
-      output directory: results/regulonDB/
-      promoter input: example_data/regulonDB/artificial_promoters.tsv
-    UniProt:
-      input file: example_data/UniProt/s_aureus_domains_shortened.txt
-      output file: results/UniProt/domains.tsv
-    VCF Merger:
-      input directory: example_data/vcf_merger/
-      output file: results/vcf_merger/mutation.tsv
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: propores
+      keep alternative locations: false
+      output directory: results
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0
 Mac OS X:
   Default:
-    Analysis:
-      PWM number of sequence threshold: 5
-      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
-      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
-      TFBS random mutations: 15
-      gene path: example_data/mutation_analysis/artificial/genes.tsv
-      genes of interest (name long): genes of interest
-      genes of interest (name short): GoI
-      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
-      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
-      other genes (name long): other genes
-      other genes (name short): other
-      output directory: results/mutation_analysis/
-      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
-      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
-      relative promoter start: -100
-      substitution matrix path: substitution_matrices/PAM10.tsv
-    NGS:
-      BWA executable: /usr/bin/bwa
-      SAMTools executable: /usr/bin/samtools
-      VarScan executable: /usr/bin/varscan
-      output directory: results/NGS/
-      p-value: 0.05
-      quality control cut-off: 30
-      reads directory: example_data/NGS/reads
-      reference genome path: example_data/NGS/ref_genome.fasta
-    PATRIC:
-      input file: example_data/PATRIC/resistance.csv
-      output file: results/PATRIC/resistance.tsv
-    RegulonDB:
-      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
-      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
-      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
-      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
-      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
-      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
-      TU input: example_data/regulonDB/artificial_TUs.tsv
-      gene input: example_data/regulonDB/artificial_genes.tsv
-      operon input: example_data/regulonDB/artificial_operons.tsv
-      output directory: results/regulonDB/
-      promoter input: example_data/regulonDB/artificial_promoters.tsv
-    UniProt:
-      input file: example_data/UniProt/s_aureus_domains_shortened.txt
-      output file: results/UniProt/domains.tsv
-    VCF Merger:
-      input directory: example_data/vcf_merger/
-      output file: results/vcf_merger/mutation.tsv
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: propores
+      keep alternative locations: false
+      output directory: results
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0
   GUI:
     colours:
       description text: '#4F81BD'
@@ -463,78 +424,40 @@ Mac OS X:
       - 0
       window bottom: 20
   User:
-    Analysis:
-      PWM number of sequence threshold: 5
-      TF MSA path: example_data/mutation_analysis/artificial/TF_MSA.fasta
-      TFBS path: example_data/mutation_analysis/artificial/TFBS.tsv
-      TFBS random mutations: 15
-      gene path: example_data/mutation_analysis/artificial/genes.tsv
-      genes of interest (name long): genes of interest
-      genes of interest (name short): GoI
-      interest path: example_data/mutation_analysis/artificial/genes_of_interest.tsv
-      mutation path: example_data/mutation_analysis/artificial/mutations.tsv
-      other genes (name long): other genes
-      other genes (name short): other
-      output directory: results/mutation_analysis/
-      protein domain path: example_data/mutation_analysis/artificial/domains.tsv
-      regulation path: example_data/mutation_analysis/artificial/regulation.tsv
-      relative promoter start: -100
-      substitution matrix path: substitution_matrices/PAM10.tsv
-    NGS:
-      BWA executable: /usr/bin/bwa
-      SAMTools executable: /usr/bin/samtools
-      VarScan executable: /usr/bin/varscan
-      output directory: results/NGS/
-      p-value: 0.05
-      quality control cut-off: 30
-      reads directory: example_data/NGS/reads
-      reference genome path: example_data/NGS/ref_genome.fasta
-    PATRIC:
-      input file: example_data/PATRIC/resistance.csv
-      output file: results/PATRIC/resistance.tsv
-    RegulonDB:
-      TF MSA input: example_data/regulonDB/artificial_TF_MSA.txt
-      TF-TF input: example_data/regulonDB/artificial_TF_TF.tsv
-      TF-TU input: example_data/regulonDB/artificial_TF_TU.tsv
-      TF-gene input: example_data/regulonDB/artificial_TF_gene.tsv
-      TF-operon input: example_data/regulonDB/artificial_TF_operon.tsv
-      TFBS input: example_data/regulonDB/artificial_TFBS.tsv
-      TU input: example_data/regulonDB/artificial_TUs.tsv
-      gene input: example_data/regulonDB/artificial_genes.tsv
-      operon input: example_data/regulonDB/artificial_operons.tsv
-      output directory: results/regulonDB/
-      promoter input: example_data/regulonDB/artificial_promoters.tsv
-    UniProt:
-      input file: example_data/UniProt/s_aureus_domains_shortened.txt
-      output file: results/UniProt/domains.tsv
-    VCF Merger:
-      input directory: example_data/vcf_merger/
-      output file: results/vcf_merger/mutation.tsv
-Run:
-  Default:
-    clean up NGS output directory: true
-    delete old analysis output: true
-    open NGS output directory: true
-    open analysis output directory: true
-    open parser output directory: true
-    run TFBS analysis: true
-    run adjust operon promoters: true
-    run coding region analysis: true
-    run genes of interest analysis: true
-    run protein domain analysis: true
-    run regulation analysis: true
-  User:
-    clean up NGS output directory: true
-    delete old analysis output: true
-    open NGS output directory: true
-    open analysis output directory: true
-    open parser output directory: true
-    run TFBS analysis: true
-    run adjust operon promoters: true
-    run coding region analysis: true
-    run genes of interest analysis: true
-    run protein domain analysis: true
-    run regulation analysis: true
+    Axis trace:
+      axis selection: 0
+      directory input: ''
+      input selection: 0
+      run: false
+      run from input: false
+      single input: ''
+      surface patch threshold: 30.0
+    Gate open:
+      clash tolerance: 0.75
+      difficulty: run all
+      directory input: ''
+      input selection: 0
+      intput selection: 0
+      re-estimate difficulty: false
+      run: false
+      single input: ''
+    General:
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: propores
+      keep alternative locations: false
+      output directory: results
+      output name: ''
+      skip H atoms: false
+    Pore ID:
+      axis preparation: false
+      computation mode: autodetect
+      gate preparation: false
+      pore types: all
+      probe radius: 1.4
+      resolution: 1.0
+      run: true
+      solvent radius: 1.2
+      volume threshold: 50.0
 Windows:
   Default:
     Axis trace:
@@ -555,11 +478,10 @@ Windows:
       run: false
       single input: ''
     General:
-      PDB path: C:/Users/Markus/OneDrive/Projects/Propores/input/1EA5_R.pdb
-      PROPORES executable: C:/Users/Markus/OneDrive/Projects/Propores/propores.exe
-      Propores executable: propores.exe
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: propores.exe
       keep alternative locations: false
-      output directory: C:/Users/Markus/OneDrive/Projects/Propores/results
+      output directory: results
       output name: ''
       skip H atoms: false
     Pore ID:
@@ -766,11 +688,10 @@ Windows:
       run: false
       single input: ''
     General:
-      PDB path: C:/Users/Markus/OneDrive/Projects/Propores/input/1EA5_R.pdb
-      PROPORES executable: C:/Users/Markus/OneDrive/Projects/Propores/propores.exe
-      Propores executable: propores.exe
+      PDB path: input/1EA5_R.pdb
+      PROPORES executable: ./propores.exe
       keep alternative locations: false
-      output directory: C:/Users/Markus/OneDrive/Projects/Propores/results
+      output directory: results/
       output name: ''
       skip H atoms: false
     Pore ID:

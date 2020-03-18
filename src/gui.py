@@ -1258,7 +1258,7 @@ class GUI:
 
         # run PROPORES with the command line options and report errors
         try:
-            run(args=args, shell=True)
+            run(args=' '.join(args), shell=True)
             self.open(adjust_dir_path(self.general.out_dir.var.get(), abs=True))
         except Exception:
             messagebox.showerror('PROPORES Error',

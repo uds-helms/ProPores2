@@ -19,7 +19,7 @@ Linux:
       single input: ''
     General:
       PDB path: input/1EA5_R.pdb
-      PROPORES executable: propores
+      PROPORES executable: ./propores
       keep alternative locations: false
       output directory: results
       output name: ''

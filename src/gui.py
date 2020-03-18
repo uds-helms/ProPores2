@@ -1177,9 +1177,12 @@ class GUI:
                 '-i', quote(adjust_file_path(self.general.pdb.var.get(), abs=True)),
                 '-o', quote(adjust_dir_path(self.general.out_dir.var.get(), abs=True))]
 
-        # set the output name, if specified
+        # set the output name, if specified, and compute the output directory name as PROPORES does
         if self.general.out_name.var.get():
-            args += ['--name', self.general.out_name.var.get()]
+            out_name = self.general.out_name.var.get()
+            args += ['--name', out_name]
+        else:
+            out_name = '.'.join(os.path.basename(self.general.pdb.var.get()).split('.')[:-1])
 
         # set the flag for skipping H-atoms during PDB parsing, if specified
         if self.general.skip_h.var.get():
@@ -1259,7 +1262,17 @@ class GUI:
         # run PROPORES with the command line options and report errors
         try:
             run(args=' '.join(args), shell=True)
-            self.open(adjust_dir_path(self.general.out_dir.var.get(), abs=True))
+
+            # try to open the specific result directory
+            directory = adjust_dir_path(os.path.join(self.general.out_dir.var.get(), out_name), abs=True)
+            if os.path.isdir(directory):
+                self.open(directory)
+            # if that directory does not exist due to some bug, open the directory above if that exists
+            else:
+                directory = adjust_dir_path(self.general.out_dir.var.get(), abs=True)
+
+                if os.path.isdir(directory):
+                    self.open(directory)
         except Exception:
             messagebox.showerror('PROPORES Error',
                                  'An unhandled exception occurred while trying to run PROPORES.\n\n'

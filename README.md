@@ -10,11 +10,11 @@ PROPORES 2.0 is a C++ command line tool for analysing pores (and cavities) in pr
 **Gate Opening:** Rotates the shared lining residues of two neighbouring pores in an effort to open the gate between them as much as possible. The result is a PDB file of the entire protein with the rotated residues.
 
 ## Step 1: Installation
-The installation requires a C++17 compiler and CMake 3.15 or newer.
+The installation requires a C++17 compiler and CMake 3.13 or newer.
 
 ### Windows 7 and 10
 1. Install a C++17 compiler, or update an existing C++ compiler if necessary. [Microsoft provides a tutorial for installing the Visual C++ compiler.](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2019)
-2. Install CMake 3.15 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install) This should add `cmake` to the environment variables but might require a restart of the computer to take effect.
+2. Install CMake 3.13 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install) This should add `cmake` to the environment variables but might require a restart of the computer to take effect.
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
 4. Open the PROPORES folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the PROPORES folder.
 
@@ -32,7 +32,7 @@ The installation requires a C++17 compiler and CMake 3.15 or newer.
    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9 --slave /usr/bin/gcov gcov /usr/bin/gcov-9
    sudo update-alternatives --config gcc
    ```
-2. Install CMake 3.15 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install)
+2. Install CMake 3.13 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install)
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
 4. Open the PROPORES folder in the terminal and run 
    ```

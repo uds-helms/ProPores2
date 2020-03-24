@@ -2,6 +2,12 @@
 /cmake-build-release/
 /output
 /.idea/
+/build/
+*spec
+gate-difficulty.xlsx
+pyinstaller.bat
+/results/
+/__pycache__/
 
 # Notes
 *.pdf

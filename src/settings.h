@@ -406,9 +406,9 @@ private:
 
         std::cout << "Required:" << std::endl;
         print_option("-i <path>", "Path to the input PDB file.");
-        print_option("-o <path>", "Path to the output directory. A sub-directory will be created for the current run. "
-                                  "If the sub-directory already exists and pore-ID is run, its content will get "
-                                  "deleted!");
+        print_option("-o <path>", "Path to the output directory. A sub-directory will be created for the "
+                                  "current run. If the sub-directory already exists and pore-ID is run, its content "
+                                  "will get deleted!");
         std::cout << std::endl;
 
         std::cout << "General options:" << std::endl;
@@ -421,7 +421,8 @@ private:
         std::cout << "Pore-ID options:" << std::endl;
         print_option("-b <decimal>", "Grid box length in Angstrom (= resolution). [default: 1.0]");
         print_option("-s <decimal>", "Solvent radius in Angstrom. [default: 1.2]");
-        print_option("-p <decimal>", "Probe radius in Angstrom. [default: 1.4]");
+        print_option("-p <decimal>", "Probe radius in Angstrom. The higher the value, the deeper pore regions "
+                                     "have to be on the protein surface. [default: 1.4]");
         print_option("-v <decimal>", "Volume threshold for pores/cavities in cubic Angstrom. [default: 50]");
         print_option("--cylinder-ray-trace", "Faster for smaller proteins or larger grid box lengths. "
                                              "Increased RAM usage. [default: autodetect]");

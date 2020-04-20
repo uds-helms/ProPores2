@@ -49,6 +49,14 @@ The installation requires a C++17 compiler and CMake 3.13 or newer.
    sh install_linux_macOS.sh
    ```
    This creates the executable `propores` in the PROPORES folder.
+5. (Optional) If you want to use the user interface, install Python3 with the packages `tkinter` and `pyyaml`. Open the PROPORES folder in the terminal and run
+   ```
+   sh install_python_ubuntu_debian.sh
+   ```
+   or
+   ```
+   install_python_macOS.sh
+   ```
 
 
 ## Step 2: Running PROPORES on the Command Line

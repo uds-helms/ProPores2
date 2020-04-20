@@ -51,12 +51,12 @@ The installation requires a C++17 compiler and CMake 3.13 or newer.
    This creates the executable `propores` in the PROPORES folder.
 
 
-## Step 2: Running PROPORES
+## Step 2: Running PROPORES on the Command Line
 Open the terminal (or command prompt) and navigate to the PROPORES folder with the `propores` executable. The general command setup on Windows is
 ```
 propores.exe <run command(s)> -i <path> -o <path> [options...]
 ```
-and on MacOS and Linux:
+and on MacOS or Linux:
 ```
 ./propores <run command(s)> -i <path> -o <path> [options...]
 ```
@@ -99,6 +99,21 @@ This writes the protein versions with open gates to the folder `output/example/g
 ```
 propores.exe pore-id axis-trace gate-open -i input/1EA5_R.pdb -o output --name example -b 0.5 --skip-hard-gates
 ```
+
+## Step 2: Running PROPORES via the Graphical User Interface
+PROPORES 2.0 comes with a graphical user interface that can be used instead of the command line. After installing PROPORES as described in Step 1, the user interface can be opened as follows:
+
+### Windows 7 and 10
+Double-click on `ProporesGUI_32.exe` or `ProporesGUI_64.exe` depending on whether you have a 32-bit or 64-bit Windows version. If in doubt, select the 32-bit version.
+
+### MacOS and Linux
+Open the terminal and navigate to the PROPORES folder with the `propores` executable. Run
+```
+python3 propores_gui.py
+```
+
+### Avoiding Errors
+Make sure that `ProporesGUI_32.exe`, `ProporesGUI_64.exe` or `propores_gui.py` are in the same folder as the `config.yaml` file and the `src` folder, otherwise the user interface will not open. Check if the automatically detected path to the PROPORES executable is correct, otherwise set it manually under `General → PROPORES executable`.
 
 ## Attribution
 The approach was designed by Po-Hsien Lee and published as:

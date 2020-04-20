@@ -13,10 +13,20 @@ PROPORES 2.0 is a C++ command line tool for analysing pores (and cavities) in pr
 The installation requires a C++17 compiler and CMake 3.13 or newer.
 
 ### Windows 7 and 10
-1. Install a C++17 compiler, or update an existing C++ compiler if necessary. [Microsoft provides a tutorial for installing the Visual C++ compiler.](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2019)
+1. Install a C++17 compiler, or update an existing C++ compiler if necessary. [Microsoft provides a tutorial for installing the Visual C++ compiler.](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2019) Make sure to tick "Desktop development in C++" during the isntallation of Visual Studio.
 2. Install CMake 3.13 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install) This should add `cmake` to the environment variables but might require a restart of the computer to take effect.
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
 4. Open the PROPORES folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the PROPORES folder.
+
+   If `Run as administrator` does not work, try simply double-clicking `install_windows.bat`. 
+
+   If that does not work either, open the Windows command line, e.g. via the search field in the task bar, and navigate to the PROPORES folder with the `cd` command ([tutorial](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cd)). Then execute the following commands:
+   ```
+   if exist "build\" rmdir /Q /S build
+   cmake -S . -B build
+   cmake --build build --config Release --target install
+   if exist "build\" rmdir /Q /S build
+   ```
 
 ### MacOS and Linux
 1. Install a C++17 compiler, or update an existing C++ compiler if necessary. If you are using the GCC compiler, you need GCC-9 (and G++9) or newer. 

@@ -9,6 +9,7 @@ pyinstaller.bat
 /results/
 /__pycache__/
 /notes/
+/cmake-build-debug/
 
 # Notes
 *.pdf

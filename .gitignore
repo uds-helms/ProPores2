@@ -8,6 +8,7 @@ gate-difficulty.xlsx
 pyinstaller.bat
 /results/
 /__pycache__/
+/notes/
 
 # Notes
 *.pdf

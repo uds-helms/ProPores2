@@ -34,21 +34,34 @@ namespace fs = std::filesystem;
 
 struct Settings {
     // INPUT and OUTPUT
+    // PDB parsing
     fs::path pdb_path;
-    fs::path out_dir_path;
-    fs::path pore_path;
-    fs::path lining_path;
-    fs::path axes_path;
-    fs::path axes_preparation_path;
-    fs::path gate_path;
-    fs::path gate_preparation_path;
-    fs::path axis_single_input_file;
-    fs::path axis_directory_input_path;
-    fs::path gate_single_input_file_path;
-    fs::path gate_input_directory_path;
-    fs::path rotamer_lib_path = fs::path("rotamer_lib");
-
+    std::string pdb_name;
+    // main output specifications
+    fs::path out_dir;
     std::string output_name;
+    // pore-ID paths
+    fs::path pore_dir;
+    fs::path lining_dir;
+    // axis trace paths
+    fs::path axis_dir;
+    fs::path axis_preparation_dir;
+    fs::path axis_single_input;
+    fs::path axis_directory_input;
+    // gate open paths
+    fs::path gate_dir;
+    fs::path gate_preparation_dir;
+    fs::path gate_single_input;
+    fs::path gate_directory_input;
+    // logging
+    fs::path kept_atoms;
+    fs::path skipped_atoms;
+    fs::path pore_log;
+    fs::path axis_log;
+    fs::path gate_log;
+    // static input
+    fs::path rotamer_lib = fs::path("rotamer_lib");
+
 
     // PARAMETERS
     // PORE-ID and AXIS-TRACE
@@ -61,7 +74,7 @@ struct Settings {
     double volume_threshold = 50;
     // highest number of grid boxes before switching from cylinder trace to cylinder standalone
     size_t box_threshold = 1500000;
-    // highest number og atoms before switching from cylinder trace to cylinder standalone
+    // highest number of atoms before switching from cylinder trace to cylinder standalone
     size_t atom_pair_threshold = 30000;
     // AXIS-TRACE
     // threshold for the minimum number of grid boxes in a pore surface patch
@@ -83,9 +96,13 @@ struct Settings {
     bool keep_alternative = false;
     // true if H-atoms should be discarded from the input PDB file
     bool skip_H = false;
+    // true if HETATM records should be ignored
+    bool skip_hetero_atoms = false;
+    // true if non-standard amino acids should be ignored
+    bool skip_non_standard_amino_acids = false;
     // PORE-ID
     // whether to generate output files that can be used for axis-trace or gate-open
-    bool run_axis_trace_preparation = false;
+    bool run_axis_preparation = false;
     bool run_gate_preparation = false;
     // whether to remove pores, cavities or keep both
     RemoveTag remove_tag = REMOVE_NOTHING;
@@ -101,6 +118,8 @@ struct Settings {
     bool re_estimate = false;
     // gates with this difficulty or higher are skipped
     GateDifficulty difficulty_threshold = DIFFICULTY_ERROR;
+    // for each gate the PDB is parsed again, true if the PDB parsing stats were already logged to avoid duplicates
+    bool gate_already_logged_pdb_parsing_stats = false;
 
     // CONSTRUCTORS
     Settings() = default;
@@ -115,9 +134,11 @@ struct Settings {
         run_axis_trace = option_exists("axis-trace");
         run_gate_open = option_exists("gate-open");
         // extract flags
-        run_axis_trace_preparation = option_exists("--axis-preparation");
+        run_axis_preparation = option_exists("--axis-preparation");
         run_gate_preparation = option_exists("--gate-preparation");
         keep_alternative = option_exists("--keep-alternative");
+        skip_hetero_atoms = option_exists("--skip-hetatm");
+        skip_non_standard_amino_acids = option_exists("--skip-non-std-amino-acids");
         re_estimate = option_exists("--re-estimate");
         bool help_short = option_exists("-h");
         bool help_long = option_exists("--help");
@@ -153,7 +174,7 @@ struct Settings {
         if (output_dir.empty()) print_help("No output directory (-o) was given.");
 
         try {
-            out_dir_path = fs::absolute(std::filesystem::path(output_dir));
+            out_dir = fs::absolute(std::filesystem::path(output_dir));
         } catch (...) { print_help("The given output directory (-o) is invalid."); }
 
         // extract numerical parameters
@@ -211,22 +232,22 @@ struct Settings {
             // at this point we know that if the single axis-trace file is provided, then pore-ID is not enabled
             // and there is no axis-trace directory given either, so we just have to check the file path
             if (load_cluster_from_single_file) {
-                axis_single_input_file = fs::path(axis_input_single);
-                if (!fs::is_regular_file(axis_single_input_file)) {
+                axis_single_input = fs::path(axis_input_single);
+                if (!fs::is_regular_file(axis_single_input)) {
                     print_help("The axis trace input file path (-ts) does not point to an existing file. "
                                "Make sure to wrap file paths with spaces in quotation marks.");
-                } else if (fs::is_empty(axis_single_input_file)) {
+                } else if (fs::is_empty(axis_single_input)) {
                     print_help("The axis trace input file path (-ts) points to an empty file.");
                 }
             }
             // at this point we know that if the axis-trace directory is provided, then pore-ID is not enabled
             // and there is no single axis-trace file given either, so we just have to check the directory path
             if (load_cluster_from_directory) {
-                axis_directory_input_path = fs::path(axis_input_dir);
-                if (!fs::is_directory(axis_directory_input_path)) {
+                axis_directory_input = fs::path(axis_input_dir);
+                if (!fs::is_directory(axis_directory_input)) {
                     print_help("The axis trace input directory path (-td) does not point to an existing directory. "
                                "Make sure to wrap directory paths with spaces in quotation marks.");
-                } else if (fs::is_empty(axis_directory_input_path)) {
+                } else if (fs::is_empty(axis_directory_input)) {
                     print_help("The axis trace input directory path (-td) points to an empty directory.");
                 }
             }
@@ -253,98 +274,112 @@ struct Settings {
             // at this point we know that if the single gate-open file is provided, then pore-ID is not enabled
             // and there is no gate-open directory given either, so we just have to check the file path
             if (load_gate_from_single_file) {
-                gate_single_input_file_path = fs::path(gate_input_single);
-                if (!fs::is_regular_file(gate_single_input_file_path)) {
+                gate_single_input = fs::path(gate_input_single);
+                if (!fs::is_regular_file(gate_single_input)) {
                     print_help("The gate-open input file path (-gs) does not point to an existing file. "
                                "Make sure to wrap file paths with spaces in quotation marks.");
-                } else if (fs::is_empty(gate_single_input_file_path)) {
+                } else if (fs::is_empty(gate_single_input)) {
                     print_help("The gate-open input file path (-gs) points to an empty file.");
                 }
             }
             // at this point we know that if the gate-open directory is provided, then pore-ID is not enabled
             // and there is no single gate-open file given either, so we just have to check the directory path
             if (load_gates_from_directory) {
-                gate_input_directory_path = fs::path(gate_input_dir);
-                if (!fs::is_directory(gate_input_directory_path)) {
+                gate_directory_input = fs::path(gate_input_dir);
+                if (!fs::is_directory(gate_directory_input)) {
                     print_help("The gate-open input directory path (-gd) does not point to an existing directory. "
                                "Make sure to wrap directory paths with spaces in quotation marks.");
-                } else if (fs::is_empty(gate_input_directory_path)) {
+                } else if (fs::is_empty(gate_directory_input)) {
                     print_help("The gate-open input directory path (-gd) points to an empty directory.");
                 }
             }
         }
 
+        // extract the PDB name
+        pdb_name = pdb_path.stem().string();
         // set the output name to the PDB name if none was given on the command line
-        if (output_name.empty()) output_name = pdb_path.stem().string();
+        if (output_name.empty()) output_name = pdb_name;
         // construct the output directory path
-        out_dir_path /= fs::path(output_name);
+        out_dir /= fs::path(output_name);
         if (!output_name.empty() && output_name.back() != '_') output_name += '_';
 
         // generate output sub-directory paths
-        pore_path = out_dir_path / fs::path("pores");
-        lining_path = out_dir_path / fs::path("lining");
-        axes_path = out_dir_path / fs::path("axes");
-        gate_path = out_dir_path / fs::path("gate_open");
-        axes_preparation_path = out_dir_path / fs::path("axis_trace_input");
-        gate_preparation_path = out_dir_path / fs::path("gate_open_input");
+        pore_dir = out_dir / fs::path("pores");
+        lining_dir = out_dir / fs::path("lining");
+        axis_dir = out_dir / fs::path("axes");
+        gate_dir = out_dir / fs::path("gate_open");
+        axis_preparation_dir = out_dir / fs::path("axis_trace_input");
+        gate_preparation_dir = out_dir / fs::path("gate_open_input");
 
         // try to delete the previous output depending on which program parts are enabled
-        if (fs::exists(out_dir_path)) {
+        if (fs::exists(output_dir)) {
             // for pore-ID all previous output is deleted
             if (run_pore_id) {
                 try {
-                    fs::remove_all(out_dir_path);
+                    fs::remove_all(output_dir);
                 } catch (...) {
-                    print_help("The content of the already existing output directory at (" + out_dir_path.string()
+                    print_help("The content of the already existing output directory at (" + out_dir.string()
                                + ") could not be deleted. Check if it or the content is open in another program.");
                 }
             } else {
                 // if only axis-trace and/or gate-open are enabled, only delete previous axis-trace/gate-open output
-                if (run_axis_trace && fs::exists(axes_path)) {
+                if (run_axis_trace && fs::exists(axis_dir)) {
                     try {
-                        fs::remove_all(axes_path);
+                        fs::remove_all(axis_dir);
                     } catch (...) {
                         print_help("The content of the already existing axis-trace directory at '"
-                                   + axes_path.string() + "' could not be deleted. . Check if it or the content is "
+                                   + axis_dir.string() + "' could not be deleted. . Check if it or the content is "
                                                           "open in another program.");
                     }
                 }
-                if (run_gate_open && fs::exists(gate_path)) {
+                if (run_gate_open && fs::exists(gate_dir)) {
                     try {
-                        fs::remove_all(gate_path);
+                        fs::remove_all(gate_dir);
                     } catch (...) {
                         print_help("The content of the already existing gate-open directory at '"
-                                   + gate_path.string() + "' could not be deleted. . Check if it or the content is "
+                                   + gate_dir.string() + "' could not be deleted. . Check if it or the content is "
                                                           "open in another program.");
                     }
                 }
             }
         }
         // create the main output directory
-        fs::create_directories(out_dir_path);
+        fs::create_directories(output_dir);
         // create the sub-directories for enabled program parts
         if (run_pore_id) {
-            fs::create_directories(pore_path);
-            fs::create_directories(lining_path);
+            fs::create_directories(pore_dir);
+            fs::create_directories(lining_dir);
         }
-        if (run_axis_trace) fs::create_directories(axes_path);
-        if (run_gate_open) fs::create_directories(gate_path);
-        if (run_axis_trace_preparation) fs::create_directories(axes_preparation_path);
-        if (run_gate_preparation) fs::create_directories(gate_preparation_path);
+        if (run_axis_trace) fs::create_directories(axis_dir);
+        if (run_gate_open) fs::create_directories(gate_dir);
+        if (run_axis_preparation) fs::create_directories(axis_preparation_dir);
+        if (run_gate_preparation) fs::create_directories(gate_preparation_dir);
         // if gate-open is enabled, check if the rotamer library is where it should be
         if (run_gate_open) {
-            if (!fs::is_directory(rotamer_lib_path)) {
-                print_help("The rotamer library could not be found at: " + rotamer_lib_path.string());
-            } else if (fs::is_empty(rotamer_lib_path)) {
-                print_help("The rotamer library at '" + rotamer_lib_path.string() + "' is empty.");
+            if (!fs::is_directory(rotamer_lib)) {
+                print_help("The rotamer library could not be found at: " + rotamer_lib.string());
+            } else if (fs::is_empty(rotamer_lib)) {
+                print_help("The rotamer library at '" + rotamer_lib.string() + "' is empty.");
             }
         }
+
+        // generate logging paths
+        kept_atoms = out_dir / fs::path("used_atoms.pdb");
+        skipped_atoms = out_dir / fs::path("skipped_atoms.pdb");
+        pore_log = out_dir / fs::path("pore_ID_log.yaml");
+        axis_log = out_dir / fs::path("axes_trace_log.yaml");
+        gate_log = out_dir / fs::path("gate_open_log.yaml");
+
+        // log the program component parameters
+        if (run_pore_id) write_pore_id_parameters();
+        if (run_axis_trace) write_axes_trace_parameters();
+        if (run_gate_open) write_gate_open_parameters();
 
     }
 
     // generates the file path with all rotamer definitions for the given residue type
     [[nodiscard]] std::string rotamer_file_path(const std::string &residue_type) const {
-        fs::path file_path = rotamer_lib_path / fs::path(residue_type + "_trimed.txt");
+        fs::path file_path = rotamer_lib / fs::path(residue_type + "_trimed.txt");
         if (fs::exists(file_path)) return file_path.string();
         return "";
     }
@@ -352,7 +387,6 @@ struct Settings {
 private:
     std::vector<std::string> args;
     const size_t col = 21;
-    const std::string indent = "  ";
     const std::string sep = "  ";
     const size_t line_width = 90;
 
@@ -417,6 +451,10 @@ private:
         print_option("--skip-H-atoms", "Ignore H-atoms in the input PDB file. [default: false]");
         print_option("--keep-alternative", "Load alternative locations of atoms in addition to the primary location. "
                                            "[default: false]");
+        print_option("--skip-hetatm", "Do not load hetero atoms (HETATM) records. [default: false]");
+        print_option("--skip-non-std-amino-acids", "Do not load atoms of non-standard residues (= not one "
+                                                   "of the 20 'classical' amino acids) from ATOM records. HETATM "
+                                                   "records are unaffected by this setting. [default: false]");
 
         std::cout << "Pore-ID options:" << std::endl;
         print_option("-b <decimal>", "Grid box length in Angstrom (= resolution). [default: 1.0]");
@@ -468,12 +506,12 @@ private:
     }
 
     void print_option(const std::string &opt, const std::string &exp) const {
-        std::vector<std::string> rows = wrap(exp, line_width - col - sep.length() - indent.length());
+        std::vector<std::string> rows = wrap(exp, line_width - col - sep.length() - indent(1).length());
         for (size_t i = 0; i < rows.size(); i++) {
             if (i == 0) {
-                std::cout << indent << std::setw(col) << std::left << opt << sep << rows[i] << std::endl;
+                std::cout << indent(1) << std::setw(col) << std::left << opt << sep << rows[i] << std::endl;
             } else {
-                std::cout << indent << std::setw(col) << " " << sep << rows[i] << std::endl;
+                std::cout << indent(1) << std::setw(col) << " " << sep << rows[i] << std::endl;
             }
         }
     }
@@ -481,6 +519,103 @@ private:
     void print_text(const std::string &text) const {
         std::vector<std::string> rows = wrap(text, line_width);
         for (const std::string &row: rows) { std::cout << row << std::endl; }
+    }
+
+    void write_pore_id_parameters() const {
+        // create the log file or overwrite the old one
+        std::ofstream file(pore_log);
+        file.close();
+        // parameters
+        add_comment(pore_log, 0, "given and inferred command line parameters");
+        add_entry(pore_log, 0, "parameters");
+        add_comment(pore_log, 1, "input and output");
+        add_entry(pore_log, 1, "PDB name", pdb_name);
+        add_entry(pore_log, 1, "PDB path", pdb_path.string());
+        add_entry(pore_log, 1, "output directory", out_dir.string());
+        add_entry(pore_log, 1, "output name", output_name);
+        add_comment(pore_log, 1, "PDB parsing");
+        add_entry(pore_log, 1, "skip hydrogen atoms", skip_H);
+        add_entry(pore_log, 1, "skip hetero atoms", skip_hetero_atoms);
+        add_entry(pore_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
+        add_entry(pore_log, 1, "keep alternative atom locations", keep_alternative);
+        add_comment(pore_log, 1, "run flags");
+        add_entry(pore_log, 1, "run axes trace preparation", run_axis_preparation);
+        add_entry(pore_log, 1, "run gate open preparation", run_gate_preparation);
+        add_comment(pore_log, 1, "identification parameters");
+        add_entry(pore_log, 1, "resolution", box_length);
+        add_entry(pore_log, 1, "solvent radius", solvent_radius);
+        add_entry(pore_log, 1, "probe radius", probe_radius);
+        add_entry(pore_log, 1, "volume threshold", volume_threshold);
+        add_entry(pore_log, 1, "computation mode", to_str(cylinder_tag));
+        add_entry(pore_log, 1, "filter", to_str(remove_tag));
+        // initialise log
+        add_comment(pore_log, 0, "information about the pore ID run");
+        add_entry(pore_log, 0, "log");
+    }
+
+    void write_axes_trace_parameters() const {
+        // create the log file or overwrite the old one
+        std::ofstream file(axis_log);
+        file.close();
+        // parameters
+        add_comment(axis_log, 0, "given and inferred command line parameters");
+        add_entry(axis_log, 0, "parameters");
+        add_comment(axis_log, 1, "input and output");
+        add_entry(pore_log, 1, "PDB name", pdb_name);
+        add_entry(axis_log, 1, "output directory", axis_dir.string());
+        add_entry(axis_log, 1, "load from pore ID", run_pore_id);
+        add_entry(axis_log, 1, "load from single file", load_cluster_from_single_file);
+        add_entry(axis_log, 1, "load from directory", load_cluster_from_directory);
+
+        if (run_axis_trace) {
+            add_entry(axis_log, 1, "input path", "None");
+        } else if (load_cluster_from_single_file) {
+            add_entry(axis_log, 1, "input path", axis_single_input.string());
+        } else {
+            add_entry(axis_log, 1, "input path", axis_directory_input.string());
+        }
+        add_comment(axis_log, 1, "axes trace parameters");
+        add_entry(axis_log, 1, "surface patch threshold", surface_patch_threshold);
+        // initialise log
+        add_comment(axis_log, 0, "information about the axes trace run");
+        add_entry(axis_log, 0, "log");
+    }
+
+    void write_gate_open_parameters() const {
+        // create the log file or overwrite the old one
+        std::ofstream file(gate_log);
+        file.close();
+        // parameters
+        add_comment(gate_log, 0, "given and inferred command line parameters");
+        add_entry(gate_log, 0, "parameters");
+        add_comment(gate_log, 1, "input and output");
+        add_entry(pore_log, 1, "PDB name", pdb_name);
+        add_entry(gate_log, 1, "PDB path", pdb_path.string());
+        add_entry(gate_log, 1, "output directory", gate_dir.string());
+        add_comment(gate_log, 1, "PDB parsing");
+        add_entry(gate_log, 1, "skip hydrogen atoms", skip_H);
+        add_entry(gate_log, 1, "skip hetero atoms", skip_hetero_atoms);
+        add_entry(gate_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
+        add_entry(gate_log, 1, "keep alternative atom locations", keep_alternative);
+        add_comment(gate_log, 1, "gate input");
+        add_entry(gate_log, 1, "load from pore ID", run_pore_id);
+        add_entry(gate_log, 1, "load from single file", load_gate_from_single_file);
+        add_entry(gate_log, 1, "load from directory", load_gates_from_directory);
+        if (run_gate_open) {
+            add_entry(gate_log, 1, "input path", "None");
+        } else if (load_cluster_from_single_file) {
+            add_entry(gate_log, 1, "input path", gate_single_input.string());
+        } else {
+            add_entry(gate_log, 1, "input path", gate_directory_input.string());
+        }
+        add_comment(gate_log, 1, "gate open parameters");
+        add_entry(gate_log, 1, "perturb value", perturb_value);
+        add_entry(gate_log, 1, "clash tolerance", clash_tolerance);
+        add_entry(gate_log, 1, "gate difficulty threshold", to_str(difficulty_threshold));
+        add_entry(gate_log, 1, "re-estimate gate difficulty", re_estimate);
+        // initialise log
+        add_comment(gate_log, 0, "information about the gate open run");
+        add_entry(gate_log, 0, "log");
     }
 };
 

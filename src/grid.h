@@ -230,12 +230,16 @@ struct ProteinGrid : Grid {
     // CONSTRUCTORS
     // constructor interface for the actual program with user command line input
     explicit ProteinGrid(const Settings &settings) :
-            ProteinGrid(settings.pdb_path.string(), settings.box_length, settings.solvent_radius, settings.skip_H,
-                        settings.keep_alternative) {}
+            ProteinGrid(settings.pdb_path.string(), settings.kept_atoms.string(), settings.skipped_atoms.string(),
+                        settings.pore_log.string(), settings.box_length,
+                        settings.solvent_radius, settings.skip_H, settings.keep_alternative, settings.skip_hetero_atoms,
+                        settings.skip_non_standard_amino_acids) {}
 
     // detailed constructor for testing
-    ProteinGrid(const std::string &pdb_path, const double length, const double solvent,
-                const bool skip_H, const bool keep_alternative) :
+    ProteinGrid(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
+                const std::string &log_path, const double length, const double solvent,
+                const bool skip_H, const bool keep_alternative, const bool skip_hetero_atoms,
+                const bool skip_non_standard_amino_acids) :
             Grid(length),
             box_radius_sqrt3(box_radius * sqrt(3)),
             solvent_radius(solvent),
@@ -243,7 +247,15 @@ struct ProteinGrid : Grid {
             max_vdw(vdw_radius(S)) {
         // INPUT PARSING
         // parse atom information from the input file
-        parse_PDB(pdb_path, atoms, skip_H, keep_alternative);
+        PDBReaderStats stats = PDBReaderStats();
+        parse_PDB(pdb_path, kept_path, skipped_path, atoms, stats, skip_H, keep_alternative, skip_hetero_atoms,
+                  skip_non_standard_amino_acids);
+
+        // log PDB parsing stats if the log file is given
+        if (!log_path.empty()) {
+            stats.write(log_path);
+        }
+
         // make sure that there are valid atoms in the input file
         if (atoms.empty()) throw std::runtime_error("There are no valid atoms in the input PDB file.");
 

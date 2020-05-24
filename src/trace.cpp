@@ -83,7 +83,7 @@ void clusters_from_directory(const std::string &dir_path, std::vector<PoreCluste
 void output_trace_cluster(const Settings &settings, const ProteinGrid &grid) {
     for (const PoreCluster &cluster: grid.clusters) {
         // generate the output path and create the output file
-        fs::path output_path = settings.axes_preparation_path / fs::path(cluster.name() + ".tsv");
+        fs::path output_path = settings.axis_preparation_dir / fs::path(cluster.name() + ".tsv");
         std::ofstream file(output_path.string());
         // write a header with the ID and type (pore or cavity) of the cluster, as well as the used grid box length
         file << "# Name: " << cluster.name() << std::endl;
@@ -312,7 +312,7 @@ void axis_trace(const Settings &settings, const std::vector<PoreCluster> &cluste
         // determine the starting point(s) of the axis (or axes)
         compute_starting_points(pore, settings.surface_patch_threshold);
         // construct the base of the output file(s)
-        std::string base = (settings.axes_path / fs::path(settings.output_name + cluster.name() + "_axis_")).string();
+        std::string base = (settings.axis_dir / fs::path(settings.output_name + cluster.name() + "_axis_")).string();
         // trace the axis or axes
         size_t end = std::max(size_t(1), pore.starting_points.size() - 1);
         for (size_t i = 0; i < end; i++) {

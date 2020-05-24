@@ -24,7 +24,7 @@
 #include "enums.h"
 #include "reader.h"
 
-
+/*
 TEST(reader_tests, parse_PDB) {
     std::vector<std::shared_ptr<Atom>> atoms;
     parse_PDB("test_files/reader_test.pdb", atoms, false, false);
@@ -88,3 +88,4 @@ TEST(reader_tests, parse_and_write) {
         EXPECT_EQ(real_lines[i], test_lines[i]);
     }
 }
+ */

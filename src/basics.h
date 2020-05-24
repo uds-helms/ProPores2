@@ -21,6 +21,7 @@
 #define PROPORES_BASICS_H
 
 #include <map>
+#include <ctime>
 #include <string>
 #include <chrono>
 #include <memory>
@@ -29,8 +30,11 @@
 #include <sstream>
 #include <exception>
 #include <algorithm>
+#include <filesystem>
 #include <unordered_set>
 #include "vector.h"
+
+namespace fs = std::filesystem;
 
 // construct an indent (whitespace) for the given indent level
 std::string indent(size_t level);
@@ -67,6 +71,23 @@ std::vector<std::string> split(const std::string &str, char sep);
 
 // split the words of the input string into rows such that each row is at most <width> characters long
 std::vector<std::string> wrap(const std::string &str, size_t width);
+
+// get the current date and time
+std::string current_datetime();
+
+// add a line to a file without overwriting it
+void add_to_file(const fs::path &file_path, const std::string &line);
+
+// add key: value entries in YAML format to the specified file
+void add_entry(const fs::path &file_path, size_t level, const std::string &key, const std::string &value);
+void add_entry(const fs::path &file_path, size_t level, const std::string &key);
+void add_entry(const fs::path &file_path, size_t level, const std::string &key, const double &value);
+void add_entry(const fs::path &file_path, size_t level, const std::string &key, const size_t &value);
+void add_entry(const fs::path &file_path, size_t level, const std::string &key, const bool &value);
+void add_entry(const fs::path &file_path, size_t level, const std::string &key,
+               const std::chrono::time_point<std::chrono::high_resolution_clock> &start_time);
+void add_comment(const fs::path &file_path, size_t level, const std::string &comment);
+
 
 // search box relative to a grid box of interest
 struct RelativeSearchBox {

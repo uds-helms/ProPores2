@@ -29,7 +29,7 @@
 
 // ATOM PROCESSING
 // parses the atom type column in a PDB line
-std::pair<AtomType, std::string> parse_atom_type(const std::string &str);
+std::pair<AtomType, std::string> parse_atom_type(const std::string &str, RecordType record);
 
 // van der Waals radius of different atom types
 double vdw_radius(AtomType type);
@@ -41,6 +41,8 @@ struct Atom {
     // atom ID in the program and the PDB file
     size_t id;
     size_t PDB_id;
+    // record type, i.e. ATOM or HETATM
+    RecordType record;
     // atom type, i.e. H, C, S, O,...
     AtomType type;
     // full type, i.e. CA, CB
@@ -49,6 +51,7 @@ struct Atom {
     std::string alternate_location;
     // corresponding residue information
     ResidueType residue_type;
+    std::string residue_name;
     std::string chain;
     size_t residue_id;
     std::string insertion_code;
@@ -60,7 +63,7 @@ struct Atom {
     // movement of the atom
     std::string temperature;
     // element symbol
-    std::string element;
+    AtomType element;
     // charge
     std::string charge;
     // vdW-radius
@@ -70,9 +73,11 @@ struct Atom {
 
     Atom(const size_t atom_id, const std::string &pdb_line) :
             id(atom_id),
+            record(to_record_type(pdb_substr(pdb_line, 0, 6))),
             PDB_id(size_t(pdb_substr(pdb_line, 6, 5, 100000))),
             alternate_location(pdb_substr(pdb_line, 16, 1)),
             residue_type(to_residue_type(pdb_substr(pdb_line, 17, 3))),
+            residue_name(pdb_substr(pdb_line, 17, 3)),
             chain(pdb_substr(pdb_line, 21, 1)),
             residue_id(size_t(pdb_substr(pdb_line, 22, 4, 10000))),
             insertion_code(pdb_substr(pdb_line, 26, 1)),
@@ -81,12 +86,17 @@ struct Atom {
                               stod(pdb_substr(pdb_line, 46, 8)))),
             atom_occupancy(pdb_substr(pdb_line, 54, 6)),
             temperature(pdb_substr(pdb_line, 60, 6)),
-            element(pdb_substr(pdb_line, 76, 2)),
+            element(to_atom_type(pdb_substr(pdb_line, 76, 2))),
             charge(pdb_substr(pdb_line, 78, 2)) {
         // extract the long and short form of the atom type
-        std::pair<AtomType, std::string> pair = parse_atom_type(pdb_substr(pdb_line, 12, 4));
-        type = pair.first;
-        full_type = pair.second;
+        if (element != INVALID_ATOM) {
+            type = element;
+            full_type = pdb_substr(pdb_line, 12, 4);
+        } else {
+            std::pair<AtomType, std::string> pair = parse_atom_type(pdb_line.substr(12, 4), record);
+            type = pair.first;
+            full_type = pair.second;
+        }
         // compute the van der Waals radius and the atomic mass
         vdw = vdw_radius(type);
         mass = atomic_mass(type);

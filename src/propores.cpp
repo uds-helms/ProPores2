@@ -17,6 +17,7 @@
  * <https://www.gnu.org./licenses/>.
 */
 
+#include <chrono>
 #include <iostream>
 #include "atom.h"
 #include "grid.h"
@@ -42,11 +43,17 @@ int main(int argc, char *argv[]) {
         print(header);
         auto pore_id_start = std::chrono::high_resolution_clock::now();
         print("\nPore-ID");
+        add_entry(settings.pore_log, 1, "start time", current_datetime());
         // PDB parsing and grid construction
         ProteinGrid grid = ProteinGrid(settings);
         print(1, pore_id_start, "> loaded protein with " + std::to_string(grid.atoms.size()) + " atoms in");
+        add_entry(settings.pore_log, 1, "PDB parsing runtime", pore_id_start);
         // run pore/cavity identification
         pore_ID(grid, settings);
+
+        if (settings.run_axis_preparation || settings.run_gate_preparation || settings.run_gate_open) {
+            add_comment(settings.pore_log, 1, "preparation");
+        }
 
         // compute a list of potential gate between two neighbouring pores/cavities for subsequent gate-opening and/or
         // as preparation for later manual or automated analysis
@@ -62,61 +69,80 @@ int main(int argc, char *argv[]) {
             }
             print(1, gate_preparation_start,
                   gate_steps + " information of " + std::to_string(gates.size()) + " gate(s) in");
+            add_entry(settings.pore_log, 1, "potential gates", gates.size());
+            add_entry(settings.pore_log, 1, "gate preparation", gate_preparation_start);
         }
 
         // write a file with grid boxes of each pore/cavity cluster for subsequent gate-opening and/or as preparation
         // for later manual or automated analysis
-        if (settings.run_axis_trace_preparation) {
+        if (settings.run_axis_preparation) {
             auto axis_preparation = std::chrono::high_resolution_clock::now();
             output_trace_cluster(settings, grid);
             print(1, axis_preparation,
                   "> wrote information of " + std::to_string(grid.clusters.size()) + " pore(s) in");
+            add_entry(settings.pore_log, 1, "axis trace preparation", axis_preparation);
         }
         // save the pore/cavity grid box clusters for axis-determination
         if (settings.run_axis_trace) clusters = std::move(grid.clusters);
         print(1, pore_id_start, "=> total pore-ID runtime:");
+        add_comment(settings.pore_log, 1, "finished");
+        add_entry(settings.pore_log, 1, "end time", current_datetime());
+        add_entry(settings.pore_log, 1, "total runtime", pore_id_start);
     }
 
     // determine the axes of pores and cavities
     if (settings.run_axis_trace) {
         if (!settings.run_pore_id) print(header);
         print("\nAxis-Trace");
+        auto axis_start = std::chrono::high_resolution_clock::now();
+
+        add_entry(settings.axis_log, 1, "start time", current_datetime());
         // if pore-ID was not performed at the start of this run, obtain the cluster(s) from user provided file(s)
         if (!settings.run_pore_id) {
-            auto axis_loading_start = std::chrono::high_resolution_clock::now();
             if (settings.load_cluster_from_single_file)
-                cluster_from_file(settings.axis_single_input_file.string(), clusters);
+                cluster_from_file(settings.axis_single_input.string(), clusters);
             if (settings.load_cluster_from_directory)
-                clusters_from_directory(settings.axis_directory_input_path.string(), clusters);
-            print(1, axis_loading_start, "> loaded " + std::to_string(clusters.size()) + " pore(s) in");
+                clusters_from_directory(settings.axis_directory_input.string(), clusters);
+            print(1, axis_start, "> loaded " + std::to_string(clusters.size()) + " pore(s) in");
         }
-        // if at least one cluster could be loaded, try to open all clusteers in the list
+
+        // if at least one cluster could be loaded, try to open all clusters in the list
         if (!clusters.empty()) {
-            auto axis_start = std::chrono::high_resolution_clock::now();
+            add_entry(settings.axis_log, 1, "pores", clusters.size());
             axis_trace(settings, clusters);
             print(1, axis_start, "=> total axis_trace runtime:");
         }
+
+        add_comment(settings.axis_log, 1, "finished");
+        add_entry(settings.axis_log, 1, "end time", current_datetime());
+        add_entry(settings.axis_log, 1, "total runtime", axis_start);
     }
 
     // open gates between neighbouring pores/cavities
     if (settings.run_gate_open) {
         if (!settings.run_pore_id && !settings.run_axis_trace) print(header);
         print("\nGate-Open");
+        auto gate_open_start = std::chrono::high_resolution_clock::now();
+
+        add_entry(settings.gate_log, 1, "start time", current_datetime());
         // if pore-ID was not performed at the start of this run, obtain the potential gates from user provided file(s)
         if (!settings.run_pore_id) {
-            auto gate_loading_start = std::chrono::high_resolution_clock::now();
             if (settings.load_gate_from_single_file)
-                gate_from_file(settings.gate_single_input_file_path.string(), gates);
+                gate_from_file(settings.gate_single_input.string(), gates);
             if (settings.load_gates_from_directory)
-                gates_from_directory(settings.gate_input_directory_path.string(), gates);
-            print(1, gate_loading_start, "> loaded " + std::to_string(gates.size()) + " gate(s) in");
+                gates_from_directory(settings.gate_directory_input.string(), gates);
+            print(1, gate_open_start, "> loaded " + std::to_string(gates.size()) + " gate(s) in");
         }
         // if at least one gate could be loaded, try to open all gates in the list
         if (!gates.empty()) {
-            auto gate_open_start = std::chrono::high_resolution_clock::now();
+            add_entry(settings.gate_log, 1, "gates", gates.size());
             gate_open(settings, gates);
             print(1, gate_open_start, "=> total gate-open runtime:");
         }
+
+        add_comment(settings.gate_log, 1, "finished");
+        add_entry(settings.gate_log, 1, "end time", current_datetime());
+        add_entry(settings.gate_log, 1, "total runtime", gate_open_start);
     }
     print(0, initial, "\n=> total runtime:");
 }

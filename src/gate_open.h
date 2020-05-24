@@ -79,6 +79,6 @@ void remove_eliminated(Gate &gate);
 std::vector<Rotamer> exhaustive_search(const Gate &gate);
 
 // main gate-open routine
-void gate_open(const Settings &settings, std::vector<Gate> &gates);
+void gate_open(Settings &settings, std::vector<Gate> &gates);
 
 #endif //PROPORES_GATE_OPEN_H

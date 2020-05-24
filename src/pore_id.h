@@ -32,6 +32,9 @@ std::vector<uint8_t> psp_scan(ProteinGrid &grid);
 // check if the connecting vector between atom pairs is interrupted by occupied grid boxes
 void collision_detection(ProteinGrid &grid);
 
+// determine which cylinder function should be run, if true => run cylinder standalone
+bool switch_to_standalone(const ProteinGrid &grid, const Settings &settings);
+
 // form a cylinder around the connecting vector between atom pairs
 void cylinder_trace(ProteinGrid &grid, const std::shared_ptr<AtomPair> &atom_pair, double r_sq, int r_grid,
                     double threshold, double search);

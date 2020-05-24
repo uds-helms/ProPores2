@@ -22,11 +22,53 @@
 
 #include <vector>
 #include "atom.h"
+#include "basics.h"
+#include "settings.h"
+
+struct PDBReaderStats {
+    size_t valid = 0;
+    size_t skipped_H = 0;
+    size_t skipped_alternative = 0;
+    size_t skipped_hetero = 0;
+    size_t skipped_non_standard_amino_acids = 0;
+    size_t line_too_short = 0;
+    size_t atom_type_parse_error = 0;
+    size_t no_vdw_radius = 0;
+    size_t no_atomic_mass = 0;
+
+    [[nodiscard]] size_t total_skipped() const {
+        return skipped_H + skipped_alternative + skipped_hetero + skipped_non_standard_amino_acids + line_too_short + atom_type_parse_error + no_vdw_radius + no_atomic_mass;
+    }
+    
+    void write(const std::string &file_path) const {
+        add_entry(file_path, 1, "PDB parsing stats");
+        add_comment(file_path, 2, "number of atoms that were successfully extracted from the PDB file");
+        add_entry(file_path, 2, "atoms", valid);
+        add_comment(file_path, 2, "number of atoms that were skipped for various reasons");
+        add_entry(file_path, 2, "total skipped atoms", total_skipped());
+        add_comment(file_path, 2, "reasons why atoms were skipped");
+        add_entry(file_path, 2, "skipped HETATM entries", skipped_hetero);
+        add_entry(file_path, 2, "record line too short", line_too_short);
+        add_entry(file_path, 2, "atom type could not be determined", atom_type_parse_error);
+        add_entry(file_path, 2, "skipped non-standard amino acids in ATOM records", skipped_non_standard_amino_acids);
+        add_entry(file_path, 2, "no van der Waals radius information", no_vdw_radius);
+        add_entry(file_path, 2, "no atomic mass information", no_atomic_mass);
+        add_entry(file_path, 2, "skipped hydrogen atoms", skipped_H);
+        add_entry(file_path, 2, "skipped alternative atom locations", skipped_alternative);
+    }
+};
 
 // extract all valid atom entries from a given PDB input file, allow to skip H-atoms and to load alternative locations
 // of atoms in addition to the primary location
-void parse_PDB(const std::string &filename, std::vector<std::shared_ptr<Atom>> &atoms, bool skip_H,
-               bool keep_alternative);
+void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
+               std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats,
+               bool skip_H,
+               bool keep_alternative,
+               bool skip_hetero_atoms,
+               bool skip_non_standard_amino_acids);
+
+// wrapper that allows calling parse_PDB with the program settings
+void parse_PDB(const Settings &settings, std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats);
 
 // format an index and coordinate in pseudo PDB format, can be used to output pore/cavity boxes for visualisation
 std::string pseudo_pdb(size_t id, const Vec<double> &coord);

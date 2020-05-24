@@ -22,13 +22,134 @@
 
 #include <string>
 
+enum RecordType : uint8_t {
+    INVALID_RECORD,
+    ATOM,
+    HETATOM
+};
+
 enum AtomType : uint8_t {
     INVALID_ATOM,
+    // protein atoms
+    C,
     H,
-    O,
     N,
+    O,
     S,
-    C
+    // hetero atoms
+    Ac,
+    Ag,
+    Al,
+    Am,
+    Ar,
+    As,
+    At,
+    Au,
+    B,
+    Ba,
+    Be,
+    Bh,
+    Bi,
+    Bk,
+    Br,
+    Ca,
+    Cd,
+    Ce,
+    Cf,
+    Cl,
+    Cm,
+    Cn,
+    Co,
+    Cr,
+    Cs,
+    Cu,
+    Db,
+    Ds,
+    Dy,
+    Er,
+    Es,
+    Eu,
+    F,
+    Fe,
+    Fl,
+    Fm,
+    Fr,
+    Ga,
+    Gd,
+    Ge,
+    He,
+    Hf,
+    Hg,
+    Ho,
+    Hs,
+    I,
+    In,
+    Ir,
+    K,
+    Kr,
+    La,
+    Li,
+    Lr,
+    Lu,
+    Lv,
+    Mc,
+    Md,
+    Mg,
+    Mn,
+    Mo,
+    Mt,
+    Na,
+    Nb,
+    Nd,
+    Ne,
+    Nh,
+    Ni,
+    No,
+    Np,
+    Og,
+    Os,
+    P,
+    Pa,
+    Pb,
+    Pd,
+    Pm,
+    Po,
+    Pr,
+    Pt,
+    Pu,
+    Ra,
+    Rb,
+    Re,
+    Rf,
+    Rg,
+    Rh,
+    Rn,
+    Ru,
+    Sb,
+    Sc,
+    Se,
+    Sg,
+    Si,
+    Sm,
+    Sn,
+    Sr,
+    Ta,
+    Tb,
+    Tc,
+    Te,
+    Th,
+    Ti,
+    Tl,
+    Tm,
+    Ts,
+    U,
+    V,
+    W,
+    Xe,
+    Y,
+    Yb,
+    Zn,
+    Zr
 };
 
 enum ResidueType : uint8_t {
@@ -90,6 +211,8 @@ enum GateDifficulty : uint8_t {
 
 
 // convert enums to string
+std::string to_str(RecordType record);
+
 std::string to_str(AtomType atom);
 
 std::string to_str(ResidueType residue);
@@ -98,8 +221,15 @@ std::string to_str(BoxState state);
 
 std::string to_str(GateDifficulty difficulty);
 
+std::string to_str(CylinderTag tag);
+
+std::string to_str(RemoveTag tag);
+
 // convert strings to enums
+RecordType to_record_type(const std::string &str);
+
 AtomType to_atom_type(const std::string &str);
+AtomType to_atom_type(const char &str);
 
 ResidueType to_residue_type(const std::string &str);
 

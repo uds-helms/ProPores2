@@ -18,43 +18,104 @@
 */
 
 #include <vector>
+#include <cctype>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
 #include "atom.h"
+#include "reader.h"
+#include "settings.h"
 
 // extract all valid atom entries from a given PDB input file, allow to skip H-atoms and to load alternative locations
 // of atoms in addition to the primary location
-void parse_PDB(const std::string &filename, std::vector<std::shared_ptr<Atom>> &atoms, const bool skip_H,
-               const bool keep_alternative) {
-    std::ifstream file;
-    file.open(filename);
-
+void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
+               std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats,
+               const bool skip_H,
+               const bool keep_alternative,
+               const bool skip_hetero_atoms,
+               const bool skip_non_standard_amino_acids) {
+    // open the input PDB file, the file for logging the processed and kept atom lines and the file for skipped atoms
+    std::ifstream pdb_file(pdb_path);
+    std::ofstream kept_file(kept_path);
+    std::ofstream skipped_file(skipped_path);
+    // for extracting the content of the input PDB file line by line
     std::string line;
+    // next atom ID
     size_t id = 0;
 
-    while (getline(file, line)) {
+    while (getline(pdb_file, line)) {
         // record type: ATOM (protein atoms) or HETATM (non-protein atoms, including solvent molecules)
-        // only consider protein atoms
-        if (remove_spaces(line.substr(0, 6)) != "ATOM") continue;
+        RecordType record_type = to_record_type(remove_spaces(pdb_substr(line, 0, 6)));
+        // skip all non-atom entries
+        if (record_type != ATOM && record_type != HETATOM) continue;
+        // skip hetero atom entries if the corresponding flag is set
+        if (skip_hetero_atoms && record_type == HETATOM) {
+            skipped_file << line << std::endl;
+            stats.skipped_hetero++;
+            continue;
+        }
         // it can happen that the z-coordinate column is not given in full
         // => make sure that the z-column is at least 1 long and determine its length dynamically
-        if (line.size() < 47) continue;
+        if (line.size() < 47) {
+            skipped_file << line << std::endl;
+            stats.line_too_short++;
+            continue;
+        }
         // create the atom and a shared pointer to it
         std::shared_ptr<Atom> atom = std::make_shared<Atom>(id, line);
         // make sure the atom is valid before adding it to the atom vector
-        if (atom->type == INVALID_ATOM || atom->residue_type == INVALID_RESIDUE) continue;
+        if (atom->type == INVALID_ATOM) {
+            skipped_file << line << std::endl;
+            stats.atom_type_parse_error++;
+            continue;
+        }
+        // make sure that ATOM records have a valid amino acid residue
+        if (atom->record == ATOM && skip_non_standard_amino_acids && atom->residue_type == INVALID_RESIDUE) {
+            skipped_file << line << std::endl;
+            stats.skipped_non_standard_amino_acids++;
+            continue;
+        }
+        // make sure that van der Waals radius and atomic mass information is available
+        if (atom->vdw == 0.0) {
+            skipped_file << line << std::endl;
+            stats.no_vdw_radius++;
+            continue;
+        }
+        if (atom->mass == 0.0) {
+            skipped_file << line << std::endl;
+            stats.no_atomic_mass++;
+            continue;
+        }
         // skip H atoms if specified
-        if (skip_H && atom->type == H) continue;
+        if (skip_H && atom->type == H) {
+            skipped_file << line << std::endl;
+            stats.skipped_H++;
+            continue;
+        }
         // skip alternative locations of atoms if keep-alternatives is not enabled
-        if (!keep_alternative && !atom->alternate_location.empty() && atom->alternate_location != "A") continue;
-        // add the atom to the list
+        if (!keep_alternative && !atom->alternate_location.empty() && atom->alternate_location != "A") {
+            skipped_file << line << std::endl;
+            stats.skipped_alternative++;
+            continue;
+        }
+        // add the atom to the list and log it in the kept file
+        kept_file << line << std::endl;
+        stats.valid++;
         atoms.push_back(atom);
         id++;
     }
-    file.close();
+    pdb_file.close();
+    kept_file.close();
+    skipped_file.close();
+}
+
+// wrapper that allows calling parse_PDB with the program settings
+void parse_PDB(const Settings &settings, std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats) {
+    parse_PDB(settings.pdb_path.string(), settings.kept_atoms.string(), settings.skipped_atoms.string(), atoms, stats,
+              settings.skip_H, settings.keep_alternative, settings.skip_hetero_atoms,
+              settings.skip_non_standard_amino_acids);
 }
 
 // format an index and coordinate in pseudo PDB format, can be used to output pore/cavity boxes for visualisation
@@ -74,6 +135,10 @@ std::string pseudo_pdb(const size_t id, const Vec<double> &coord) {
     ss << std::setw(8) << std::setprecision(3) << std::setfill(' ') << std::right << std::fixed << coord.x;
     ss << std::setw(8) << std::setprecision(3) << std::setfill(' ') << std::right << std::fixed << coord.y;
     ss << std::setw(8) << std::setprecision(3) << std::setfill(' ') << std::right << std::fixed << coord.z;
+    ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << std::right << std::fixed << 1.0;
+    ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << std::right << std::fixed << 0.0;
+    ss << std::setw(12) << std::setfill(' ') << std::right << std::fixed << "C";
+    ss << "  ";
     return ss.str();
 }
 
@@ -81,16 +146,22 @@ std::string pseudo_pdb(const size_t id, const Vec<double> &coord) {
 std::string PDB_atom_entry(const std::shared_ptr<Atom> &atom) {
     if (std::isinf(atom->coord.x) || std::isinf(atom->coord.y) || std::isinf(atom->coord.z)) return "";
     std::stringstream ss;
-    ss << "ATOM  ";
+    ss << std::setw(6) << std::setfill(' ') << std::left << std::fixed << to_str(atom->record);
     // due to width limitations of this column, higher IDs can only be represented with asterisks
     if (atom->PDB_id <= 99999) {
         ss << std::setw(5) << std::setfill(' ') << std::right << atom->PDB_id;
     } else {
         ss << "*****";
     }
-    ss << "  " << std::setw(3) << std::setfill(' ') << std::left << atom->full_type;
+    ss << " ";
+
+    if (atom->full_type.size() == 4 || to_str(atom->type).size() == 2 || std::isdigit(atom->full_type.at(0))) {
+        ss << std::setw(4) << std::setfill(' ') << std::left << atom->full_type;
+    } else {
+        ss << " " << std::setw(3) << std::setfill(' ') << std::left << atom->full_type;
+    }
     ss << std::setw(1) << std::setfill(' ') << std::right << atom->alternate_location;
-    ss << std::setw(3) << std::setfill(' ') << std::right << to_str(atom->residue_type);
+    ss << std::setw(3) << std::setfill(' ') << std::right << atom->residue_name;
     ss << std::setw(2) << std::setfill(' ') << std::right << atom->chain;
     // due to width limitations of this column, higher IDs can only be represented with asterisks
     if (atom->residue_id <= 9999) {
@@ -105,8 +176,8 @@ std::string PDB_atom_entry(const std::shared_ptr<Atom> &atom) {
     ss << std::setw(8) << std::setprecision(3) << std::setfill(' ') << std::right << std::fixed << atom->coord.z;
     ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << atom->atom_occupancy;
     ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << atom->temperature;
-    ss << std::setw(12) << std::setfill(' ') << atom->element;
-    ss << std::setw(2) << std::setfill(' ') << atom->charge;
+    ss << std::setw(12) << std::setfill(' ') << std::right << std::fixed << atom->element;
+    ss << std::setw(2) << std::setfill(' ') << std::left << std::fixed << atom->charge;
     return ss.str();
 }
 

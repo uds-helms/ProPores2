@@ -21,32 +21,277 @@
 #include <vector>
 #include "enums.h"
 
+std::string to_str(const RecordType record) {
+    switch (record) {
+        case ATOM:
+            return "ATOM";
+        case HETATOM:
+            return "HETATM";
+        default:
+            return "INVALID_RECORD_TYPE";
+    }
+}
+
+RecordType to_record_type(const std::string &str) {
+    if (str == "ATOM") return ATOM;
+    if (str == "HETATM") return HETATOM;
+    return INVALID_RECORD;
+}
+
 std::string to_str(const AtomType atom) {
     switch (atom) {
-        case H:
-            return "H";
-        case O:
-            return "O";
-        case N:
-            return "N";
-        case S:
-            return "S";
-        case C:
-            return "C";
+        // protein atoms
+        case C: return "C";
+        case H: return "H";
+        case N: return "N";
+        case O: return "O";
+        case S: return "S";
+        // hetero atoms
+        case Ac: return "AC";
+        case Ag: return "AG";
+        case Al: return "AL";
+        case Am: return "AM";
+        case Ar: return "AR";
+        case As: return "AS";
+        case At: return "AT";
+        case Au: return "AU";
+        case B: return "B";
+        case Ba: return "BA";
+        case Be: return "BE";
+        case Bh: return "BH";
+        case Bi: return "BI";
+        case Bk: return "BK";
+        case Br: return "BR";
+        case Ca: return "CA";
+        case Cd: return "CD";
+        case Ce: return "CE";
+        case Cf: return "CF";
+        case Cl: return "CL";
+        case Cm: return "CM";
+        case Cn: return "CN";
+        case Co: return "CO";
+        case Cr: return "CR";
+        case Cs: return "CS";
+        case Cu: return "CU";
+        case Db: return "DB";
+        case Ds: return "DS";
+        case Dy: return "DY";
+        case Er: return "ER";
+        case Es: return "ES";
+        case Eu: return "EU";
+        case F: return "F";
+        case Fe: return "FE";
+        case Fl: return "FL";
+        case Fm: return "FM";
+        case Fr: return "FR";
+        case Ga: return "GA";
+        case Gd: return "GD";
+        case Ge: return "GE";
+        case He: return "HE";
+        case Hf: return "HF";
+        case Hg: return "HG";
+        case Ho: return "HO";
+        case Hs: return "HS";
+        case I: return "I";
+        case In: return "IN";
+        case Ir: return "IR";
+        case K: return "K";
+        case Kr: return "KR";
+        case La: return "LA";
+        case Li: return "LI";
+        case Lr: return "LR";
+        case Lu: return "LU";
+        case Lv: return "LV";
+        case Mc: return "MC";
+        case Md: return "MD";
+        case Mg: return "MG";
+        case Mn: return "MN";
+        case Mo: return "MO";
+        case Mt: return "MT";
+        case Na: return "NA";
+        case Nb: return "NB";
+        case Nd: return "ND";
+        case Ne: return "NE";
+        case Nh: return "NH";
+        case Ni: return "NI";
+        case No: return "NO";
+        case Np: return "NP";
+        case Og: return "OG";
+        case Os: return "OS";
+        case P: return "P";
+        case Pa: return "PA";
+        case Pb: return "PB";
+        case Pd: return "PD";
+        case Pm: return "PM";
+        case Po: return "PO";
+        case Pr: return "PR";
+        case Pt: return "PT";
+        case Pu: return "PU";
+        case Ra: return "RA";
+        case Rb: return "RB";
+        case Re: return "RE";
+        case Rf: return "RF";
+        case Rg: return "RG";
+        case Rh: return "RH";
+        case Rn: return "RN";
+        case Ru: return "RU";
+        case Sb: return "SB";
+        case Sc: return "SC";
+        case Se: return "SE";
+        case Sg: return "SG";
+        case Si: return "SI";
+        case Sm: return "SM";
+        case Sn: return "SN";
+        case Sr: return "SR";
+        case Ta: return "TA";
+        case Tb: return "TB";
+        case Tc: return "TC";
+        case Te: return "TE";
+        case Th: return "TH";
+        case Ti: return "TI";
+        case Tl: return "TL";
+        case Tm: return "TM";
+        case Ts: return "TS";
+        case U: return "U";
+        case V: return "V";
+        case W: return "W";
+        case Xe: return "XE";
+        case Y: return "Y";
+        case Yb: return "YB";
+        case Zn: return "ZN";
+        case Zr: return "ZR";
         default:
             return "INVALID_ATOM";
     }
 }
 
 AtomType to_atom_type(const std::string &str) {
-    if (str == "H") return H;
-    if (str == "O") return O;
-    if (str == "N") return N;
-    if (str == "S") return S;
+    // protein atoms
     if (str == "C") return C;
+    if (str == "H") return H;
+    if (str == "N") return N;
+    if (str == "O") return O;
+    if (str == "S") return S;
+    // hetero atoms
+    if (str == "AC" || str == "Ac") return Ac;
+    if (str == "AG" || str == "Ag") return Ag;
+    if (str == "AL" || str == "Al") return Al;
+    if (str == "AM" || str == "Am") return Am;
+    if (str == "AR" || str == "Ar") return Ar;
+    if (str == "AS" || str == "As") return As;
+    if (str == "AT" || str == "At") return At;
+    if (str == "AU" || str == "Au") return Au;
+    if (str == "B") return B;
+    if (str == "BA" || str == "Ba") return Ba;
+    if (str == "BE" || str == "Be") return Be;
+    if (str == "BH" || str == "Bh") return Bh;
+    if (str == "BI" || str == "Bi") return Bi;
+    if (str == "BK" || str == "Bk") return Bk;
+    if (str == "BR" || str == "Br") return Br;
+    if (str == "CA" || str == "Ca") return Ca;
+    if (str == "CD" || str == "Cd") return Cd;
+    if (str == "CE" || str == "Ce") return Ce;
+    if (str == "CF" || str == "Cf") return Cf;
+    if (str == "CL" || str == "Cl") return Cl;
+    if (str == "CM" || str == "Cm") return Cm;
+    if (str == "CN" || str == "Cn") return Cn;
+    if (str == "CO" || str == "Co") return Co;
+    if (str == "CR" || str == "Cr") return Cr;
+    if (str == "CS" || str == "Cs") return Cs;
+    if (str == "CU" || str == "Cu") return Cu;
+    if (str == "DB" || str == "Db") return Db;
+    if (str == "DS" || str == "Ds") return Ds;
+    if (str == "DY" || str == "Dy") return Dy;
+    if (str == "ER" || str == "Er") return Er;
+    if (str == "ES" || str == "Es") return Es;
+    if (str == "EU" || str == "Eu") return Eu;
+    if (str == "F") return F;
+    if (str == "FE" || str == "Fe") return Fe;
+    if (str == "FL" || str == "Fl") return Fl;
+    if (str == "FM" || str == "Fm") return Fm;
+    if (str == "FR" || str == "Fr") return Fr;
+    if (str == "GA" || str == "Ga") return Ga;
+    if (str == "GD" || str == "Gd") return Gd;
+    if (str == "GE" || str == "Ge") return Ge;
+    if (str == "HE" || str == "He") return He;
+    if (str == "HF" || str == "Hf") return Hf;
+    if (str == "HG" || str == "Hg") return Hg;
+    if (str == "HO" || str == "Ho") return Ho;
+    if (str == "HS" || str == "Hs") return Hs;
+    if (str == "I") return I;
+    if (str == "IN" || str == "In") return In;
+    if (str == "IR" || str == "Ir") return Ir;
+    if (str == "K") return K;
+    if (str == "KR" || str == "Kr") return Kr;
+    if (str == "LA" || str == "La") return La;
+    if (str == "LI" || str == "Li") return Li;
+    if (str == "LR" || str == "Lr") return Lr;
+    if (str == "LU" || str == "Lu") return Lu;
+    if (str == "LV" || str == "Lv") return Lv;
+    if (str == "MC" || str == "Mc") return Mc;
+    if (str == "MD" || str == "Md") return Md;
+    if (str == "MG" || str == "Mg") return Mg;
+    if (str == "MN" || str == "Mn") return Mn;
+    if (str == "MO" || str == "Mo") return Mo;
+    if (str == "MT" || str == "Mt") return Mt;
+    if (str == "NA" || str == "Na") return Na;
+    if (str == "NB" || str == "Nb") return Nb;
+    if (str == "ND" || str == "Nd") return Nd;
+    if (str == "NE" || str == "Ne") return Ne;
+    if (str == "NH" || str == "Nh") return Nh;
+    if (str == "NI" || str == "Ni") return Ni;
+    if (str == "NO" || str == "No") return No;
+    if (str == "NP" || str == "Np") return Np;
+    if (str == "OG" || str == "Og") return Og;
+    if (str == "OS" || str == "Os") return Os;
+    if (str == "P") return P;
+    if (str == "PA" || str == "Pa") return Pa;
+    if (str == "PB" || str == "Pb") return Pb;
+    if (str == "PD" || str == "Pd") return Pd;
+    if (str == "PM" || str == "Pm") return Pm;
+    if (str == "PO" || str == "Po") return Po;
+    if (str == "PR" || str == "Pr") return Pr;
+    if (str == "PT" || str == "Pt") return Pt;
+    if (str == "PU" || str == "Pu") return Pu;
+    if (str == "RA" || str == "Ra") return Ra;
+    if (str == "RB" || str == "Rb") return Rb;
+    if (str == "RE" || str == "Re") return Re;
+    if (str == "RF" || str == "Rf") return Rf;
+    if (str == "RG" || str == "Rg") return Rg;
+    if (str == "RH" || str == "Rh") return Rh;
+    if (str == "RN" || str == "Rn") return Rn;
+    if (str == "RU" || str == "Ru") return Ru;
+    if (str == "SB" || str == "Sb") return Sb;
+    if (str == "SC" || str == "Sc") return Sc;
+    if (str == "SE" || str == "Se") return Se;
+    if (str == "SG" || str == "Sg") return Sg;
+    if (str == "SI" || str == "Si") return Si;
+    if (str == "SM" || str == "Sm") return Sm;
+    if (str == "SN" || str == "Sn") return Sn;
+    if (str == "SR" || str == "Sr") return Sr;
+    if (str == "TA" || str == "Ta") return Ta;
+    if (str == "TB" || str == "Tb") return Tb;
+    if (str == "TC" || str == "Tc") return Tc;
+    if (str == "TE" || str == "Te") return Te;
+    if (str == "TH" || str == "Th") return Th;
+    if (str == "TI" || str == "Ti") return Ti;
+    if (str == "TL" || str == "Tl") return Tl;
+    if (str == "TM" || str == "Tm") return Tm;
+    if (str == "TS" || str == "Ts") return Ts;
+    if (str == "U") return U;
+    if (str == "V") return V;
+    if (str == "W") return W;
+    if (str == "XE" || str == "Xe") return Xe;
+    if (str == "Y") return Y;
+    if (str == "YB" || str == "Yb") return Yb;
+    if (str == "ZN" || str == "Zn") return Zn;
+    if (str == "ZR" || str == "Zr") return Zr;
     return INVALID_ATOM;
 }
 
+AtomType to_atom_type(const char &str) {
+    return to_atom_type(std::string(1, str));
+}
 
 std::string to_str(const ResidueType residue) {
     switch (residue) {
@@ -178,6 +423,22 @@ GateDifficulty to_gate_difficulty(const std::string &str) {
     if (str == "MEDIUM") return MEDIUM;
     if (str == "HARD") return HARD;
     return DIFFICULTY_ERROR;
+}
+
+std::string to_str(CylinderTag tag) {
+    switch (tag) {
+        case RAY_TRACE: return "RAY_TRACE";
+        case STANDALONE: return "STANDALONE";
+        default: return "AUTODETECT";
+    }
+}
+
+std::string to_str(RemoveTag tag) {
+    switch (tag) {
+        case REMOVE_PORES: return "REMOVE_PORES";
+        case REMOVE_CAVITIES: return "REMOVE_CAVITIES";
+        default: return "REMOVE_NOTHING";
+    }
 }
 
 // map residue types to backbone definitions

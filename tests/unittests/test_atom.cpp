@@ -26,7 +26,7 @@ INPUT PDB
 ATOM  *****  C   AAA A****     -13.267  87.421  34.691
 ATOM      1  N   SER A   4     -13.267  87.421  34.691  1.00 50.42           N
 ATOM      2  CA aGLU A   4i   -0.123451.1234562.1234560.123449.367           C +
-ATOM      3  1H  SER A   4     -11.448  86.988  36.332  1.00 47.23
+ATOM      3  1H  SER A   4     -11.448  86.988  36.332  1.00 47.23          FE
 */
 
 
@@ -39,7 +39,7 @@ public:
             complete(std::make_shared<Atom>(
                     Atom(2, "ATOM      2  CA aGLU A   4i   -0.123451.1234562.1234560.123449.367           C +"))),
             simple(std::make_shared<Atom>(
-                    Atom(3, "ATOM      3  1H  SER A   4     -11.448  86.988  36.332  1.00 47.23"))) {}
+                    Atom(3, "ATOM      3  1H  SER A   4     -11.448  86.988  36.332  1.00 47.23          FE  "))) {}
 
     std::shared_ptr<Atom> pseudo;
     std::shared_ptr<Atom> element;
@@ -62,7 +62,7 @@ TEST_F(AtomTest, constructor) {
     EXPECT_EQ(Vec<double>(-13.267, 87.421, 34.691), pseudo->original);
     EXPECT_EQ("", pseudo->atom_occupancy);
     EXPECT_EQ("", pseudo->temperature);
-    EXPECT_EQ("", pseudo->element);
+    EXPECT_EQ(INVALID_ATOM, pseudo->element);
     EXPECT_EQ("", pseudo->charge);
     EXPECT_EQ(1.7, pseudo->vdw);
     EXPECT_EQ(12.01, pseudo->mass);
@@ -83,7 +83,7 @@ TEST_F(AtomTest, constructor) {
     EXPECT_EQ(Vec<double>(-13.267, 87.421, 34.691), element->original);
     EXPECT_EQ("1.00", element->atom_occupancy);
     EXPECT_EQ("50.42", element->temperature);
-    EXPECT_EQ("N", element->element);
+    EXPECT_EQ(N, element->element);
     EXPECT_EQ("", element->charge);
     EXPECT_EQ(1.55, element->vdw);
     EXPECT_EQ(14.01, element->mass);
@@ -104,7 +104,7 @@ TEST_F(AtomTest, constructor) {
     EXPECT_EQ(Vec<double>(-0.12345, 1.123456, 2.123456), complete->original);
     EXPECT_EQ("0.1234", complete->atom_occupancy);
     EXPECT_EQ("49.367", complete->temperature);
-    EXPECT_EQ("C", complete->element);
+    EXPECT_EQ(C, complete->element);
     EXPECT_EQ("+", complete->charge);
     EXPECT_EQ(1.7, complete->vdw);
     EXPECT_EQ(12.01, complete->mass);
@@ -114,7 +114,7 @@ TEST_F(AtomTest, constructor) {
     // simple
     EXPECT_EQ(3, simple->id);
     EXPECT_EQ(3, simple->PDB_id);
-    EXPECT_EQ(H, simple->type);
+    EXPECT_EQ(Fe, simple->type);
     EXPECT_EQ("", simple->alternate_location);
     EXPECT_EQ(SER, simple->residue_type);
     EXPECT_EQ(4, simple->residue_id);
@@ -124,7 +124,7 @@ TEST_F(AtomTest, constructor) {
     EXPECT_EQ(Vec<double>(-11.448, 86.988, 36.332), simple->original);
     EXPECT_EQ("1.00", simple->atom_occupancy);
     EXPECT_EQ("47.23", simple->temperature);
-    EXPECT_EQ("", simple->element);
+    EXPECT_EQ(Fe, simple->element);
     EXPECT_EQ("", simple->charge);
     EXPECT_EQ(1.2, simple->vdw);
     EXPECT_EQ(1.008, simple->mass);
@@ -164,14 +164,34 @@ TEST(atom_tests, atomic_mass) {
 
 TEST(atom_tests, parse_atom_type) {
     std::pair<AtomType, std::string> res = std::make_pair(H, "1HB");
-    EXPECT_EQ(res, parse_atom_type("1HB"));
+    EXPECT_EQ(res, parse_atom_type("1HB ", ATOM));
+    EXPECT_EQ(res, parse_atom_type(" 1HB", ATOM));
+    EXPECT_EQ(res, parse_atom_type("21HB ", ATOM));
+    EXPECT_EQ(res, parse_atom_type("1HB ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("21HB ", HETATOM));
     res = std::make_pair(C, "CA");
-    EXPECT_EQ(res, parse_atom_type("CA"));
-    res = std::make_pair(INVALID_ATOM, "BLA");
-    EXPECT_EQ(res, parse_atom_type("BLA"));
+    EXPECT_EQ(res, parse_atom_type("CA  ", ATOM));
+    EXPECT_EQ(res, parse_atom_type(" CA ", ATOM));
+    EXPECT_EQ(res, parse_atom_type("  CA", ATOM));
+    EXPECT_EQ(res, parse_atom_type(" CA ", HETATOM));
+    res = std::make_pair(Ca, "CA");
+    EXPECT_EQ(res, parse_atom_type("CA  ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("  CA", HETATOM));
+    res = std::make_pair(I, "I");
+    EXPECT_EQ(res, parse_atom_type("I   ", ATOM));
+    EXPECT_EQ(res, parse_atom_type("   I", ATOM));
+    EXPECT_EQ(res, parse_atom_type(" I  ", ATOM));
+    EXPECT_EQ(res, parse_atom_type("  I ", ATOM));
+    EXPECT_EQ(res, parse_atom_type("I   ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("   I", HETATOM));
+    EXPECT_EQ(res, parse_atom_type(" I  ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("  I ", HETATOM));
     res = std::make_pair(INVALID_ATOM, "");
-    EXPECT_EQ(res, parse_atom_type("12HBB"));
-    EXPECT_EQ(res, parse_atom_type(""));
+    EXPECT_EQ(res, parse_atom_type("1C", ATOM));
+    EXPECT_EQ(res, parse_atom_type("1CH", ATOM));
+    EXPECT_EQ(res, parse_atom_type("BLA", ATOM));
+    EXPECT_EQ(res, parse_atom_type("12HBB", ATOM));
+    EXPECT_EQ(res, parse_atom_type("", ATOM));
 }
 
 TEST_F(AtomTest, sort_atoms) {

@@ -22,6 +22,7 @@
 #include "gtest/gtest.h"
 #include "enums.h"
 
+/*
 TEST(enum_tests, to_atom_type) {
     for (const std::string &str: {"H", "C", "O", "N", "S"}) {
         EXPECT_FALSE(INVALID_ATOM == to_atom_type(str));
@@ -96,3 +97,4 @@ TEST(enum_tests, difficulty_to_str) {
     EXPECT_EQ(expected, actual);
 }
 
+*/

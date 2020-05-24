@@ -157,6 +157,16 @@ void collision_detection(ProteinGrid &grid) {
     }
 }
 
+
+// determine which cylinder function should be run, if true => run cylinder standalone
+bool switch_to_standalone(const ProteinGrid &grid, const Settings &settings) {
+    bool autodetect = grid.occupied.size() > settings.box_threshold;
+    autodetect = autodetect || grid.pairs.size() < settings.atom_pair_threshold;
+    autodetect = autodetect && settings.cylinder_tag == AUTODETECT;
+    // run standalone cylinder perpendicularity if enabled
+    return autodetect || settings.cylinder_tag == STANDALONE;
+}
+
 // form a cylinder around the connecting vector between atom pairs
 void cylinder_trace(ProteinGrid &grid, const std::shared_ptr<AtomPair> &atom_pair, const double r_sq, const int r_grid,
                     const double threshold, const double search) {
@@ -584,7 +594,7 @@ void output_pores(ProteinGrid &grid, const Settings &settings) {
         // pore/cavity volume in Angstrom
         double volume = cluster.size() * grid.box_volume;
         // create the PDB file path, open the empty file and write the pore/cavity volume
-        std::ofstream pdb_file((settings.pore_path / fs::path(name + ".pdb")).string());
+        std::ofstream pdb_file((settings.pore_dir / fs::path(name + ".pdb")).string());
         pdb_file << "REMARK\tPore Volume = " << volume << " (cubic Angstrom)" << std::endl;
         // write each pore/cavity grid box as an "atom" in pseudo PDB format so that it can be visualised
         for (size_t i = 0; i < cluster.size(); i++) {
@@ -593,7 +603,7 @@ void output_pores(ProteinGrid &grid, const Settings &settings) {
         pdb_file.close();
         // LINING RESIDUES
         // create the lining residues file path and open the empty file
-        std::ofstream lining((settings.lining_path / fs::path(name + ".tsv")).string());
+        std::ofstream lining((settings.lining_dir / fs::path(name + ".tsv")).string());
         // for each lining residue, write the chain, residue ID and residue type in tab-separated format
         for (const auto &[chain, res_id, res_type]: cluster.lining_residues) {
             lining << chain << "\t" << res_id << "\t" << to_str(res_type) << std::endl;
@@ -604,20 +614,26 @@ void output_pores(ProteinGrid &grid, const Settings &settings) {
 
 // main pore/cavity identification routine
 void pore_ID(ProteinGrid &grid, const Settings &settings) {
-    // scan the x, y and z axis for protein-solvent-protein (PSP) events
     auto start = std::chrono::high_resolution_clock::now();
+    fs::path log = settings.pore_log;
+
+    // PROTEIN-SOLVENT-PROTEIN IDENTIFICATION
+    add_comment(log, 1, "identifying enclosed, empty spaces");
+    // scan the x, y and z axis for protein-solvent-protein (PSP) events
     psp_scan(grid);
+    add_entry(log, 1, "PSP scan", start);
     // first run collision detection
+    auto sub_start = std::chrono::high_resolution_clock::now();
     collision_detection(grid);
-    // determine which cylinder function should be run, autodetect=true => run cylinder standalone
-    bool autodetect = grid.occupied.size() > settings.box_threshold;
-    autodetect = autodetect || grid.pairs.size() < settings.atom_pair_threshold;
-    autodetect = autodetect && settings.cylinder_tag == AUTODETECT;
-    // run standalone cylinder perpendicularity if enabled
-    if (autodetect || settings.cylinder_tag == STANDALONE) {
+    add_entry(log, 1, "collision detection", sub_start);
+    // compute
+    sub_start = std::chrono::high_resolution_clock::now();
+    if (switch_to_standalone(grid, settings)) {
+        add_entry(log, 1, "used computation mode", to_str(STANDALONE));
         perpendicularity_standalone(grid);
-        // otherwise run cylinder trace
+    // otherwise run cylinder trace
     } else {
+        add_entry(log, 1, "used computation mode", to_str(RAY_TRACE));
         // first generate and trace cylinders in the grid
         cylinder_completion(grid);
         // then compute which boxes are crossed by perpendicular cylinders
@@ -625,32 +641,62 @@ void pore_ID(ProteinGrid &grid, const Settings &settings) {
         // release the trace memory
         grid.trace = std::vector<std::unordered_set<size_t>>();
     }
+    add_entry(log, 1, "cylinder computation", sub_start);
     // release the atom pair memory
     grid.pairs = std::vector<std::shared_ptr<AtomPair>>();
+
+    // PROTEIN SURFACE
+    add_comment(log, 1, "processing protein surface");
     // 1. seal gaps on the protein surface to compute the background surrounding the protein
     // 2. remove shallow regions on the protein surface
+    sub_start = std::chrono::high_resolution_clock::now();
     seal_gaps(grid);
+    add_entry(log, 1, "gap sealing", sub_start);
+    sub_start = std::chrono::high_resolution_clock::now();
     remove_shallow_regions(grid, settings.probe_radius);
+    add_entry(log, 1, "shallow region removal", sub_start);
     print(1, start, "> marked potential pore or cavity areas in");
+
+    // PORE IDENTIFICATION AND CLASSIFICATION
+    add_comment(log, 1, "identifying pores");
     // 1. identify nuclei that could form the core of a pore or cavity
     // 2. merge all connected pore/cavity nucleus boxes into clusters (this avoids merging pores/cavities that are
     //    close to each other and connected by narrow stretches of empty boxes)
     // 3. after the clusters are established, add the surrounding potential pore/cavity boxes to the nearest cluster
     start = std::chrono::high_resolution_clock::now();
+    sub_start = std::chrono::high_resolution_clock::now();
     identify_pore_nuclei(grid);
+    add_entry(log, 1, "pore nuclei identification", sub_start);
+    sub_start = std::chrono::high_resolution_clock::now();
     initial_pore_assembly(grid, 1.0);
+    add_entry(log, 1, "initial pore assembly", sub_start);
+    sub_start = std::chrono::high_resolution_clock::now();
     complete_pores(grid);
+    add_entry(log, 1, "pore completion", sub_start);
+
+    // POST-PROCESSING
+    add_comment(log, 1, "pore post-processing");
     // 1. for each empty grid box involved in a pore/cavity, compute if it's at the protein surface, in touch with
     //    residues, in touch with another cluster or in the cluster centre
     // 2. if the cluster touches the background, it is a pore, otherwise it is a cavity
-    if (settings.run_axis_trace || settings.run_axis_trace_preparation) label_pore_boxes(grid);
+    sub_start = std::chrono::high_resolution_clock::now();
+    if (settings.run_axis_trace || settings.run_axis_preparation) label_pore_boxes(grid);
     classify_clusters(grid);
+    add_entry(log, 1, "pore classification", sub_start);
     // remove pores/cavities that are too small, or only keep pores or cavities
+    sub_start = std::chrono::high_resolution_clock::now();
     grid.filter_pores(settings.volume_threshold, settings.remove_tag);
+    add_entry(log, 1, "pore filter", sub_start);
     // compute the residues surrounding each pore/cavity
+    sub_start = std::chrono::high_resolution_clock::now();
     lining_residues(grid);
     grid.occupied = std::vector<std::unordered_set<size_t>>();
+    add_entry(log, 1, "lining residue", sub_start);
     // create files for the pores/cavities and corresponding lining residues
+    sub_start = std::chrono::high_resolution_clock::now();
     output_pores(grid, settings);
+    add_entry(log, 1, "pore output", sub_start);
     print(1, start, "> identified " + std::to_string(grid.clusters.size()) + " pores/cavities in");
+    add_comment(log, 1, "results");
+    add_entry(log, 1, "identified pores", grid.clusters.size());
 }

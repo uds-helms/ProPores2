@@ -212,9 +212,15 @@ struct Gate {
     }
 
     // load the protein atoms from the input PDB file, and match them to the gating residues
-    void load_atoms(const Settings &settings) {
+    void load_atoms(Settings &settings) {
         // parse the input PDB file and extract the protein atoms
-        parse_PDB(settings.pdb_path.string(), atoms, settings.skip_H, settings.keep_alternative);
+        PDBReaderStats stats = PDBReaderStats();
+        parse_PDB(settings, atoms, stats);
+        // log PDB parsing stats if that was not already done for a previous gate
+        if (!settings.gate_already_logged_pdb_parsing_stats) {
+            stats.write(settings.gate_log.string());
+            settings.gate_already_logged_pdb_parsing_stats = true;
+        }
         // associate atoms with gating residues and determine the position of the C-alpha atoms in the gating residues
         size_t number_c_alpha = 0;
         for (const std::shared_ptr<Atom> &atom: atoms) {
@@ -228,7 +234,7 @@ struct Gate {
                 }
                 // do not need to store the atoms of alanine, glycine or proline since they are going to be removed
                 // from the gate later anyway due to missing side chains or lack of rotamers
-                if (res.type == ALA || res.type == GLY || res.type == PRO) continue;
+                if (res.type == ALA || res.type == GLY || res.type == PRO || res.type == INVALID_RESIDUE) continue;
                 res.add_atom(atom);
             }
         }
@@ -239,7 +245,7 @@ struct Gate {
         std::vector<Residue> valid_residues;
         for (Residue &residue: residues) {
             // alanine, glycine and proline do not have side chains or none that can be converted to rotamers
-            if (residue.type == ALA || residue.type == GLY || residue.type == PRO) continue;
+            if (residue.type == ALA || residue.type == GLY || residue.type == PRO || residue.type == INVALID_RESIDUE) continue;
             // some error occurred while the side chains were set up
             if (!residue.setup_indices()) continue;
             // set the coordinates of side chain atoms to infinity to (temporarily) remove them from the protein

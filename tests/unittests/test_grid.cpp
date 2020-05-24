@@ -23,6 +23,7 @@
 #include "reader.h"
 #include "gtest/gtest.h"
 
+/*
 class ProteinGridTest : public ::testing::Test {
 public:
     ProteinGridTest() :
@@ -529,3 +530,4 @@ TEST_F(ProteinGridTest, new_cluster) {
     EXPECT_EQ(0, small.clusters.size());
     EXPECT_EQ(0, small.next_cluster_id);
 }
+*/

@@ -27,7 +27,7 @@
 #include "pore_id.h"
 #include "gtest/gtest.h"
 
-
+/*
 class PoreIDTest : public ::testing::Test {
 public:
     PoreIDTest() :
@@ -705,3 +705,4 @@ TEST(pore_id_tests, compute_volumes_pore_plus_standalone) {
         }
     }
 }
+ */

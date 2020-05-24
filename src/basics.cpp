@@ -18,13 +18,17 @@
 */
 
 #include <string>
+#include <cctype>
 #include <chrono>
 #include <vector>
 #include <sstream>
 #include <iomanip>
 #include <iostream>
 #include <algorithm>
+#include <filesystem>
 #include "basics.h"
+
+namespace fs = std::filesystem;
 
 // construct an indent (whitespace) for the given indent level
 std::string indent(const size_t level) { return std::string(level * 2, ' '); }
@@ -52,6 +56,11 @@ std::string remove_spaces(std::string str) {
 // strip whitespace from the right side of a string
 std::string r_strip(std::string str) {
     str.erase(std::find_if(str.rbegin(), str.rend(), [](char c) { return !std::isspace(c); }).base(), str.end());
+    return str;
+}
+
+std::string r_strip_zero(std::string str) {
+    str.erase(std::find_if(str.rbegin(), str.rend(), [](char c) { return c != '0'; }).base(), str.end());
     return str;
 }
 
@@ -113,4 +122,49 @@ std::vector<std::string> wrap(const std::string &str, const size_t width) {
         }
     }
     return rows;
+}
+
+// get the current date and time
+std::string current_datetime() {
+    std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    char buffer[40];
+    ctime_s(buffer, sizeof(buffer), &now);
+    return r_strip(buffer);
+}
+
+// add a line to a file without overwriting it
+void add_to_file(const fs::path &file_path, const std::string &line) {
+    std::ofstream file(file_path, std::ios_base::app);
+    file << line << std::endl;
+    file.close();
+}
+
+// add key: value entries in YAML format to the specified file
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key, const std::string &value) {
+    add_to_file(file_path, indent(level) + key + ": " + value);
+}
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key) {
+    add_to_file(file_path, indent(level) + key + ":");
+}
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key, const double &value) {
+    std::stringstream ss;
+    ss << indent(level) << key << ": " << value;
+    add_to_file(file_path, ss.str());
+}
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key, const size_t &value) {
+    add_to_file(file_path, indent(level) + key + ": " + std::to_string(value));
+}
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key, const bool &value) {
+    add_to_file(file_path, indent(level) + key + ": " + (value ? "true" : "false"));
+}
+void add_entry(const fs::path &file_path, const size_t level, const std::string &key,
+        const std::chrono::time_point<std::chrono::high_resolution_clock> &start_time) {
+    auto current_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - start_time).count();
+    std::stringstream str;
+    str << indent(level) << key << ": " << std::setprecision(3) << double(duration) / 1000.0 << "s";
+    add_to_file(file_path, str.str());
+}
+void add_comment(const fs::path &file_path, const size_t level, const std::string &comment) {
+    add_to_file(file_path, indent(level) + "# " + comment);
 }

@@ -143,6 +143,10 @@ void gates_from_grid(ProteinGrid &grid, std::vector<Gate> &gates) {
             // identify all lining residues that are shared by the two pores/cavities
             std::vector<std::tuple<std::string, size_t, ResidueType>> shared;
             for (const std::tuple<std::string, size_t, ResidueType> &residue: cluster_1.lining_residues) {
+                ResidueType res = std::get<2>(residue);
+                // skip lining residues that are not standard amino acids or cannot be rotated
+                if (res == INVALID_RESIDUE || res == PRO || res == GLY || res == ALA) continue;
+                // check if the residue is shared
                 if (cluster_2.lining_residues.find(residue) != cluster_2.lining_residues.end()) {
                     shared.push_back(residue);
                 }
@@ -213,7 +217,7 @@ void output_gates(const Settings &settings, const std::vector<Gate> &gates) {
         // do not output gates that do not have valid gating residues or where the difficulty could not be estimated
         if (gate.difficulty > HARD || gate.residues.empty()) continue;
         // generate the output path and create the output file
-        fs::path output_path = settings.gate_preparation_path / fs::path("between_" + gate.name() + ".txt");
+        fs::path output_path = settings.gate_preparation_dir / fs::path("between_" + gate.name() + ".txt");
         std::ofstream file(output_path.string());
         // write a header with the IDs of the two pores/cavities and the estimated difficulty
         file << "# Pore/cavity IDs: " << gate.pore_1 << " and " << gate.pore_2 << std::endl;
@@ -524,7 +528,7 @@ std::vector<Rotamer> exhaustive_search(const Gate &gate) {
 }
 
 // main gate-open routine
-void gate_open(const Settings &settings, std::vector<Gate> &gates) {
+void gate_open(Settings &settings, std::vector<Gate> &gates) {
     // load the rotamer library
     auto library_start = std::chrono::high_resolution_clock::now();
     std::unordered_map<ResidueType, std::vector<std::vector<int>>> rotamer_lib;
@@ -584,7 +588,7 @@ void gate_open(const Settings &settings, std::vector<Gate> &gates) {
             for (const BasicAtom &atom: rot.atoms) { gate.atoms[atom.index]->coord = atom.coord; }
         }
         std::string file_name = settings.output_name + gate.name() + ".pdb";
-        write_PDB((settings.gate_path / fs::path(file_name)).string(), gate.atoms);
+        write_PDB((settings.gate_dir / fs::path(file_name)).string(), gate.atoms);
         // output the total run time needed for this gate
         print(2, start_gate, "=> total gate runtime:");
     }

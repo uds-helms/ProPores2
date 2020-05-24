@@ -1,4 +1,4 @@
-# Install script for directory: D:/OneDrive/Projects/Propores/src
+# Install script for directory: D:/OneDrive/Projects/PROPORES/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -4,14 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/OneDrive/Projects/Propores/src/angles.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/angles.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/atom.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/atom.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/basics.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/basics.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/enums.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/enums.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/gate_open.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/gate_open.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/pore_id.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/pore_id.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/reader.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/reader.cpp.obj"
-  "D:/OneDrive/Projects/Propores/src/trace.cpp" "D:/OneDrive/Projects/Propores/cmake-build-debug/src/CMakeFiles/propores_source.dir/trace.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/angles.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/angles.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/atom.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/atom.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/basics.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/basics.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/enums.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/enums.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/gate_open.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/gate_open.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/pore_id.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/pore_id.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/reader.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/reader.cpp.obj"
+  "D:/OneDrive/Projects/PROPORES/src/trace.cpp" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/src/CMakeFiles/propores_source.dir/trace.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "MSVC")
 

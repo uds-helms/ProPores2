@@ -24,10 +24,13 @@
 #include "enums.h"
 #include "reader.h"
 
-/*
+
 TEST(reader_tests, parse_PDB) {
     std::vector<std::shared_ptr<Atom>> atoms;
-    parse_PDB("test_files/reader_test.pdb", atoms, false, false);
+    PDBReaderStats stats = PDBReaderStats();
+    // all
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, false, false, true, true);
     EXPECT_EQ(4, atoms.size());
     EXPECT_EQ(12345, atoms[3]->PDB_id);
     EXPECT_EQ(C, atoms[3]->type);
@@ -38,37 +41,47 @@ TEST(reader_tests, parse_PDB) {
     EXPECT_EQ("i", atoms[3]->insertion_code);
     EXPECT_EQ("0.0001", atoms[3]->atom_occupancy);
     EXPECT_EQ("123456", atoms[3]->temperature);
-    EXPECT_EQ("EL", atoms[3]->element);
+    EXPECT_EQ(C, atoms[3]->element);
     EXPECT_EQ("+-", atoms[3]->charge);
     for (size_t i = 0; i < atoms.size(); i++) {
         EXPECT_EQ(i, atoms[i]->id);
     }
     atoms.clear();
-    parse_PDB("test_files/reader_test.pdb", atoms, true, false);
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, false, false, false, true);
+    EXPECT_EQ(5, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, true, false, true, true);
     EXPECT_EQ(2, atoms.size());
     atoms.clear();
-    parse_PDB("test_files/reader_test.pdb", atoms, false, true);
-    EXPECT_EQ(5, atoms.size());
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, false, true, false, false);
+    EXPECT_EQ(10, atoms.size());
 }
 
 TEST(reader_tests, parse_PDB_simple_coord) {
     std::vector<std::shared_ptr<Atom>> atoms;
-    parse_PDB("test_files/simple_coord.pdb", atoms, false, false);
+    PDBReaderStats stats = PDBReaderStats();
+    parse_PDB("test_files/simple_coord.pdb", "test_files/reader_output.pdb", "test_files/reader_output.pdb",
+              atoms, stats, false, false, false, false);
     EXPECT_EQ(3, atoms.size());
 }
 
 TEST(reader_tests, pseudo_pdb) {
-    EXPECT_EQ("ATOM  *****  C   AAA A   1     -13.267  87.421  34.691",
+    EXPECT_EQ("ATOM  *****  C   AAA A   1     -13.267  87.421  34.691  1.00  0.00           C  ",
               pseudo_pdb(100000, Vec<double>(-13.267, 87.421, 34.691)));
-    EXPECT_EQ("ATOM  99999  C   AAA A   1     -13.267  87.421  34.691",
+    EXPECT_EQ("ATOM  99999  C   AAA A   1     -13.267  87.421  34.691  1.00  0.00           C  ",
               pseudo_pdb(99999, Vec<double>(-13.267, 87.421, 34.691)));
-    EXPECT_EQ("ATOM      1  C   AAA A   1    -133.2688777.4211234.691",
+    EXPECT_EQ("ATOM      1  C   AAA A   1    -133.2688777.4211234.691  1.00  0.00           C  ",
               pseudo_pdb(1, Vec<double>(-133.2677, 8777.42122, 1234.69133)));
 }
 
 TEST(reader_tests, parse_and_write) {
     std::vector<std::shared_ptr<Atom>> atoms;
-    parse_PDB("test_files/real.pdb", atoms, false, true);
+    PDBReaderStats stats = PDBReaderStats();
+    parse_PDB("test_files/real.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, false, true, false, false);
     EXPECT_EQ(4389, atoms.size());
 
     std::ifstream real_file("test_files/real.pdb");
@@ -88,4 +101,3 @@ TEST(reader_tests, parse_and_write) {
         EXPECT_EQ(real_lines[i], test_lines[i]);
     }
 }
- */

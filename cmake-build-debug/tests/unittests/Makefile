@@ -49,10 +49,10 @@ RM = "D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\OneDrive\Projects\Propores
+CMAKE_SOURCE_DIR = D:\OneDrive\Projects\PROPORES
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\OneDrive\Projects\Propores\cmake-build-debug
+CMAKE_BINARY_DIR = D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -115,18 +115,18 @@ list_install_components\fast: list_install_components
 
 # The main all target
 all: cmake_check_build_system
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests\CMakeFiles\progress.marks
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\unittests\all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles 0
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\unittests\clean
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : clean
 
 # The main clean target
@@ -136,30 +136,30 @@ clean\fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\unittests\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\unittests\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : preinstall\fast
 
 # clear depends
 depend:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : depend
 
 # Convenience name for target.
 tests\unittests\CMakeFiles\propores_tests.dir\rule:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\rule
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : tests\unittests\CMakeFiles\propores_tests.dir\rule
 
 # Convenience name for target.
@@ -169,9 +169,9 @@ propores_tests: tests\unittests\CMakeFiles\propores_tests.dir\rule
 
 # fast build rule for target.
 propores_tests\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\build
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : propores_tests\fast
 
 test_angles.obj: test_angles.cpp.obj
@@ -180,9 +180,9 @@ test_angles.obj: test_angles.cpp.obj
 
 # target to build an object file
 test_angles.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_angles.cpp.obj
 
 test_angles.i: test_angles.cpp.i
@@ -191,9 +191,9 @@ test_angles.i: test_angles.cpp.i
 
 # target to preprocess a source file
 test_angles.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_angles.cpp.i
 
 test_angles.s: test_angles.cpp.s
@@ -202,9 +202,9 @@ test_angles.s: test_angles.cpp.s
 
 # target to generate assembly for a file
 test_angles.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_angles.cpp.s
 
 test_atom.obj: test_atom.cpp.obj
@@ -213,9 +213,9 @@ test_atom.obj: test_atom.cpp.obj
 
 # target to build an object file
 test_atom.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_atom.cpp.obj
 
 test_atom.i: test_atom.cpp.i
@@ -224,9 +224,9 @@ test_atom.i: test_atom.cpp.i
 
 # target to preprocess a source file
 test_atom.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_atom.cpp.i
 
 test_atom.s: test_atom.cpp.s
@@ -235,9 +235,9 @@ test_atom.s: test_atom.cpp.s
 
 # target to generate assembly for a file
 test_atom.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_atom.cpp.s
 
 test_basics.obj: test_basics.cpp.obj
@@ -246,9 +246,9 @@ test_basics.obj: test_basics.cpp.obj
 
 # target to build an object file
 test_basics.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_basics.cpp.obj
 
 test_basics.i: test_basics.cpp.i
@@ -257,9 +257,9 @@ test_basics.i: test_basics.cpp.i
 
 # target to preprocess a source file
 test_basics.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_basics.cpp.i
 
 test_basics.s: test_basics.cpp.s
@@ -268,9 +268,9 @@ test_basics.s: test_basics.cpp.s
 
 # target to generate assembly for a file
 test_basics.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_basics.cpp.s
 
 test_enums.obj: test_enums.cpp.obj
@@ -279,9 +279,9 @@ test_enums.obj: test_enums.cpp.obj
 
 # target to build an object file
 test_enums.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_enums.cpp.obj
 
 test_enums.i: test_enums.cpp.i
@@ -290,9 +290,9 @@ test_enums.i: test_enums.cpp.i
 
 # target to preprocess a source file
 test_enums.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_enums.cpp.i
 
 test_enums.s: test_enums.cpp.s
@@ -301,9 +301,9 @@ test_enums.s: test_enums.cpp.s
 
 # target to generate assembly for a file
 test_enums.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_enums.cpp.s
 
 test_grid.obj: test_grid.cpp.obj
@@ -312,9 +312,9 @@ test_grid.obj: test_grid.cpp.obj
 
 # target to build an object file
 test_grid.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_grid.cpp.obj
 
 test_grid.i: test_grid.cpp.i
@@ -323,9 +323,9 @@ test_grid.i: test_grid.cpp.i
 
 # target to preprocess a source file
 test_grid.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_grid.cpp.i
 
 test_grid.s: test_grid.cpp.s
@@ -334,9 +334,9 @@ test_grid.s: test_grid.cpp.s
 
 # target to generate assembly for a file
 test_grid.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_grid.cpp.s
 
 test_pore_ID.obj: test_pore_ID.cpp.obj
@@ -345,9 +345,9 @@ test_pore_ID.obj: test_pore_ID.cpp.obj
 
 # target to build an object file
 test_pore_ID.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_pore_ID.cpp.obj
 
 test_pore_ID.i: test_pore_ID.cpp.i
@@ -356,9 +356,9 @@ test_pore_ID.i: test_pore_ID.cpp.i
 
 # target to preprocess a source file
 test_pore_ID.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_pore_ID.cpp.i
 
 test_pore_ID.s: test_pore_ID.cpp.s
@@ -367,9 +367,9 @@ test_pore_ID.s: test_pore_ID.cpp.s
 
 # target to generate assembly for a file
 test_pore_ID.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_pore_ID.cpp.s
 
 test_reader.obj: test_reader.cpp.obj
@@ -378,9 +378,9 @@ test_reader.obj: test_reader.cpp.obj
 
 # target to build an object file
 test_reader.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_reader.cpp.obj
 
 test_reader.i: test_reader.cpp.i
@@ -389,9 +389,9 @@ test_reader.i: test_reader.cpp.i
 
 # target to preprocess a source file
 test_reader.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_reader.cpp.i
 
 test_reader.s: test_reader.cpp.s
@@ -400,9 +400,9 @@ test_reader.s: test_reader.cpp.s
 
 # target to generate assembly for a file
 test_reader.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_reader.cpp.s
 
 test_vector.obj: test_vector.cpp.obj
@@ -411,9 +411,9 @@ test_vector.obj: test_vector.cpp.obj
 
 # target to build an object file
 test_vector.cpp.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_vector.cpp.obj
 
 test_vector.i: test_vector.cpp.i
@@ -422,9 +422,9 @@ test_vector.i: test_vector.cpp.i
 
 # target to preprocess a source file
 test_vector.cpp.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_vector.cpp.i
 
 test_vector.s: test_vector.cpp.s
@@ -433,9 +433,9 @@ test_vector.s: test_vector.cpp.s
 
 # target to generate assembly for a file
 test_vector.cpp.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\unittests\CMakeFiles\propores_tests.dir\build.make /nologo -$(MAKEFLAGS) tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : test_vector.cpp.s
 
 # Help Target
@@ -485,8 +485,8 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 .PHONY : cmake_check_build_system
 

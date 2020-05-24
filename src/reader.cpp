@@ -176,7 +176,7 @@ std::string PDB_atom_entry(const std::shared_ptr<Atom> &atom) {
     ss << std::setw(8) << std::setprecision(3) << std::setfill(' ') << std::right << std::fixed << atom->coord.z;
     ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << atom->atom_occupancy;
     ss << std::setw(6) << std::setprecision(2) << std::setfill(' ') << atom->temperature;
-    ss << std::setw(12) << std::setfill(' ') << std::right << std::fixed << atom->element;
+    ss << std::setw(12) << std::setfill(' ') << std::right << std::fixed << to_str(atom->element);
     ss << std::setw(2) << std::setfill(' ') << std::left << std::fixed << atom->charge;
     return ss.str();
 }

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/OneDrive/Projects/Propores/tests/lib/googletest/src/gtest_main.cc" "D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj"
+  "D:/OneDrive/Projects/PROPORES/tests/lib/googletest/src/gtest_main.cc" "D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "MSVC")
 
@@ -16,7 +16,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
+  "D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

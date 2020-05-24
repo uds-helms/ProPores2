@@ -23,14 +23,14 @@
 #include "reader.h"
 #include "gtest/gtest.h"
 
-/*
+
 class ProteinGridTest : public ::testing::Test {
 public:
     ProteinGridTest() :
-            small("test_files/simple_coord.pdb", 1.0, 1.0, false, false),
-            small_05("test_files/simple_coord.pdb", 0.5, 1.0, false, false),
-            kd("test_files/kd.pdb", 1.0, 1.0, false, false),
-            g_per("test_files/perpendicular.pdb", 1.0, 1.0, false, false) {
+            small("test_files/simple_coord.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true),
+            small_05("test_files/simple_coord.pdb",  "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 0.5, 1.0, false, false, true, true),
+            kd("test_files/kd.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, false, false, true, true),
+            g_per("test_files/perpendicular.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, false, false, true, true) {
         atom_1 = std::make_shared<Atom>(Atom{0, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});
         atom_2 = std::make_shared<Atom>(Atom{0, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});
         atom_3 = std::make_shared<Atom>(Atom{1, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});
@@ -530,4 +530,3 @@ TEST_F(ProteinGridTest, new_cluster) {
     EXPECT_EQ(0, small.clusters.size());
     EXPECT_EQ(0, small.next_cluster_id);
 }
-*/

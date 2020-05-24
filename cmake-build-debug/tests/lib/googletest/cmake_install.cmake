@@ -1,4 +1,4 @@
-# Install script for directory: D:/OneDrive/Projects/Propores/tests/lib/googletest
+# Install script for directory: D:/OneDrive/Projects/PROPORES/tests/lib/googletest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

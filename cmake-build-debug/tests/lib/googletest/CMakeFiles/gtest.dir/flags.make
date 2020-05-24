@@ -6,5 +6,5 @@ CXX_FLAGS = /DWIN32 /D_WINDOWS /GR  /Zi /Ob0 /Od /RTC1 -MDd   -GS -W4 -WX -wd425
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -ID:\OneDrive\Projects\Propores\tests\lib\googletest\include -ID:\OneDrive\Projects\Propores\tests\lib\googletest 
+CXX_INCLUDES = -ID:\OneDrive\Projects\PROPORES\tests\lib\googletest\include -ID:\OneDrive\Projects\PROPORES\tests\lib\googletest 
 

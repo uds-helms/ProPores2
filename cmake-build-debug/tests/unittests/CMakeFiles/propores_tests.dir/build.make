@@ -44,10 +44,10 @@ RM = "D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\OneDrive\Projects\Propores
+CMAKE_SOURCE_DIR = D:\OneDrive\Projects\PROPORES
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\OneDrive\Projects\Propores\cmake-build-debug
+CMAKE_BINARY_DIR = D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include tests\unittests\CMakeFiles\propores_tests.dir\depend.make
@@ -60,203 +60,203 @@ include tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.obj: ..\tests\unittests\test_basics.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_basics.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_basics.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_basics.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_basics.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_basics.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_basics.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_basics.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_basics.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_basics.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_basics.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_basics.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_basics.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_basics.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_basics.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_basics.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_basics.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.obj: ..\tests\unittests\test_pore_ID.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_pore_ID.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_pore_ID.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_pore_ID.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_pore_ID.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_pore_ID.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_pore_ID.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_pore_ID.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_pore_ID.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_pore_ID.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_pore_ID.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_pore_ID.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_pore_ID.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_pore_ID.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_pore_ID.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_pore_ID.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_pore_ID.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.obj: ..\tests\unittests\test_grid.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_grid.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_grid.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_grid.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_grid.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_grid.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_grid.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_grid.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_grid.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_grid.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_grid.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_grid.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_grid.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_grid.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_grid.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_grid.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_grid.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.obj: ..\tests\unittests\test_vector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_vector.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_vector.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_vector.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_vector.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_vector.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_vector.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_vector.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_vector.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_vector.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_vector.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_vector.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_vector.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_vector.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_vector.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_vector.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_vector.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.obj: ..\tests\unittests\test_atom.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_atom.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_atom.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_atom.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_atom.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_atom.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_atom.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_atom.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_atom.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_atom.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_atom.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_atom.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_atom.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_atom.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_atom.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_atom.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_atom.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.obj: ..\tests\unittests\test_reader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_reader.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_reader.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_reader.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_reader.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_reader.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_reader.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_reader.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_reader.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_reader.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_reader.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_reader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_reader.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_reader.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_reader.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_reader.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_reader.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.obj: ..\tests\unittests\test_angles.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_angles.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_angles.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_angles.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_angles.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_angles.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_angles.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_angles.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_angles.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_angles.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_angles.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_angles.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_angles.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_angles.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_angles.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_angles.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_angles.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.obj: tests\unittests\CMakeFiles\propores_tests.dir\flags.make
 tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.obj: ..\tests\unittests\test_enums.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_enums.cpp.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object tests/unittests/CMakeFiles/propores_tests.dir/test_enums.cpp.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_enums.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\Propores\tests\unittests\test_enums.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\propores_tests.dir\test_enums.cpp.obj /FdCMakeFiles\propores_tests.dir\ /FS -c D:\OneDrive\Projects\PROPORES\tests\unittests\test_enums.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/propores_tests.dir/test_enums.cpp.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\propores_tests.dir\test_enums.cpp.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\unittests\test_enums.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\unittests\test_enums.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\unittests\CMakeFiles\propores_tests.dir\test_enums.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/propores_tests.dir/test_enums.cpp.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_enums.cpp.s /c D:\OneDrive\Projects\Propores\tests\unittests\test_enums.cpp
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\propores_tests.dir\test_enums.cpp.s /c D:\OneDrive\Projects\PROPORES\tests\unittests\test_enums.cpp
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Object files for target propores_tests
 propores_tests_OBJECTS = \
@@ -286,12 +286,12 @@ tests\unittests\propores_tests.exe: lib\gtest_maind.lib
 tests\unittests\propores_tests.exe: src\propores_source.lib
 tests\unittests\propores_tests.exe: lib\gtestd.lib
 tests\unittests\propores_tests.exe: tests\unittests\CMakeFiles\propores_tests.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable propores_tests.exe"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable propores_tests.exe"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	"D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\propores_tests.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\propores_tests.dir\objects1.rsp @<<
- /out:propores_tests.exe /implib:propores_tests.lib /pdb:D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests\propores_tests.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console ..\..\lib\gtestd.lib ..\..\lib\gtest_maind.lib ..\..\src\propores_source.lib ..\..\lib\gtestd.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
+ /out:propores_tests.exe /implib:propores_tests.lib /pdb:D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests\propores_tests.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console ..\..\lib\gtestd.lib ..\..\lib\gtest_maind.lib ..\..\src\propores_source.lib ..\..\lib\gtestd.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Rule to build all files generated by this target.
 tests\unittests\CMakeFiles\propores_tests.dir\build: tests\unittests\propores_tests.exe
@@ -299,12 +299,12 @@ tests\unittests\CMakeFiles\propores_tests.dir\build: tests\unittests\propores_te
 .PHONY : tests\unittests\CMakeFiles\propores_tests.dir\build
 
 tests\unittests\CMakeFiles\propores_tests.dir\clean:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests
 	$(CMAKE_COMMAND) -P CMakeFiles\propores_tests.dir\cmake_clean.cmake
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 .PHONY : tests\unittests\CMakeFiles\propores_tests.dir\clean
 
 tests\unittests\CMakeFiles\propores_tests.dir\depend:
-	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" D:\OneDrive\Projects\Propores D:\OneDrive\Projects\Propores\tests\unittests D:\OneDrive\Projects\Propores\cmake-build-debug D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests D:\OneDrive\Projects\Propores\cmake-build-debug\tests\unittests\CMakeFiles\propores_tests.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" D:\OneDrive\Projects\PROPORES D:\OneDrive\Projects\PROPORES\tests\unittests D:\OneDrive\Projects\PROPORES\cmake-build-debug D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\unittests\CMakeFiles\propores_tests.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : tests\unittests\CMakeFiles\propores_tests.dir\depend
 

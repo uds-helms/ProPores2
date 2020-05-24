@@ -49,10 +49,10 @@ RM = "D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\OneDrive\Projects\Propores
+CMAKE_SOURCE_DIR = D:\OneDrive\Projects\PROPORES
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\OneDrive\Projects\Propores\cmake-build-debug
+CMAKE_BINARY_DIR = D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -115,18 +115,18 @@ list_install_components\fast: list_install_components
 
 # The main all target
 all: cmake_check_build_system
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\Propores\cmake-build-debug\tests\CMakeFiles\progress.marks
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles 0
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\clean
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
 .PHONY : clean
 
 # The main clean target
@@ -136,23 +136,23 @@ clean\fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
 .PHONY : preinstall\fast
 
 # clear depends
 depend:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
 .PHONY : depend
 
 # Help Target
@@ -177,8 +177,8 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests
 .PHONY : cmake_check_build_system
 

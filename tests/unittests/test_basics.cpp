@@ -21,7 +21,7 @@
 #include "basics.h"
 #include <vector>
 
-/*
+
 TEST(basics_tests, remove_spaces) {
     EXPECT_EQ("", remove_spaces("    "));
     EXPECT_EQ("", remove_spaces(""));
@@ -118,4 +118,3 @@ TEST(basics_tests, wrap) {
     std::vector<std::string> expected = {"12345", "123456789", "123 12", "123", "123"};
     EXPECT_EQ(expected, wrap(str, 6));
 }
-*/

@@ -44,10 +44,10 @@ RM = "D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\OneDrive\Projects\Propores
+CMAKE_SOURCE_DIR = D:\OneDrive\Projects\PROPORES
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\OneDrive\Projects\Propores\cmake-build-debug
+CMAKE_BINARY_DIR = D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include tests\lib\googletest\CMakeFiles\gtest.dir\depend.make
@@ -60,28 +60,28 @@ include tests\lib\googletest\CMakeFiles\gtest.dir\flags.make
 
 tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.obj: tests\lib\googletest\CMakeFiles\gtest.dir\flags.make
 tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.obj: ..\tests\lib\googletest\src\gtest-all.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object tests/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object tests/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\gtest.dir\src\gtest-all.cc.obj /Fd..\..\..\bin\gtestd.pdb /FS -c D:\OneDrive\Projects\Propores\tests\lib\googletest\src\gtest-all.cc
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoCMakeFiles\gtest.dir\src\gtest-all.cc.obj /Fd..\..\..\bin\gtestd.pdb /FS -c D:\OneDrive\Projects\PROPORES\tests\lib\googletest\src\gtest-all.cc
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gtest.dir/src/gtest-all.cc.i"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe > CMakeFiles\gtest.dir\src\gtest-all.cc.i @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\Propores\tests\lib\googletest\src\gtest-all.cc
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\OneDrive\Projects\PROPORES\tests\lib\googletest\src\gtest-all.cc
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gtest.dir/src/gtest-all.cc.s"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\cl.exe @<<
- /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\gtest.dir\src\gtest-all.cc.s /c D:\OneDrive\Projects\Propores\tests\lib\googletest\src\gtest-all.cc
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\gtest.dir\src\gtest-all.cc.s /c D:\OneDrive\Projects\PROPORES\tests\lib\googletest\src\gtest-all.cc
 <<
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Object files for target gtest
 gtest_OBJECTS = \
@@ -93,13 +93,13 @@ gtest_EXTERNAL_OBJECTS =
 lib\gtestd.lib: tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.obj
 lib\gtestd.lib: tests\lib\googletest\CMakeFiles\gtest.dir\build.make
 lib\gtestd.lib: tests\lib\googletest\CMakeFiles\gtest.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library ..\..\..\lib\gtestd.lib"
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library ..\..\..\lib\gtestd.lib"
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	$(CMAKE_COMMAND) -P CMakeFiles\gtest.dir\cmake_clean_target.cmake
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	C:\PROGRA~2\MICROS~1\2017\BUILDT~1\VC\Tools\MSVC\1416~1.270\bin\Hostx86\x86\link.exe /lib /nologo /machine:X86 /out:..\..\..\lib\gtestd.lib @CMakeFiles\gtest.dir\objects1.rsp 
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 # Rule to build all files generated by this target.
 tests\lib\googletest\CMakeFiles\gtest.dir\build: lib\gtestd.lib
@@ -107,12 +107,12 @@ tests\lib\googletest\CMakeFiles\gtest.dir\build: lib\gtestd.lib
 .PHONY : tests\lib\googletest\CMakeFiles\gtest.dir\build
 
 tests\lib\googletest\CMakeFiles\gtest.dir\clean:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 	$(CMAKE_COMMAND) -P CMakeFiles\gtest.dir\cmake_clean.cmake
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 .PHONY : tests\lib\googletest\CMakeFiles\gtest.dir\clean
 
 tests\lib\googletest\CMakeFiles\gtest.dir\depend:
-	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" D:\OneDrive\Projects\Propores D:\OneDrive\Projects\Propores\tests\lib\googletest D:\OneDrive\Projects\Propores\cmake-build-debug D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\CMakeFiles\gtest.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "NMake Makefiles" D:\OneDrive\Projects\PROPORES D:\OneDrive\Projects\PROPORES\tests\lib\googletest D:\OneDrive\Projects\PROPORES\cmake-build-debug D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\CMakeFiles\gtest.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : tests\lib\googletest\CMakeFiles\gtest.dir\depend
 

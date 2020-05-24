@@ -10,6 +10,13 @@ pyinstaller.bat
 /__pycache__/
 /notes/
 /cmake-build-debug/
+/tests/unittests/test_files/reader_output.pdb
+/tests/unittests/test_files/reader_kept.pdb
+/tests/unittests/test_files/reader_skipped.pdb
+/tests/unittests/test_files/log.yaml
+/tests/unittests/test_files/kept.pdb
+/tests/unittests/test_files/skipped.pdb
+/tests/unittests/propores_tests.exe
 
 # Notes
 *.pdf

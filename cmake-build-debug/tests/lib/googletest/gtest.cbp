@@ -8,24 +8,24 @@
 		<Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\tests\;CMake Files\tests\unittests\;CMake Files\tests\lib\;CMake Files\tests\lib\googletest\;CMake Files\tests\lib\googletest\cmake\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest"/>
+				<Option working_dir="D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 all"/>
-					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="gtest">
-				<Option output="D:/OneDrive/Projects/Propores/cmake-build-debug/lib/gtestd.lib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest"/>
+				<Option output="D:/OneDrive/Projects/PROPORES/cmake-build-debug/lib/gtestd.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest/include"/>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/include"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.16.27023\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
@@ -34,21 +34,21 @@
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest"/>
-					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest"/>
+					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="gtest/fast">
-				<Option output="D:/OneDrive/Projects/Propores/cmake-build-debug/lib/gtestd.lib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest"/>
+				<Option output="D:/OneDrive/Projects/PROPORES/cmake-build-debug/lib/gtestd.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest/include"/>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/include"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.16.27023\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
@@ -57,21 +57,21 @@
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest/fast"/>
-					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest/fast"/>
+					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="gtest_main">
-				<Option output="D:/OneDrive/Projects/Propores/cmake-build-debug/lib/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest"/>
+				<Option output="D:/OneDrive/Projects/PROPORES/cmake-build-debug/lib/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest/include"/>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/include"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.16.27023\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
@@ -80,21 +80,21 @@
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest_main"/>
-					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest_main"/>
+					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="gtest_main/fast">
-				<Option output="D:/OneDrive/Projects/Propores/cmake-build-debug/lib/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest"/>
+				<Option output="D:/OneDrive/Projects/PROPORES/cmake-build-debug/lib/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="msvc8"/>
 				<Compiler>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest/include"/>
-					<Add directory="D:/OneDrive/Projects/Propores/tests/lib/googletest"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/include"/>
+					<Add directory="D:/OneDrive/Projects/PROPORES/tests/lib/googletest"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.16.27023\include"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
@@ -103,35 +103,35 @@
 					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest_main/fast"/>
-					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
-					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<Build command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\Makefile VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/lib/googletest/src/gtest-all.cc">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/src/gtest-all.cc">
 			<Option target="gtest"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/lib/googletest/src/gtest_main.cc">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/src/gtest_main.cc">
 			<Option target="gtest_main"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/src/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/src/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\src\"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\tests\"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/unittests/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/unittests/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\tests\unittests\"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/lib/googletest/CMakeLists.txt">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\tests\lib\googletest\"/>
 		</Unit>
-		<Unit filename="D:/OneDrive/Projects/Propores/tests/lib/googletest/cmake/internal_utils.cmake">
+		<Unit filename="D:/OneDrive/Projects/PROPORES/tests/lib/googletest/cmake/internal_utils.cmake">
 			<Option virtualFolder="CMake Files\tests\lib\googletest\cmake\"/>
 		</Unit>
 	</Project>

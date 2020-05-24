@@ -96,6 +96,7 @@ struct Atom {
             std::pair<AtomType, std::string> pair = parse_atom_type(pdb_line.substr(12, 4), record);
             type = pair.first;
             full_type = pair.second;
+            element = type;
         }
         // compute the van der Waals radius and the atomic mass
         vdw = vdw_radius(type);

@@ -49,10 +49,10 @@ RM = "D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\OneDrive\Projects\Propores
+CMAKE_SOURCE_DIR = D:\OneDrive\Projects\PROPORES
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\OneDrive\Projects\Propores\cmake-build-debug
+CMAKE_BINARY_DIR = D:\OneDrive\Projects\PROPORES\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -115,18 +115,18 @@ rebuild_cache\fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest\CMakeFiles\progress.marks
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\Propores\cmake-build-debug\CMakeFiles 0
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\OneDrive\Projects\PROPORES\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\clean
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : clean
 
 # The main clean target
@@ -136,30 +136,30 @@ clean\fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\preinstall
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : preinstall\fast
 
 # clear depends
 depend:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : depend
 
 # Convenience name for target.
 tests\lib\googletest\CMakeFiles\gtest.dir\rule:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest.dir\rule
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : tests\lib\googletest\CMakeFiles\gtest.dir\rule
 
 # Convenience name for target.
@@ -169,16 +169,16 @@ gtest: tests\lib\googletest\CMakeFiles\gtest.dir\rule
 
 # fast build rule for target.
 gtest\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest.dir\build
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : gtest\fast
 
 # Convenience name for target.
 tests\lib\googletest\CMakeFiles\gtest_main.dir\rule:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f CMakeFiles\Makefile2 /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest_main.dir\rule
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : tests\lib\googletest\CMakeFiles\gtest_main.dir\rule
 
 # Convenience name for target.
@@ -188,9 +188,9 @@ gtest_main: tests\lib\googletest\CMakeFiles\gtest_main.dir\rule
 
 # fast build rule for target.
 gtest_main\fast:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest_main.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest_main.dir\build
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : gtest_main\fast
 
 src\gtest-all.obj: src\gtest-all.cc.obj
@@ -199,9 +199,9 @@ src\gtest-all.obj: src\gtest-all.cc.obj
 
 # target to build an object file
 src\gtest-all.cc.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest-all.cc.obj
 
 src\gtest-all.i: src\gtest-all.cc.i
@@ -210,9 +210,9 @@ src\gtest-all.i: src\gtest-all.cc.i
 
 # target to preprocess a source file
 src\gtest-all.cc.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest-all.cc.i
 
 src\gtest-all.s: src\gtest-all.cc.s
@@ -221,9 +221,9 @@ src\gtest-all.s: src\gtest-all.cc.s
 
 # target to generate assembly for a file
 src\gtest-all.cc.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest.dir\src\gtest-all.cc.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest-all.cc.s
 
 src\gtest_main.obj: src\gtest_main.cc.obj
@@ -232,9 +232,9 @@ src\gtest_main.obj: src\gtest_main.cc.obj
 
 # target to build an object file
 src\gtest_main.cc.obj:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest_main.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest_main.dir\src\gtest_main.cc.obj
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest_main.cc.obj
 
 src\gtest_main.i: src\gtest_main.cc.i
@@ -243,9 +243,9 @@ src\gtest_main.i: src\gtest_main.cc.i
 
 # target to preprocess a source file
 src\gtest_main.cc.i:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest_main.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest_main.dir\src\gtest_main.cc.i
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest_main.cc.i
 
 src\gtest_main.s: src\gtest_main.cc.s
@@ -254,9 +254,9 @@ src\gtest_main.s: src\gtest_main.cc.s
 
 # target to generate assembly for a file
 src\gtest_main.cc.s:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(MAKE) -f tests\lib\googletest\CMakeFiles\gtest_main.dir\build.make /nologo -$(MAKEFLAGS) tests\lib\googletest\CMakeFiles\gtest_main.dir\src\gtest_main.cc.s
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : src\gtest_main.cc.s
 
 # Help Target
@@ -289,8 +289,8 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 0
-	cd D:\OneDrive\Projects\Propores\cmake-build-debug\tests\lib\googletest
+	cd D:\OneDrive\Projects\PROPORES\cmake-build-debug\tests\lib\googletest
 .PHONY : cmake_check_build_system
 

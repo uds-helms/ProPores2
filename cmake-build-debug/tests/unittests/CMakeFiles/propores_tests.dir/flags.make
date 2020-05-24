@@ -6,5 +6,5 @@ CXX_FLAGS = /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd   -std:c++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -ID:\OneDrive\Projects\Propores\tests\unittests\..\..\src -I\include -ID:\OneDrive\Projects\Propores\tests\unittests\test_files -ID:\OneDrive\Projects\Propores\tests\lib\googletest\include -ID:\OneDrive\Projects\Propores\tests\lib\googletest 
+CXX_INCLUDES = -ID:\OneDrive\Projects\PROPORES\tests\unittests\..\..\src -ID:\OneDrive\Projects\PROPORES\tests\unittests\test_files -ID:\OneDrive\Projects\PROPORES\tests\lib\googletest\include -ID:\OneDrive\Projects\PROPORES\tests\lib\googletest 
 

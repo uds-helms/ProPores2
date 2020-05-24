@@ -1,4 +1,4 @@
-# Install script for directory: D:/OneDrive/Projects/Propores/tests
+# Install script for directory: D:/OneDrive/Projects/PROPORES/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,11 +34,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("D:/OneDrive/Projects/Propores/cmake-build-debug/tests/unittests/cmake_install.cmake")
+  include("D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/unittests/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("D:/OneDrive/Projects/Propores/cmake-build-debug/tests/lib/googletest/cmake_install.cmake")
+  include("D:/OneDrive/Projects/PROPORES/cmake-build-debug/tests/lib/googletest/cmake_install.cmake")
 endif()
 

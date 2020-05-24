@@ -22,20 +22,36 @@
 #include "gtest/gtest.h"
 #include "enums.h"
 
-/*
+TEST(enum_tests, to_record_type) {
+    for (const std::string &str: {"ATOM", "HETATM"}) {
+        EXPECT_FALSE(INVALID_RECORD == to_record_type(str));
+    }
+    for (const std::string &str: {"", "ATM", "  ", "HETATOM"}) {
+        EXPECT_TRUE(INVALID_RECORD == to_record_type(str));
+    }
+}
+
+TEST(enum_tests, record_type_to_str) {
+    std::vector<std::string> expected = {"ATOM", "HETATM", "INVALID_RECORD_TYPE"};
+    std::vector<std::string> actual;
+    for (const RecordType &type: {ATOM, HETATOM, INVALID_RECORD}) { actual.push_back(to_str(type)); }
+    EXPECT_EQ(expected, actual);
+}
+
 TEST(enum_tests, to_atom_type) {
-    for (const std::string &str: {"H", "C", "O", "N", "S"}) {
+    for (const std::string &str: {"H", "C", "O", "N", "S", "AC", "Ac", "AG", "Ag", "AL", "Al", "B",
+                                  "BA", "Ba", "HO", "Ho", "I", "KR", "Kr", "RU", "Ru", "Zr", "ZR"}) {
         EXPECT_FALSE(INVALID_ATOM == to_atom_type(str));
     }
-    for (const std::string &str: {"", "E", "  ", "1", "H1", "CA", "h"}) {
+    for (const std::string &str: {"", "E", "  ", "1", "H1", "h", "fE", "fe", "i"}) {
         EXPECT_TRUE(INVALID_ATOM == to_atom_type(str));
     }
 }
 
 TEST(enum_tests, atom_type_to_str) {
-    std::vector<std::string> expected = {"H", "O", "N", "S", "C", "INVALID_ATOM"};
+    std::vector<std::string> expected = {"H", "O", "N", "S", "C", "TC", "BR", "CL", "SG", "INVALID_ATOM"};
     std::vector<std::string> actual;
-    for (const AtomType &type: {H, O, N, S, C, INVALID_ATOM}) { actual.push_back(to_str(type)); }
+    for (const AtomType &type: {H, O, N, S, C, Tc, Br, Cl, Sg, INVALID_ATOM}) { actual.push_back(to_str(type)); }
     EXPECT_EQ(expected, actual);
 }
 
@@ -96,5 +112,3 @@ TEST(enum_tests, difficulty_to_str) {
     for (const GateDifficulty &diff: {EASY, MEDIUM, HARD, DIFFICULTY_ERROR}) { actual.push_back(to_str(diff)); }
     EXPECT_EQ(expected, actual);
 }
-
-*/

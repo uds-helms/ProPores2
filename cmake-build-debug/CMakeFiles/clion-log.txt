@@ -1,9 +1,0 @@
-"D:\Programs\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - NMake Makefiles" D:\OneDrive\Projects\PROPORES
-CMake Warning at tests/lib/googletest/CMakeLists.txt:54 (project):
-  VERSION keyword not followed by a value or was followed by a value that
-  expanded to nothing.
-
-
--- Configuring done
--- Generating done
--- Build files have been written to: D:/OneDrive/Projects/PROPORES/cmake-build-debug

@@ -751,8 +751,8 @@ Windows:
       output directory: results/
       output name: ''
       skip H atoms: false
-      skip hetero atoms: true
-      skip non-std amino acids: true
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect

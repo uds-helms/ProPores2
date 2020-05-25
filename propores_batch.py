@@ -11,9 +11,11 @@ def propores(args):
     args = [str(arg) for arg in args]
     # run PROPORES for the given PDB file
     try:
-        sp.run(args, shell=platform.system() == 'Windows', check=True, stdout=sp.DEVNULL)
+        sp.run(args, shell=platform.system() == 'Windows', check=True, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
+        print('+', end='')
     # if an error occurred, write the input file name into the log file
     except sp.CalledProcessError as e:
+        print(e)
         return
 
 
@@ -31,6 +33,8 @@ if __name__ == '__main__':
                                                                        'to PROPORES')
     args = parser.parse_args()
 
+    args.propores = os.path.abspath(args.propores)
+
     # SCRIPT
     # generate input file list and output (sub-directory)
     file_list = []
@@ -41,9 +45,9 @@ if __name__ == '__main__':
             if not file.lower().endswith('.pdb'):
                 continue
             # PDB file path
-            file_path = os.path.join(root, file)
+            file_path = os.path.abspath(os.path.join(root, file))
             # sub-directory of the PDB file
-            sub_directory = os.path.join(args.output, root.split(args.input)[1].strip(os.sep))
+            sub_directory = os.path.abspath(os.path.join(args.output, root.split(args.input)[1].strip(os.sep)))
 
             file_list.append((file_path, sub_directory))
 
@@ -53,6 +57,11 @@ if __name__ == '__main__':
     tasks = [(args.propores, '-i', pdb_path, '-o', output_sub_directory_path) + propores_args
              for pdb_path, output_sub_directory_path in file_list]
 
+    print('PROPORES 2.0 Batch Processing')
+    print('PDB files to process: {0:,}'.format(len(tasks)))
+
     # run the task list in parallel with the given number of cores
     with mp.Pool(processes=args.cores, maxtasksperchild=1) as pool:
         pool.map(propores, tasks)
+
+    print('\nFinished!')

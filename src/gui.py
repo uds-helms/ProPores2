@@ -1318,6 +1318,7 @@ class GUI:
 
         # run PROPORES with the command line options and report errors
         try:
+            print(args)
             run(args=' '.join(args), shell=platform.system() == 'Windows')
 
             # try to open the specific result directory

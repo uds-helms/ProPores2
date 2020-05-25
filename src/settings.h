@@ -312,11 +312,11 @@ struct Settings {
         gate_preparation_dir = out_dir / fs::path("gate_open_input");
 
         // try to delete the previous output depending on which program parts are enabled
-        if (fs::exists(output_dir)) {
+        if (fs::exists(out_dir)) {
             // for pore-ID all previous output is deleted
             if (run_pore_id) {
                 try {
-                    fs::remove_all(output_dir);
+                    fs::remove_all(out_dir);
                 } catch (...) {
                     print_help("The content of the already existing output directory at (" + out_dir.string()
                                + ") could not be deleted. Check if it or the content is open in another program.");
@@ -344,7 +344,7 @@ struct Settings {
             }
         }
         // create the main output directory
-        fs::create_directories(output_dir);
+        fs::create_directories(out_dir);
         // create the sub-directories for enabled program parts
         if (run_pore_id) {
             fs::create_directories(pore_dir);

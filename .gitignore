@@ -17,6 +17,7 @@ pyinstaller.bat
 /tests/unittests/test_files/kept.pdb
 /tests/unittests/test_files/skipped.pdb
 /tests/unittests/propores_tests.exe
+overview.tsv
 
 # Notes
 *.pdf

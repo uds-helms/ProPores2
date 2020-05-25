@@ -13,17 +13,21 @@ Linux:
       difficulty: run all
       directory input: ''
       input selection: 0
-      intput selection: 0
       re-estimate difficulty: false
       run: false
       single input: ''
     General:
       PDB path: input/1EA5_R.pdb
       PROPORES executable: ./propores
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
       skip H atoms: false
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
@@ -223,17 +227,21 @@ Linux:
       difficulty: run all
       directory input: ''
       input selection: 0
-      intput selection: 0
       re-estimate difficulty: false
       run: false
       single input: ''
     General:
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
       skip H atoms: false
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
@@ -266,10 +274,15 @@ Mac OS X:
     General:
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
       skip H atoms: false
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
@@ -469,17 +482,21 @@ Mac OS X:
       difficulty: run all
       directory input: ''
       input selection: 0
-      intput selection: 0
       re-estimate difficulty: false
       run: false
       single input: ''
     General:
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
       skip H atoms: false
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
@@ -512,10 +529,15 @@ Windows:
     General:
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores.exe
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
       skip H atoms: false
+      skip hetero atoms: false
+      skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
@@ -721,11 +743,16 @@ Windows:
       single input: ''
     General:
       PDB path: input/1EA5_R.pdb
-      PROPORES executable: ./propores.exe
+      PROPORES executable: propores.exe
+      batch input: input/
+      cores: 1
+      input selection: 0
       keep alternative locations: false
       output directory: results/
       output name: ''
       skip H atoms: false
+      skip hetero atoms: true
+      skip non-std amino acids: true
     Pore ID:
       axis preparation: false
       computation mode: autodetect

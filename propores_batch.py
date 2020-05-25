@@ -23,8 +23,8 @@ if __name__ == '__main__':
     parser = ap.ArgumentParser(description='Run PROPORES 2.0 on a directory of one or more PDB files. PDB files '
                                            'contained in sub-directories are included as well. The directory '
                                            'hierarchy in the input directory is maintained in the result directory.')
-    parser.add_argument('input-directory', type=str, help='path to a directory with one or more PDBs')
-    parser.add_argument('output-directory', type=str, help='path to to the output directory')
+    parser.add_argument('input', type=str, help='path to a directory with one or more PDBs')
+    parser.add_argument('output', type=str, help='path to to the output directory')
     parser.add_argument('propores', type=str, help='path to the PROPORES executable')
     parser.add_argument('--cores', type=int, default=1, help='number of cores to use in parallel')
     parser.add_argument('--args', nargs=ap.REMAINDER, default=[], help='command line arguments that should get passed '
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # generate input file list and output (sub-directory)
     file_list = []
     # iterate over all files and potential sub-directories in the PDB input directory
-    for root, dirs, files in os.walk(args.input_directory):
+    for root, dirs, files in os.walk(args.input):
         for file in files:
             # skip files that are not marked as PDB files
             if not file.lower().endswith('.pdb'):
@@ -43,7 +43,7 @@ if __name__ == '__main__':
             # PDB file path
             file_path = os.path.join(root, file)
             # sub-directory of the PDB file
-            sub_directory = os.path.join(output_directory_path, root.split(PDB_file_directory_path)[1].strip(os.sep))
+            sub_directory = os.path.join(args.output, root.split(args.input)[1].strip(os.sep))
 
             file_list.append((file_path, sub_directory))
 
@@ -55,4 +55,4 @@ if __name__ == '__main__':
 
     # run the task list in parallel with the given number of cores
     with mp.Pool(processes=args.cores, maxtasksperchild=1) as pool:
-        pool.starmap(propores, tasks)
+        pool.map(propores, tasks)

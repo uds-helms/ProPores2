@@ -1,6 +1,7 @@
 # import standard or third party modules
 import os
 import re
+import platform
 import traceback
 import tkinter as tk
 from shlex import quote
@@ -221,7 +222,7 @@ class NInput:
         self.pos = pos
         self.neg = neg
 
-    def show(self, row):
+    def show(self, row, _=False):
         """
         Shows the input fields in the application window.
         """
@@ -517,8 +518,9 @@ class FileSubSection:
 
         for i in range(len(self.inputs)):
             button, input_field = self.inputs[i]
-            button.show(row + i + 1)
-            input_field.show(row + i + 1, self.label)
+            if button:
+                button.show(row + i + 1)
+            input_field.show(row + i + 1, not button)
 
 
 class TSelector:
@@ -853,14 +855,31 @@ class GeneralSection:
         self.title = TLabel(master, gui.key.gr_title)
 
         # PDB input file and output directory
-        self.pdb = ReadFileInput(master, gui.key.pdb, cfg.user.pdb_path)
         self.out_dir = DirInput(master, gui.key.out_dir, cfg.user.out_dir)
+
+        # PDB input selector
+        self.pdb_single = ReadFileInput(master, gui.key.pdb_single, cfg.user.pdb_path)
         self.out_name = TextInput(master, gui.key.out_name, cfg.user.out_name)
+        self.pdb_batch_dir = DirInput(master, gui.key.pdb_batch, cfg.user.pdb_batch_dir)
+        self.pdb_batch_cores = NInput(master, gui.key.cores, cfg.user.pdb_batch_cores, pos=True)
+        # mutually exclusive selection buttons
+        self.selection = tk.IntVar(value=cfg.user.input_selection)
+        self.single_button = ERadiobutton(master, gui.key.pdb_single, self.selection, 0)
+        self.batch_button = ERadiobutton(master, gui.key.pdb_batch, self.selection, 1)
+        # combine the buttons and the input fields
+        self.input_sel = FileSubSection(master, gui.key.input_selection,
+                                        [(self.single_button, self.pdb_single),
+                                         (None, self.out_name),
+                                         (self.batch_button, self.pdb_batch_dir),
+                                         (None, self.pdb_batch_cores)],
+                                        label=False)
 
         # PROPORES executable
         self.exe = ExeInput(master, gui.key.exe, cfg.user.exe, 'propores')
         self.skip_h = LCheckbutton(master, gui.key.h_atoms, cfg.user.skip_h)
         self.keep_alternative = LCheckbutton(master, gui.key.keep_alt, cfg.user.keep_alternative)
+        self.skip_hetero = LCheckbutton(master, gui.key.skip_hetero, cfg.user.skip_hetero)
+        self.skip_non_std = LCheckbutton(master, gui.key.skip_non_std, cfg.user.skip_non_std)
 
         self.mouse_over(desc)
         self.place(row)
@@ -873,14 +892,15 @@ class GeneralSection:
         self.title.place(row)
 
         self.exe.show(row + 1)
-        self.pdb.show(row + 2)
-        self.out_dir.show(row + 3)
-        self.out_name.show(row + 4)
+        self.out_dir.show(row + 2)
+        self.input_sel.show(row + 3)
 
         sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
-        sep.grid(row=row + 5, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
-        self.skip_h.place(row + 6)
-        self.keep_alternative.place(row + 7)
+        sep.grid(row=row + 8, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
+        self.skip_h.place(row + 9)
+        self.keep_alternative.place(row + 10)
+        self.skip_hetero.place(row + 11)
+        self.skip_non_std.place(row + 12)
 
     def mouse_over(self, desc):
         """
@@ -888,38 +908,51 @@ class GeneralSection:
         :param desc: description box
         """
         self.title.mouse_over(desc)
-        self.pdb.mouse_over(desc)
+        self.pdb_single.mouse_over(desc)
+        self.pdb_batch_dir.mouse_over(desc)
+        self.pdb_batch_cores.mouse_over(desc)
+        self.single_button.mouse_over(desc)
+        self.batch_button.mouse_over(desc)
         self.out_dir.mouse_over(desc)
         self.exe.mouse_over(desc)
         self.keep_alternative.mouse_over(desc)
         self.skip_h.mouse_over(desc)
+        self.skip_hetero.mouse_over(desc)
+        self.skip_non_std.mouse_over(desc)
         self.out_name.mouse_over(desc)
 
     def save(self):
         """
         Updates the user configuration with values from the entry fields.
         """
-        if self.pdb.validate():
-            cfg.user.pdb_path = adjust_file_path(self.pdb.var.get())
         cfg.user.out_dir = adjust_file_path(self.out_dir.var.get())
-        if self.out_name.validate():
-            cfg.user.out_name = self.out_name.var.get()
-        if self.exe.validate():
-            cfg.user.exe = adjust_file_path(self.exe.var.get())
+        cfg.user.pdb_path = adjust_file_path(self.pdb_single.var.get())
+        cfg.user.out_name = self.out_name.var.get()
+        cfg.user.exe = adjust_file_path(self.exe.var.get())
+        cfg.user.pdb_batch_dir = adjust_dir_path(self.pdb_batch_dir.var.get())
+        cfg.user.pdb_batch_cores = int(self.pdb_batch_cores.var.get())
+        cfg.user.input_selection = int(self.selection.get())
         cfg.user.keep_alternative = bool(self.keep_alternative.var.get())
         cfg.user.skip_h = bool(self.skip_h.var.get())
+        cfg.user.skip_non_std = bool(self.skip_non_std.var.get())
+        cfg.user.skip_hetero = bool(self.skip_hetero.var.get())
         cfg.save_config()
 
     def update(self):
         """
         Updates the entry fields with the current values from the user configuration.
         """
-        self.pdb.var.set(adjust_file_path(cfg.user.pdb_path))
+        self.pdb_single.var.set(adjust_file_path(cfg.user.pdb_path))
         self.out_dir.var.set(adjust_dir_path(cfg.user.out_dir))
         self.out_name.var.set(cfg.user.out_name)
+        self.pdb_batch_dir.var.set(adjust_dir_path(cfg.user.pdb_batch_dir))
+        self.pdb_batch_cores.var.set(cfg.user.pdb_batch_cores)
+        self.selection.set(cfg.user.input_selection)
         self.exe.var.set(adjust_file_path(cfg.user.exe))
         self.keep_alternative.var.set(cfg.user.keep_alternative)
         self.skip_h.var.set(cfg.user.skip_h)
+        self.skip_hetero.var.set(cfg.user.skip_hetero)
+        self.skip_non_std.var.set(cfg.user.skip_non_std)
         self.master.update()
 
 
@@ -934,14 +967,14 @@ class GUI:
         # set up the sections_verbose
         self.desc = Description(self.right, 0)
         self.desc.configure(height=gui.df_height, width=gui.df_width)
-        self.pore_id = PoreIDSection(self.left, self.desc, 10)                  # type: PoreIDSection
+        self.pore_id = PoreIDSection(self.left, self.desc, 13)                  # type: PoreIDSection
         self.general = GeneralSection(self.left, self.desc, 0)                  # type: GeneralSection
         self.axis = AxisSection(self.right, self.desc, 2)                       # type: AxisSection
         self.gate = GateSection(self.right, self.desc, 10)                      # type: GateSection
         # button for running PROPORES
         self.run_button = RButton(self.left, gui.key.run_button, lambda: self.run())
         self.run_button.mouse_over(self.desc)
-        self.run_button.place(22)
+        self.run_button.place(25)
         # set up the menu bar
         self.menubar()
         # centre the application window
@@ -1103,11 +1136,19 @@ class GUI:
         if not self.general.exe.validate():
             return False
 
-        if not self.general.pdb.validate():
-            return False
+        # single input
+        if self.general.selection.get() == 0:
+            if not self.general.pdb_single.validate():
+                return False
 
-        if not self.general.out_name.validate():
-            return False
+            if not self.general.out_name.validate():
+                return False
+        else:
+            if not self.general.pdb_batch_dir.validate():
+                return False
+
+            if not self.general.pdb_batch_cores.validate():
+                return False
 
         # Pore ID: resolution, solvent and probe radius, volume threshold
         if self.pore_id.title.var.get():
@@ -1172,17 +1213,27 @@ class GUI:
             messagebox.showerror('Input Error', 'PROPORES could not be run due to erroneous input.')
             return
 
-        # setup the command line arguments for PROPORES, starting with the executable, PDB input and output directory
-        args = [adjust_file_path(self.general.exe.var.get(), abs=True),
-                '-i', quote(adjust_file_path(self.general.pdb.var.get(), abs=True)),
-                '-o', quote(adjust_dir_path(self.general.out_dir.var.get(), abs=True))]
-
         # set the output name, if specified, and compute the output directory name as PROPORES does
         if self.general.out_name.var.get():
             out_name = self.general.out_name.var.get()
-            args += ['--name', out_name]
         else:
-            out_name = '.'.join(os.path.basename(self.general.pdb.var.get()).split('.')[:-1])
+            out_name = '.'.join(os.path.basename(self.general.pdb_single.var.get()).split('.')[:-1])
+
+        # setup the command line arguments for PROPORES, starting with the executable, PDB input and output directory
+        if self.general.selection.get() == 0:
+            args = [adjust_file_path(self.general.exe.var.get(), abs=True),
+                    '-i', quote(adjust_file_path(self.general.pdb_single.var.get(), abs=True)),
+                    '-o', quote(adjust_dir_path(self.general.out_dir.var.get(), abs=True)),
+                    '--name', out_name]
+        else:
+            args = ['python' if platform.system() == 'Windows' else 'python3',
+                    'propores_batch.py',
+                    adjust_dir_path(self.general.pdb_batch_dir.var.get(), abs=True),
+                    adjust_dir_path(self.general.out_dir.var.get(), abs=True),
+                    adjust_file_path(self.general.exe.var.get(), abs=True),
+                    '--cores', quote(self.general.pdb_batch_cores.var.get()),
+                    '--args']
+            out_name = ''
 
         # set the flag for skipping H-atoms during PDB parsing, if specified
         if self.general.skip_h.var.get():
@@ -1191,6 +1242,12 @@ class GUI:
         # set the flag for keeping during PDB parsing, if specified
         if self.general.keep_alternative.var.get():
             args += ['--keep-alternative']
+
+        if self.general.skip_hetero.var.get():
+           args += ['--skip-hetatm']
+
+        if self.general.skip_non_std.var.get():
+            args += ['--skip-non-std-amino-acids']
 
         # check if Pore ID is enabled for running
         if self.pore_id.title.var.get():
@@ -1261,10 +1318,13 @@ class GUI:
 
         # run PROPORES with the command line options and report errors
         try:
-            run(args=' '.join(args), shell=True)
+            run(args=' '.join(args), shell=platform.system() == 'Windows')
 
             # try to open the specific result directory
-            directory = adjust_dir_path(os.path.join(self.general.out_dir.var.get(), out_name), abs=True)
+            if out_name:
+                directory = adjust_dir_path(os.path.join(self.general.out_dir.var.get(), out_name), abs=True)
+            else:
+                directory = adjust_dir_path(self.general.out_dir.var.get(), abs=True)
             if os.path.isdir(directory):
                 self.open(directory)
             # if that directory does not exist due to some bug, open the directory above if that exists

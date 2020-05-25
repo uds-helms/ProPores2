@@ -230,11 +230,16 @@ class GuiKeys:
     """
     """ GENERAL / REQUIRED """
     gr_title = 'General'
-    pdb = 'Protein PDB file'
     out_dir = 'Output directory'
-    out_name = 'Output name'
+    pdb_single = 'Single Protein PDB file'
+    out_name = 'Out name'
+    pdb_batch = 'Protein PDB batch'
+    cores = 'Number of cores'
+    input_selection = 'Input selection'
     h_atoms = 'Skip H-atoms'
     keep_alt = 'Keep alternative atom locations'
+    skip_hetero = 'Skip HETATM entries (hetero atoms)'
+    skip_non_std = 'Skip non-standard amino acids in ATOM records'
     exe = 'PROPORES executable'
 
     """ PORE ID """
@@ -299,7 +304,12 @@ class UserConfig:
         self.out_name = cfg_dict['General']['output name']                                  # type: str
         self.skip_h = bool(cfg_dict['General']['skip H atoms'])                             # type: bool
         self.keep_alternative = bool(cfg_dict['General']['keep alternative locations'])     # type: bool
-        self.exe = adjust_file_path(cfg_dict['General']['PROPORES executable'])        # type: str
+        self.skip_hetero = bool(cfg_dict['General']['skip hetero atoms'])                   # type: bool
+        self.skip_non_std = bool(cfg_dict['General']['skip non-std amino acids'])           # type: bool
+        self.exe = adjust_file_path(cfg_dict['General']['PROPORES executable'])             # type: str
+        self.pdb_batch_dir = adjust_dir_path(cfg_dict['General']['batch input'])            # type: str
+        self.pdb_batch_cores = int(cfg_dict['General']['cores'])                            # type: int
+        self.input_selection = int(cfg_dict['General']['input selection'])                  # type: int
 
         # pore ID
         self.run_id = bool(cfg_dict['Pore ID']['run'])                                      # type: bool
@@ -308,8 +318,8 @@ class UserConfig:
         self.probe = float(cfg_dict['Pore ID']['probe radius'])                             # type: float
         self.volume = float(cfg_dict['Pore ID']['volume threshold'])                        # type: float
         self.cylinder_mode = cfg_dict['Pore ID']['computation mode']                        # type: str
-        self.axis_prep = bool(cfg_dict['Pore ID']['axis preparation'])                      # type: str
-        self.gate_prep = bool(cfg_dict['Pore ID']['gate preparation'])                      # type: str
+        self.axis_prep = bool(cfg_dict['Pore ID']['axis preparation'])                      # type: bool
+        self.gate_prep = bool(cfg_dict['Pore ID']['gate preparation'])                      # type: bool
         self.pore_type = cfg_dict['Pore ID']['pore types']                                  # type: str
 
         # axis trace
@@ -327,7 +337,7 @@ class UserConfig:
         self.clash = float(cfg_dict['Gate open']['clash tolerance'])                        # type: float
         self.reestimate = bool(cfg_dict['Gate open']['re-estimate difficulty'])             # type: bool
         self.skip_difficulty = cfg_dict['Gate open']['difficulty']                          # type: str
-        self.gate_selection = int(cfg_dict['Gate open']['input selection'])                 # type: str
+        self.gate_selection = int(cfg_dict['Gate open']['input selection'])                 # type: int
 
     def update_cfg_dict(self):
         """
@@ -341,6 +351,11 @@ class UserConfig:
         self.cfg_dict['General']['skip H atoms'] = bool(self.skip_h)
         self.cfg_dict['General']['keep alternative locations'] = bool(self.keep_alternative)
         self.cfg_dict['General']['PROPORES executable'] = adjust_file_path(self.exe)
+        self.cfg_dict['General']['skip hetero atoms'] = bool(self.skip_hetero)
+        self.cfg_dict['General']['skip non-std amino acids'] = bool(self.skip_non_std)
+        self.cfg_dict['General']['batch input'] = adjust_dir_path(self.pdb_batch_dir)
+        self.cfg_dict['General']['cores'] = int(self.pdb_batch_cores)
+        self.cfg_dict['General']['input selection'] = int(self.input_selection)
         
         # pore ID
         self.cfg_dict['Pore ID']['run'] = bool(self.run_id)
@@ -368,7 +383,7 @@ class UserConfig:
         self.cfg_dict['Gate open']['clash tolerance'] = float(self.clash)
         self.cfg_dict['Gate open']['re-estimate difficulty'] = self.reestimate
         self.cfg_dict['Gate open']['difficulty'] = self.skip_difficulty
-        self.cfg_dict['Gate open']['intput selection'] = int(self.gate_selection)
+        self.cfg_dict['Gate open']['input selection'] = int(self.gate_selection)
 
         return deepcopy(self.cfg_dict)
 
@@ -510,10 +525,6 @@ class GuiConfig:
         d[self.key.gr_title] = GuiEntity(label='General',
                                          desc='This section specifies the required input and output behaviour shared '
                                               'by all PROPORES components.')
-        d[self.key.pdb] = GuiEntity(label='PDB file',
-                                    desc='Required file with protein information such as IDs, names and coordinates of '
-                                         'atoms and residues.'
-                                         '\n\nFormat: Protein Data Bank (.pdb)')
         d[self.key.out_dir] = GuiEntity(label='Result directory',
                                         desc='Directory that is going to contain a sub-directory of the current '
                                              'PROPORES run. Output files can include files for identified '
@@ -522,6 +533,10 @@ class GuiConfig:
                                              'open gates between neighbouring pores.'
                                              '\n\nPDB and pseudo-PDB files can be visualised with PDB-viewers such as '
                                              'Chimera or PyMOL.')
+        d[self.key.pdb_single] = GuiEntity(label='Single PDB input',
+                                           desc='Required file with protein information such as IDs, names and '
+                                                'coordinates of atoms and residues.'
+                                                '\n\nFormat: Protein Data Bank (.pdb)')
         d[self.key.out_name] = GuiEntity(label='Result name',
                                          desc='Name of the result sub-directory as well as prefix of all output files. '
                                               'If the field is left blank, the name of the input protein PDB file is '
@@ -529,6 +544,18 @@ class GuiConfig:
                                               '\n\nExample: If the input PDB file is "example_data/1EA5.pdb", '
                                               'then this defaults to "1EA5". If the result directory is "results/", '
                                               'all results will be written to "results/1EA5/".')
+        d[self.key.pdb_batch] = GuiEntity(label='Batch input',
+                                          desc='Directory that contains one or more protein PDB files. If this option '
+                                               'is selected, PROPORES will be run on all PDBs in this directory and '
+                                               'all sub-directories. The directory hierarchy of the input directory '
+                                               'will be maintained in the output directory.')
+        d[self.key.cores] = GuiEntity(label='Number of cores',
+                                      desc='Number of cores to use when running PROPORES on a batch of PDB files in '
+                                           'parallel. If this value is set to 1, all PDB files in the input directory '
+                                           'will be run sequentially.')
+        d[self.key.input_selection] = GuiEntity(label='Input selection',
+                                                desc='Run PROPORES on a single PDB file or on a batch of several PDB '
+                                                     'files in parallel.')
         d[self.key.exe] = GuiEntity(label='PROPORES executable',
                                     desc='Path to the PROPORES executable. This defaults to the standard location in '
                                          'the same directory as this graphical user interface. If it cannot be found '
@@ -546,6 +573,16 @@ class GuiConfig:
                                               'locations are ignored. If enabled, all locations will be kept, which '
                                               'means that all alternative locations will be loaded as additional '
                                               'atoms.')
+        d[self.key.skip_hetero] = GuiEntity(label='Skip hetero atoms',
+                                            desc='Hetero atoms are non-protein atoms listed under "HETATM" in a PDB '
+                                                 'file. If enabled, all HETATM lines will be ignored when loading '
+                                                 'the PDB file.')
+        d[self.key.skip_non_std] = GuiEntity(label='Skip non-standard amino acids',
+                                             desc='Protein atoms are listed under "ATOM" in a PDB file. If enabled, '
+                                                  'all "ATOM" records with non-standard resiue names (ALA, ARG, ASN, '
+                                                  'ASP, CYS, GLN, GLU, GLY, HIS, ILE, LEU, LYS, MET, PHE, PRO, SER, '
+                                                  'THR, TRP, TYR, VAl) will be ignored when loading the PDB file. '
+                                                  'Atoms in "HETATM" records are not affected by this.')
 
         """ PORE ID """
         d[self.key.pore_title] = GuiEntity(label='Pore ID',

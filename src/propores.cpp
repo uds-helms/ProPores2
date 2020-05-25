@@ -47,6 +47,8 @@ int main(int argc, char *argv[]) {
         // PDB parsing and grid construction
         ProteinGrid grid = ProteinGrid(settings);
         print(1, pore_id_start, "> loaded protein with " + std::to_string(grid.atoms.size()) + " atoms in");
+
+        add_entry(settings.pore_log, 1, "number of grid boxes", grid.boxes);
         add_entry(settings.pore_log, 1, "PDB parsing runtime", pore_id_start);
         // run pore/cavity identification
         pore_ID(grid, settings);

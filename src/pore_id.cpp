@@ -625,6 +625,7 @@ void pore_ID(ProteinGrid &grid, const Settings &settings) {
     // first run collision detection
     auto sub_start = std::chrono::high_resolution_clock::now();
     collision_detection(grid);
+    add_entry(log, 1, "atom pairs", grid.pairs.size());
     add_entry(log, 1, "collision detection", sub_start);
     // compute
     sub_start = std::chrono::high_resolution_clock::now();

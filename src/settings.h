@@ -561,13 +561,13 @@ private:
         add_comment(axis_log, 0, "given and inferred command line parameters");
         add_entry(axis_log, 0, "parameters");
         add_comment(axis_log, 1, "input and output");
-        add_entry(pore_log, 1, "PDB name", pdb_name);
+        add_entry(axis_log, 1, "PDB name", pdb_name);
         add_entry(axis_log, 1, "output directory", axis_dir.string());
         add_entry(axis_log, 1, "load from pore ID", run_pore_id);
         add_entry(axis_log, 1, "load from single file", load_cluster_from_single_file);
         add_entry(axis_log, 1, "load from directory", load_cluster_from_directory);
 
-        if (run_axis_trace) {
+        if (run_pore_id) {
             add_entry(axis_log, 1, "input path", "None");
         } else if (load_cluster_from_single_file) {
             add_entry(axis_log, 1, "input path", axis_single_input.string());
@@ -589,7 +589,7 @@ private:
         add_comment(gate_log, 0, "given and inferred command line parameters");
         add_entry(gate_log, 0, "parameters");
         add_comment(gate_log, 1, "input and output");
-        add_entry(pore_log, 1, "PDB name", pdb_name);
+        add_entry(gate_log, 1, "PDB name", pdb_name);
         add_entry(gate_log, 1, "PDB path", pdb_path.string());
         add_entry(gate_log, 1, "output directory", gate_dir.string());
         add_comment(gate_log, 1, "PDB parsing");
@@ -601,7 +601,7 @@ private:
         add_entry(gate_log, 1, "load from pore ID", run_pore_id);
         add_entry(gate_log, 1, "load from single file", load_gate_from_single_file);
         add_entry(gate_log, 1, "load from directory", load_gates_from_directory);
-        if (run_gate_open) {
+        if (run_pore_id) {
             add_entry(gate_log, 1, "input path", "None");
         } else if (load_cluster_from_single_file) {
             add_entry(gate_log, 1, "input path", gate_single_input.string());

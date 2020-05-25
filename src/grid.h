@@ -116,7 +116,6 @@ struct Grid {
     // number of boxes in the grid
     size_t boxes = 0;
 
-
     // search bubbles of relative coordinates for different radii
     RelativeSearchSpaces search_spaces;
     // direct neighbour boxes

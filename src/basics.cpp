@@ -18,7 +18,7 @@
 */
 
 
-#include <ctime>
+#include <time.h>
 #include <string>
 #include <cctype>
 #include <chrono>

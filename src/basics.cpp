@@ -133,7 +133,7 @@ std::string current_datetime() {
     ctime_s(buffer, sizeof(buffer), &now);
 # elif defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__) || defined(__unix__) \
     || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)) || defined(macintosh) || defined(Macintosh) || defined(__CYGWIN__)
-    ctime_r(buffer, &now);
+    ctime_r(&now, buffer);
 # endif
     return r_strip(buffer);
 }

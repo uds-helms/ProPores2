@@ -18,7 +18,6 @@
 */
 
 
-#include <time.h>
 #include <string>
 #include <cctype>
 #include <chrono>
@@ -130,7 +129,12 @@ std::vector<std::string> wrap(const std::string &str, const size_t width) {
 std::string current_datetime() {
     std::time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     char buffer[40];
+# if defined(__WIN32) || defined(__WIN64) || defined(__WIN32__) || defined(__WINDOWS__)
     ctime_s(buffer, sizeof(buffer), &now);
+# elif defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__) || defined(__unix__) \
+    || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)) || defined(macintosh) || defined(Macintosh) || defined(__CYGWIN__)
+    ctime_r(buffer, &now);
+# endif
     return r_strip(buffer);
 }
 

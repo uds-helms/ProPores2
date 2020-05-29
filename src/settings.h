@@ -211,6 +211,22 @@ struct Settings {
             difficulty_threshold = HARD;
         } else if (skip_medium_gates) { difficulty_threshold = MEDIUM; }
 
+        // extract the PDB name
+        pdb_name = pdb_path.stem().string();
+        // set the output name to the PDB name if none was given on the command line
+        if (output_name.empty()) output_name = pdb_name;
+        // construct the output directory path
+        out_dir /= fs::path(output_name);
+        if (!output_name.empty() && output_name.back() != '_') output_name += '_';
+
+        // generate output sub-directory paths
+        pore_dir = out_dir / fs::path("pores");
+        lining_dir = out_dir / fs::path("lining");
+        axis_dir = out_dir / fs::path("axes");
+        gate_dir = out_dir / fs::path("gate_open");
+        axis_preparation_dir = out_dir / fs::path("axis_trace_input");
+        gate_preparation_dir = out_dir / fs::path("gate_open_input");
+
         // process axis-trace file paths
         if (run_axis_trace) {
             load_cluster_from_single_file = !axis_input_single.empty();
@@ -221,17 +237,23 @@ struct Settings {
             }
             // pore-ID is not enabled and there was no custom axis-trace input
             if (!run_pore_id && axis_input_single.empty() && axis_input_dir.empty()) {
-                print_help("When pore-ID is not run, axis-trace input must be provided "
-                           "(either '-ts <path>' or '-td <path>').");
+                // check if maybe the axis trace preparation directory exists and contains input
+                if (fs::exists(axis_preparation_dir) && !fs::is_empty(axis_preparation_dir)) {
+                    load_cluster_from_directory = true;
+                    axis_directory_input = axis_preparation_dir;
+                } else {
+                    print_help("When pore-ID is not run, axis-trace input must be provided "
+                               "(either '-ts <path>' or '-td <path>').");
+                }
             }
             // pore-ID is enabled and there was at least one custom axis-trace input
-            if (run_pore_id && (load_cluster_from_directory || load_cluster_from_single_file)) {
+            else if (run_pore_id && (load_cluster_from_directory || load_cluster_from_single_file)) {
                 print_help("When pore-ID is run, do not provide axis determination input files ('-ts' or '-td'). "
                            "For running axis-trace with user defined input, do not run pore-ID.");
             }
             // at this point we know that if the single axis-trace file is provided, then pore-ID is not enabled
             // and there is no axis-trace directory given either, so we just have to check the file path
-            if (load_cluster_from_single_file) {
+            else if (load_cluster_from_single_file) {
                 axis_single_input = fs::path(axis_input_single);
                 if (!fs::is_regular_file(axis_single_input)) {
                     print_help("The axis trace input file path (-ts) does not point to an existing file. "
@@ -242,7 +264,7 @@ struct Settings {
             }
             // at this point we know that if the axis-trace directory is provided, then pore-ID is not enabled
             // and there is no single axis-trace file given either, so we just have to check the directory path
-            if (load_cluster_from_directory) {
+            else if (load_cluster_from_directory) {
                 axis_directory_input = fs::path(axis_input_dir);
                 if (!fs::is_directory(axis_directory_input)) {
                     print_help("The axis trace input directory path (-td) does not point to an existing directory. "
@@ -263,17 +285,22 @@ struct Settings {
             }
             // pore-ID is not enabled and there was no custom gate-open input
             if (!run_pore_id && gate_input_single.empty() && gate_input_dir.empty()) {
-                print_help("When pore-ID is not run, gate-open input must be provided "
-                           "(either '-gs <path>' or '-gd <path>').");
+                if (fs::exists(gate_preparation_dir) && !fs::is_empty(gate_preparation_dir)) {
+                    load_gates_from_directory = true;
+                    gate_directory_input = gate_preparation_dir;
+                } else {
+                    print_help("When pore-ID is not run, gate-open input must be provided "
+                               "(either '-gs <path>' or '-gd <path>').");
+                }
             }
             // pore-ID is enabled and there was at least one custom gate-open input
-            if (run_pore_id && (load_gates_from_directory || load_gate_from_single_file)) {
+            else if (run_pore_id && (load_gates_from_directory || load_gate_from_single_file)) {
                 print_help("When pore-ID is run, do not provide gate-open input files ('-gs' or '-gd'). "
                            "For running gate-open with user defined input, do not run pore-ID.");
             }
             // at this point we know that if the single gate-open file is provided, then pore-ID is not enabled
             // and there is no gate-open directory given either, so we just have to check the file path
-            if (load_gate_from_single_file) {
+            else if (load_gate_from_single_file) {
                 gate_single_input = fs::path(gate_input_single);
                 if (!fs::is_regular_file(gate_single_input)) {
                     print_help("The gate-open input file path (-gs) does not point to an existing file. "
@@ -284,7 +311,7 @@ struct Settings {
             }
             // at this point we know that if the gate-open directory is provided, then pore-ID is not enabled
             // and there is no single gate-open file given either, so we just have to check the directory path
-            if (load_gates_from_directory) {
+            else if (load_gates_from_directory) {
                 gate_directory_input = fs::path(gate_input_dir);
                 if (!fs::is_directory(gate_directory_input)) {
                     print_help("The gate-open input directory path (-gd) does not point to an existing directory. "
@@ -294,22 +321,6 @@ struct Settings {
                 }
             }
         }
-
-        // extract the PDB name
-        pdb_name = pdb_path.stem().string();
-        // set the output name to the PDB name if none was given on the command line
-        if (output_name.empty()) output_name = pdb_name;
-        // construct the output directory path
-        out_dir /= fs::path(output_name);
-        if (!output_name.empty() && output_name.back() != '_') output_name += '_';
-
-        // generate output sub-directory paths
-        pore_dir = out_dir / fs::path("pores");
-        lining_dir = out_dir / fs::path("lining");
-        axis_dir = out_dir / fs::path("axes");
-        gate_dir = out_dir / fs::path("gate_open");
-        axis_preparation_dir = out_dir / fs::path("axis_trace_input");
-        gate_preparation_dir = out_dir / fs::path("gate_open_input");
 
         // try to delete the previous output depending on which program parts are enabled
         if (fs::exists(out_dir)) {
@@ -328,7 +339,7 @@ struct Settings {
                         fs::remove_all(axis_dir);
                     } catch (...) {
                         print_help("The content of the already existing axis-trace directory at '"
-                                   + axis_dir.string() + "' could not be deleted. . Check if it or the content is "
+                                   + axis_dir.string() + "' could not be deleted. Check if it or the content is "
                                                           "open in another program.");
                     }
                 }
@@ -337,7 +348,7 @@ struct Settings {
                         fs::remove_all(gate_dir);
                     } catch (...) {
                         print_help("The content of the already existing gate-open directory at '"
-                                   + gate_dir.string() + "' could not be deleted. . Check if it or the content is "
+                                   + gate_dir.string() + "' could not be deleted. Check if it or the content is "
                                                           "open in another program.");
                     }
                 }

@@ -72,9 +72,6 @@ std::vector<std::string> split(const std::string &str, char sep);
 // split the words of the input string into rows such that each row is at most <width> characters long
 std::vector<std::string> wrap(const std::string &str, size_t width);
 
-// get the current date and time
-std::string current_datetime();
-
 // add a line to a file without overwriting it
 void add_to_file(const fs::path &file_path, const std::string &line);
 

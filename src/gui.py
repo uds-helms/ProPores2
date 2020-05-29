@@ -1259,9 +1259,9 @@ class GUI:
                      '-v', quote(self.pore_id.volume.var.get())]
 
             # check preparation flags for axis trace and gate opening
-            if self.pore_id.gate_prep.var.get():
-                args += ['--axis-preparation']
             if self.pore_id.axis_prep.var.get():
+                args += ['--axis-preparation']
+            if self.pore_id.gate_prep.var.get():
                 args += ['--gate-preparation']
 
             # set mutually exclusive computation mode flag, if auto-detect is disabled

@@ -43,10 +43,10 @@ int main(int argc, char *argv[]) {
         print(header);
         auto pore_id_start = std::chrono::high_resolution_clock::now();
         print("\nPore-ID");
-        add_entry(settings.pore_log, 1, "start time", current_datetime());
+        add_entry(settings.pore_log, 1, "started", true);
         // PDB parsing and grid construction
         ProteinGrid grid = ProteinGrid(settings);
-        print(1, pore_id_start, "> loaded protein with " + std::to_string(grid.atoms.size()) + " atoms in");
+        print(1, pore_id_start, "> loaded " + settings.pdb_name + " with " + std::to_string(grid.atoms.size()) + " atoms in");
 
         add_entry(settings.pore_log, 1, "number of grid boxes", grid.boxes);
         add_entry(settings.pore_log, 1, "PDB parsing runtime", pore_id_start);
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
         if (settings.run_axis_trace) clusters = std::move(grid.clusters);
         print(1, pore_id_start, "=> total pore-ID runtime:");
         add_comment(settings.pore_log, 1, "finished");
-        add_entry(settings.pore_log, 1, "end time", current_datetime());
+        add_entry(settings.pore_log, 1, "finished", true);
         add_entry(settings.pore_log, 1, "total runtime", pore_id_start);
     }
 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
         print("\nAxis-Trace");
         auto axis_start = std::chrono::high_resolution_clock::now();
 
-        add_entry(settings.axis_log, 1, "start time", current_datetime());
+        add_entry(settings.axis_log, 1, "started", true);
         // if pore-ID was not performed at the start of this run, obtain the cluster(s) from user provided file(s)
         if (!settings.run_pore_id) {
             if (settings.load_cluster_from_single_file)
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
         }
 
         add_comment(settings.axis_log, 1, "finished");
-        add_entry(settings.axis_log, 1, "end time", current_datetime());
+        add_entry(settings.axis_log, 1, "finished", true;
         add_entry(settings.axis_log, 1, "total runtime", axis_start);
     }
 
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
         print("\nGate-Open");
         auto gate_open_start = std::chrono::high_resolution_clock::now();
 
-        add_entry(settings.gate_log, 1, "start time", current_datetime());
+        add_entry(settings.gate_log, 1, "started", true);
         // if pore-ID was not performed at the start of this run, obtain the potential gates from user provided file(s)
         if (!settings.run_pore_id) {
             if (settings.load_gate_from_single_file)
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
         }
 
         add_comment(settings.gate_log, 1, "finished");
-        add_entry(settings.gate_log, 1, "end time", current_datetime());
+        add_entry(settings.gate_log, 1, "finished", true);
         add_entry(settings.gate_log, 1, "total runtime", gate_open_start);
     }
     print(0, initial, "\n=> total runtime:");

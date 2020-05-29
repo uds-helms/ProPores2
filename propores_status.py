@@ -94,7 +94,7 @@ if __name__ == '__main__':
             runs[name]['ID.volume.threshold'] = get_value(params, 'volume threshold')
             runs[name]['ID.selected.computation.mode'] = get_value(params, 'computation mode')
             runs[name]['ID.filter'] = get_value(params, 'filter')
-            runs[name]['ID.start.date'] = get_value(log, 'start time')
+            runs[name]['ID.started'] = get_value(log, 'started')
             if 'PDB parsing stats' in log:
                 runs[name]['atoms'] = get_value(log['PDB parsing stats'], 'atoms')
                 runs[name]['removed.atoms'] = get_value(log['PDB parsing stats'], 'total skipped atoms')
@@ -102,7 +102,7 @@ if __name__ == '__main__':
             runs[name]['ID.atom.pairs'] = get_value(log, 'atom pairs')
             runs[name]['ID.used.computation.mode'] = get_value(log, 'used computation mode')
             runs[name]['ID.identified.pores'] = get_value(log, 'identified pores')
-            runs[name]['ID.end.date'] = get_value(log, 'end time')
+            runs[name]['ID.finished'] = get_value(log, 'finished')
             runs[name]['ID.total.runtime'] = get_value(log, 'total runtime')
 
         # extract axis trace information
@@ -119,9 +119,9 @@ if __name__ == '__main__':
             runs[name]['output.directory'] = os.path.abspath(root)
             runs[name]['axis.enabled'] = str(True)
             runs[name]['axis.surface.patch.threshold'] = get_value(params, 'surface patch threshold')
-            runs[name]['axis.start.date'] = get_value(log, 'start time')
+            runs[name]['axis.started'] = get_value(log, 'started')
             runs[name]['ID.identified.pores'] = get_value(log, 'pores')
-            runs[name]['axis.end.date'] = get_value(log, 'end time')
+            runs[name]['axis.finished'] = get_value(log, 'finished')
             runs[name]['axis.total.runtime'] = get_value(log, 'total runtime')
 
         # extract gate open information
@@ -141,21 +141,21 @@ if __name__ == '__main__':
             runs[name]['gate.clash.tolerance'] = get_value(params, 'clash tolerance')
             runs[name]['gate.difficulty.threshold'] = get_value(params, 'gate difficulty threshold')
             runs[name]['gate.re.estimate.difficulty'] = get_value(params, 're-estimate gate difficulty')
-            runs[name]['gate.start.date'] = get_value(log, 'start time')
+            runs[name]['gate.started'] = get_value(log, 'started')
             runs[name]['gates'] = get_value(log, 'gates')
-            runs[name]['gate.end.date'] = get_value(log, 'end time')
+            runs[name]['gate.finished'] = get_value(log, 'finished')
             runs[name]['gate.total.runtime'] = get_value(log, 'total runtime')
 
     # inform the users how many runs had at least some output
     print('Runs in the output directory: {0:,}'.format(sum(1 for k, d in runs.items()
-                                                           if d['ID.start.date'] != '?' or d['axis.start.date'] != '?'
-                                                           or d['gate.start.date'] != '?')))
+                                                           if d['ID.started'] != '?' or d['axis.started'] != '?'
+                                                           or d['gate.started'] != '?')))
 
     # compute the status
     for key, run in runs.items():
-        run['ID.status'] = run_state(run['ID.start.date'], run['ID.end.date'], run['ID.total.runtime'])
-        run['axis.status'] = run_state(run['axis.start.date'], run['axis.end.date'], run['axis.total.runtime'])
-        run['gate.status'] = run_state(run['gate.start.date'], run['gate.end.date'], run['gate.total.runtime'])
+        run['ID.status'] = run_state(run['ID.started'], run['ID.finished'], run['ID.total.runtime'])
+        run['axis.status'] = run_state(run['axis.started'], run['axis.finished'], run['axis.total.runtime'])
+        run['gate.status'] = run_state(run['gate.started'], run['gate.finished'], run['gate.total.runtime'])
             
     # generate and output the overview
     with open(args.overview, 'w') as file:

@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
         }
 
         add_comment(settings.axis_log, 1, "finished");
-        add_entry(settings.axis_log, 1, "finished", true;
+        add_entry(settings.axis_log, 1, "finished", true);
         add_entry(settings.axis_log, 1, "total runtime", axis_start);
     }
 

@@ -2,8 +2,7 @@
  * Copyright (C) 2020 Markus Hollander (markus.hollander@bioinformatik.uni-saarland.de). All rights reserved.
  *
  * This file is part of PROPORES 2.0. PROPORES was originally developed by Po-Hsien Lee (2011) in Perl under the terms
- * of the GNU General Public License version 3 or higher. The approach was published as:
- * Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational
+ * of the GNU General Public License version 3 or higher. The approach was published as: * Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational
  * repositioning of gating residues. Proteins, 80, 2:421-32. https://www.ncbi.nlm.nih.gov/pubmed/22095919
  *
  * PROPORES 2.0 is a C++ implementation of the approach outlined in Lee (2012) by Markus Hollander and Moomal Aziz.
@@ -23,12 +22,9 @@
 
 std::string to_str(const RecordType record) {
     switch (record) {
-        case ATOM_RECORD:
-            return "ATOM";
-        case HETERO_RECORD:
-            return "HETATM";
-        default:
-            return "INVALID_RECORD_TYPE";
+        case ATOM_RECORD: return "ATOM";
+        case HETERO_RECORD: return "HETATM";
+        default: return "INVALID_RECORD_TYPE";
     }
 }
 
@@ -160,8 +156,7 @@ std::string to_str(const AtomType atom) {
         case Yb: return "YB";
         case Zn: return "ZN";
         case Zr: return "ZR";
-        default:
-            return "INVALID_ATOM";
+        default: return "INVALID_ATOM";
     }
 }
 
@@ -295,48 +290,27 @@ AtomType to_atom_type(const char &str) {
 
 std::string to_str(const ResidueType residue) {
     switch (residue) {
-        case ALA:
-            return "ALA";
-        case ARG:
-            return "ARG";
-        case ASN:
-            return "ASN";
-        case ASP:
-            return "ASP";
-        case CYS:
-            return "CYS";
-        case GLN:
-            return "GLN";
-        case GLU:
-            return "GLU";
-        case GLY:
-            return "GLY";
-        case HIS:
-            return "HIS";
-        case ILE:
-            return "ILE";
-        case LEU:
-            return "LEU";
-        case LYS:
-            return "LYS";
-        case MET:
-            return "MET";
-        case PHE:
-            return "PHE";
-        case PRO:
-            return "PRO";
-        case SER:
-            return "SER";
-        case THR:
-            return "THR";
-        case TRP:
-            return "TRP";
-        case TYR:
-            return "TYR";
-        case VAL:
-            return "VAL";
-        default:
-            return "INVALID_RESIDUE";
+        case ALA: return "ALA";
+        case ARG: return "ARG";
+        case ASN: return "ASN";
+        case ASP: return "ASP";
+        case CYS: return "CYS";
+        case GLN: return "GLN";
+        case GLU: return "GLU";
+        case GLY: return "GLY";
+        case HIS: return "HIS";
+        case ILE: return "ILE";
+        case LEU: return "LEU";
+        case LYS: return "LYS";
+        case MET: return "MET";
+        case PHE: return "PHE";
+        case PRO: return "PRO";
+        case SER: return "SER";
+        case THR: return "THR";
+        case TRP: return "TRP";
+        case TYR: return "TYR";
+        case VAL: return "VAL";
+        default: return "INVALID_RESIDUE";
     }
 }
 
@@ -366,28 +340,17 @@ ResidueType to_residue_type(const std::string &str) {
 
 std::string to_str(const BoxState state) {
     switch (state) {
-        case OCCUPIED:
-            return "OCCUPIED";
-        case BACKGROUND:
-            return "BACKGROUND";
-        case POTENTIAL_PORE:
-            return "POTENTIAL_PORE";
-        case NUCLEUS:
-            return "NUCLEUS";
-        case IN_CLUSTER:
-            return "IN_CLUSTER";
-        case ON_CLUSTER_INSIDE:
-            return "ON_CLUSTER_INSIDE";
-        case TOUCHES_BACKGROUND:
-            return "TOUCHES_BACKGROUND";
-        case TOUCHES_PROTEIN:
-            return "TOUCHES_PROTEIN";
-        case TOUCHES_OTHER_CLUSTER:
-            return "TOUCHES_OTHER_CLUSTER";
-        case TOUCHES_POTENTIAL_PORE:
-            return "TOUCHES_POTENTIAL_PORE";
-        default:
-            return "UNCLASSIFIED";
+        case OCCUPIED: return "OCCUPIED";
+        case BACKGROUND: return "BACKGROUND";
+        case POTENTIAL_PORE: return "POTENTIAL_PORE";
+        case NUCLEUS: return "NUCLEUS";
+        case IN_CLUSTER: return "IN_CLUSTER";
+        case ON_CLUSTER_INSIDE: return "ON_CLUSTER_INSIDE";
+        case TOUCHES_BACKGROUND: return "TOUCHES_BACKGROUND";
+        case TOUCHES_PROTEIN: return "TOUCHES_PROTEIN";
+        case TOUCHES_OTHER_CLUSTER: return "TOUCHES_OTHER_CLUSTER";
+        case TOUCHES_POTENTIAL_PORE: return "TOUCHES_POTENTIAL_PORE";
+        default: return "UNCLASSIFIED";
     }
 }
 

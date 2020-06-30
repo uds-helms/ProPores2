@@ -653,9 +653,9 @@ private:
         add_entry(gate_log, 1, "PDB path", pdb_path.string());
         add_entry(gate_log, 1, "output directory", gate_dir.string());
         add_comment(gate_log, 1, "PDB parsing");
+        add_entry(pore_log, 1, "H-atoms", to_str(h_atom_tag));
         add_entry(pore_log, 1, "HETATM entries", to_str(hetero_atom_tag));
         add_entry(pore_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
-        add_entry(gate_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
         add_entry(gate_log, 1, "keep alternative atom locations", keep_alternative);
         add_comment(gate_log, 1, "gate input");
         add_entry(gate_log, 1, "load from pore ID", run_pore_id);

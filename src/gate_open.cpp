@@ -141,9 +141,9 @@ void gates_from_grid(ProteinGrid &grid, std::vector<Gate> &gates) {
             // skip combinations that were already examined
             if (cluster_1.id >= cluster_2.id) continue;
             // identify all lining residues that are shared by the two pores/cavities
-            std::vector<std::tuple<std::string, size_t, ResidueType>> shared;
-            for (const std::tuple<std::string, size_t, ResidueType> &residue: cluster_1.lining_residues) {
-                ResidueType res = std::get<2>(residue);
+            std::vector<std::tuple<std::string, size_t, std::string>> shared;
+            for (const std::tuple<std::string, size_t, std::string> &residue: cluster_1.lining_residues) {
+                ResidueType res = to_residue_type(std::get<2>(residue));
                 // skip lining residues that are not standard amino acids or cannot be rotated
                 if (res == INVALID_RESIDUE || res == PRO || res == GLY || res == ALA) continue;
                 // check if the residue is shared
@@ -187,11 +187,11 @@ void gate_from_file(const std::string &file_path, std::vector<Gate> &gates) {
     }
     GateDifficulty difficulty = to_gate_difficulty(cols[3]);
     // extract the gating residues
-    std::vector<std::tuple<std::string, size_t, ResidueType>> residues;
+    std::vector<std::tuple<std::string, size_t, std::string>> residues;
     while (std::getline(file, line)) {
         cols = split(r_strip(line), '\t');
         if (cols.size() != 3) continue;
-        residues.emplace_back(std::make_tuple(cols[0], stoi(cols[1]), to_residue_type(cols[2])));
+        residues.emplace_back(std::make_tuple(cols[0], stoi(cols[1]), cols[2]));
     }
     file.close();
     // make sure that there is at least one residue in the input file
@@ -275,7 +275,7 @@ void compute_dihedral_angles(const Gate &gate, Residue &res) {
 // rotate the side chain of a given residue to generate the specified rotamer
 void side_chain_rotate(const Residue &res, Rotamer &rotamer) {
     // residues have up to 4 dihedral angles along the main backbone and side chain components (e.g. N-CA-CB-CG-CD)
-    // the loop iterates over these angles starting with the angle of the entire side chain and then the angles of ever
+    // the loop iterates over these angles starting with the angle of the entire side chain and then the angles of every
     // smaller parts of the side chain
     // the first rotation point is C-beta (CB), the next is C-gamma (CG),...
     // atoms before the current rotation point in the residue chain are not rotated
@@ -534,6 +534,11 @@ void gate_open(Settings &settings, std::vector<Gate> &gates) {
     std::unordered_map<ResidueType, std::vector<std::vector<int>>> rotamer_lib;
     load_rotamer_library(settings, rotamer_lib);
     print(1, library_start, "> loaded the rotamer library in");
+    // load the PDB to log all changed atom coordinates and changed residues
+    std::vector<std::shared_ptr<Atom>> global_atoms;
+    PDBReaderStats stats = PDBReaderStats();
+    parse_PDB(settings, global_atoms, stats);
+    std::set<std::string> global_residues;
     // process each gate
     for (Gate &gate: gates) {
         // skip the gate if the difficulty is too high and a re-assessment is not desired
@@ -584,12 +589,29 @@ void gate_open(Settings &settings, std::vector<Gate> &gates) {
         // compute the total energy of all possible gate configurations based on the remaining rotamers
         std::vector<Rotamer> best_combination = exhaustive_search(gate);
         // apply the positions of the best rotamer combination and write the newly positioned atoms in a PDB file
+        // also extract and store the chain and ID of the changed residues for visualisation on the web server
+        std::set<std::string> gate_residues;
         for (const Rotamer &rot: best_combination) {
-            for (const BasicAtom &atom: rot.atoms) { gate.atoms[atom.index]->coord = atom.coord; }
+            for (const BasicAtom &atom: rot.atoms) {
+                // identify the original atom
+                std::shared_ptr<Atom> gate_atom = gate.atoms[atom.index];
+                std::shared_ptr<Atom> global_atom = global_atoms[atom.index];
+                // update atom coordinates
+                gate_atom->coord = atom.coord;
+                global_atom->coord = atom.coord;
+                // store the chain and ID of changed residues
+                gate_residues.insert(gate_atom->chain + ":" + std::to_string(gate_atom->residue_id));
+                global_residues.insert(global_atom->chain + ":" + std::to_string(global_atom->residue_id));
+            }
         }
+        // write the altered PDB and add a comment line with the altered residues
         std::string file_name = settings.output_name + gate.name() + ".pdb";
         write_PDB((settings.gate_dir / fs::path(file_name)).string(), gate.atoms);
+        add_comment((settings.gate_dir / fs::path(file_name)).string(), gate_residues);
         // output the total run time needed for this gate
         print(2, start_gate, "=> total gate runtime:");
     }
+    // write the altered PDB with all opened gates and add a comment line with the altered residues
+    write_PDB(settings.gate_merged_pdb.string(), global_atoms);
+    add_comment(settings.gate_merged_pdb.string(), global_residues);
 }

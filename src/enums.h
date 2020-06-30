@@ -24,8 +24,8 @@
 
 enum RecordType : uint8_t {
     INVALID_RECORD,
-    ATOM,
-    HETATOM
+    ATOM_RECORD,
+    HETERO_RECORD
 };
 
 enum AtomType : uint8_t {
@@ -190,16 +190,34 @@ enum BoxState : uint8_t {
     TOUCHES_POTENTIAL_PORE
 };
 
+enum HAtomTag : uint8_t {
+    KEEP_ALL_H_ATOMS,
+    REMOVE_ALL_H_ATOMS,
+    REMOVE_ONLY_PROTEIN_H_ATOMS,
+    REMOVE_ONLY_HETERO_H_ATOMS,
+    INVALID_H_ATOM_TAG
+};
+
+enum HeteroAtomTag : uint8_t {
+    KEEP_ALL_HETERO_ATOMS,
+    REMOVE_ALL_HETERO_ATOMS,
+    REMOVE_HETERO_ATOMS_EXCEPT_DUMMY,
+    REMOVE_ONLY_DUMMY_HETERO_ATOMS,
+    INVALID_HETERO_ATOM_TAG
+};
+
 enum RemoveTag : uint8_t {
     REMOVE_NOTHING,
     REMOVE_CAVITIES,
-    REMOVE_PORES
+    REMOVE_PORES,
+    INVALID_REMOVE_TAG
 };
 
-enum CylinderTag : uint8_t {
+enum ComputationMode : uint8_t {
     AUTODETECT,
     RAY_TRACE,
-    STANDALONE
+    STANDALONE,
+    INVALID_COMPUTATION_MODE
 };
 
 enum GateDifficulty : uint8_t {
@@ -209,33 +227,39 @@ enum GateDifficulty : uint8_t {
     DIFFICULTY_ERROR
 };
 
+enum PreparationTag: uint8_t {
+    AXIS_AND_GATE,
+    ONLY_AXIS,
+    ONLY_GATE,
+    NO_PREPARATION,
+    INVALID_PREPARATION_TAG
+};
+
 
 // convert enums to string
 std::string to_str(RecordType record);
-
 std::string to_str(AtomType atom);
-
 std::string to_str(ResidueType residue);
-
 std::string to_str(BoxState state);
-
+std::string to_str(HAtomTag tag);
+std::string to_str(HeteroAtomTag tag);
 std::string to_str(GateDifficulty difficulty);
-
-std::string to_str(CylinderTag tag);
-
+std::string to_str(ComputationMode tag);
 std::string to_str(RemoveTag tag);
+std::string to_str(PreparationTag tag);
 
 // convert strings to enums
 RecordType to_record_type(const std::string &str);
-
 AtomType to_atom_type(const std::string &str);
 AtomType to_atom_type(const char &str);
-
 ResidueType to_residue_type(const std::string &str);
-
 BoxState to_box_state(const std::string &str);
-
+HAtomTag to_h_atom_tag(const std::string &str);
+HeteroAtomTag to_hetero_atom_tag(const std::string &str);
 GateDifficulty to_gate_difficulty(const std::string &str);
+ComputationMode to_computation_mode(const std::string &str);
+RemoveTag to_remove_tag(const std::string &str);
+PreparationTag to_preparation_tag(const std::string &str);
 
 // map residue types to backbone definitions
 std::vector<std::string> residue_definition(ResidueType type);

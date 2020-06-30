@@ -61,7 +61,7 @@ struct PoreCluster {
     std::vector<PoreBox> boxes;
     std::unordered_set<size_t> indices;
     // residues directly surrounding the pore or cavity
-    std::set<std::tuple<std::string, size_t, ResidueType>> lining_residues;
+    std::set<std::tuple<std::string, size_t, std::string>> lining_residues;
     // true if the cluster is a pore, false if it's a cavity
     bool pore = false;
     // grid box length
@@ -82,7 +82,7 @@ struct PoreCluster {
 
     // extract residue information from the given atom and add it to the lining residue set
     void add_lining_residue(const std::shared_ptr<Atom> &atom) {
-        lining_residues.emplace(std::make_tuple(atom->chain, atom->residue_id, atom->residue_type));
+        lining_residues.emplace(std::make_tuple(atom->chain, atom->residue_id, atom->residue_name));
     }
 
     // check if a 1D index is part of the cluster
@@ -231,13 +231,13 @@ struct ProteinGrid : Grid {
     explicit ProteinGrid(const Settings &settings) :
             ProteinGrid(settings.pdb_path.string(), settings.kept_atoms.string(), settings.skipped_atoms.string(),
                         settings.pore_log.string(), settings.box_length,
-                        settings.solvent_radius, settings.skip_H, settings.keep_alternative, settings.skip_hetero_atoms,
-                        settings.skip_non_standard_amino_acids) {}
+                        settings.solvent_radius, settings.h_atom_tag, settings.hetero_atom_tag,
+                        settings.keep_alternative, settings.skip_non_standard_amino_acids) {}
 
     // detailed constructor for testing
     ProteinGrid(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
                 const std::string &log_path, const double length, const double solvent,
-                const bool skip_H, const bool keep_alternative, const bool skip_hetero_atoms,
+                const HAtomTag h_atom, const HeteroAtomTag hetero, const bool keep_alternative,
                 const bool skip_non_standard_amino_acids) :
             Grid(length),
             box_radius_sqrt3(box_radius * sqrt(3)),
@@ -247,7 +247,7 @@ struct ProteinGrid : Grid {
         // INPUT PARSING
         // parse atom information from the input file
         PDBReaderStats stats = PDBReaderStats();
-        parse_PDB(pdb_path, kept_path, skipped_path, atoms, stats, skip_H, keep_alternative, skip_hetero_atoms,
+        parse_PDB(pdb_path, kept_path, skipped_path, atoms, stats, h_atom, hetero, keep_alternative,
                   skip_non_standard_amino_acids);
 
         // log PDB parsing stats if the log file is given

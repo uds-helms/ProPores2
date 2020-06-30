@@ -34,7 +34,7 @@ TEST(enum_tests, to_record_type) {
 TEST(enum_tests, record_type_to_str) {
     std::vector<std::string> expected = {"ATOM", "HETATM", "INVALID_RECORD_TYPE"};
     std::vector<std::string> actual;
-    for (const RecordType &type: {ATOM, HETATOM, INVALID_RECORD}) { actual.push_back(to_str(type)); }
+    for (const RecordType &type: {ATOM_RECORD, HETERO_RECORD, INVALID_RECORD}) { actual.push_back(to_str(type)); }
     EXPECT_EQ(expected, actual);
 }
 
@@ -101,7 +101,7 @@ TEST(enum_tests, to_difficulty) {
     for (const std::string &str: {"EASY", "MEDIUM", "HARD"}) {
         EXPECT_FALSE(DIFFICULTY_ERROR == to_gate_difficulty(str));
     }
-    for (const std::string &str: {"", "AL", "  ", "1", "ala", "blablub", "easy", "medium", "hard"}) {
+    for (const std::string &str: {"", "AL", "  ", "ala", "blablub", "easy", "medium", "hard"}) {
         EXPECT_TRUE(DIFFICULTY_ERROR == to_gate_difficulty(str));
     }
 }

@@ -162,9 +162,9 @@ void collision_detection(ProteinGrid &grid) {
 bool switch_to_standalone(const ProteinGrid &grid, const Settings &settings) {
     bool autodetect = grid.occupied.size() > settings.box_threshold;
     autodetect = autodetect || grid.pairs.size() < settings.atom_pair_threshold;
-    autodetect = autodetect && settings.cylinder_tag == AUTODETECT;
+    autodetect = autodetect && settings.computation_mode == AUTODETECT;
     // run standalone cylinder perpendicularity if enabled
-    return autodetect || settings.cylinder_tag == STANDALONE;
+    return autodetect || settings.computation_mode == STANDALONE;
 }
 
 // form a cylinder around the connecting vector between atom pairs
@@ -606,7 +606,7 @@ void output_pores(ProteinGrid &grid, const Settings &settings) {
         std::ofstream lining((settings.lining_dir / fs::path(name + ".tsv")).string());
         // for each lining residue, write the chain, residue ID and residue type in tab-separated format
         for (const auto &[chain, res_id, res_type]: cluster.lining_residues) {
-            lining << chain << "\t" << res_id << "\t" << to_str(res_type) << std::endl;
+            lining << chain << "\t" << res_id << "\t" << res_type << std::endl;
         }
         lining.close();
     }
@@ -681,12 +681,14 @@ void pore_ID(ProteinGrid &grid, const Settings &settings) {
     //    residues, in touch with another cluster or in the cluster centre
     // 2. if the cluster touches the background, it is a pore, otherwise it is a cavity
     sub_start = std::chrono::high_resolution_clock::now();
-    if (settings.run_axis_trace || settings.run_axis_preparation) label_pore_boxes(grid);
+    if (settings.run_axis_trace || settings.preparation == AXIS_AND_GATE || settings.preparation == ONLY_AXIS) {
+        label_pore_boxes(grid);
+    }
     classify_clusters(grid);
     add_entry(log, 1, "pore classification", sub_start);
     // remove pores/cavities that are too small, or only keep pores or cavities
     sub_start = std::chrono::high_resolution_clock::now();
-    grid.filter_pores(settings.volume_threshold, settings.remove_tag);
+    grid.filter_pores(settings.volume_threshold, settings.pore_filter);
     add_entry(log, 1, "pore filter", sub_start);
     // compute the residues surrounding each pore/cavity
     sub_start = std::chrono::high_resolution_clock::now();

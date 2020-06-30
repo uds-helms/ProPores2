@@ -23,9 +23,9 @@
 
 std::string to_str(const RecordType record) {
     switch (record) {
-        case ATOM:
+        case ATOM_RECORD:
             return "ATOM";
-        case HETATOM:
+        case HETERO_RECORD:
             return "HETATM";
         default:
             return "INVALID_RECORD_TYPE";
@@ -33,8 +33,8 @@ std::string to_str(const RecordType record) {
 }
 
 RecordType to_record_type(const std::string &str) {
-    if (str == "ATOM") return ATOM;
-    if (str == "HETATM") return HETATOM;
+    if (str == "ATOM") return ATOM_RECORD;
+    if (str == "HETATM") return HETERO_RECORD;
     return INVALID_RECORD;
 }
 
@@ -405,40 +405,106 @@ BoxState to_box_state(const std::string &str) {
     return UNCLASSIFIED;
 }
 
+std::string to_str(HAtomTag tag) {
+    switch (tag) {
+        case KEEP_ALL_H_ATOMS: return "KEEP_ALL_H_ATOMS";
+        case REMOVE_ALL_H_ATOMS: return "REMOVE_ALL_H_ATOMS";
+        case REMOVE_ONLY_PROTEIN_H_ATOMS: return "REMOVE_ONLY_PROTEIN_H_ATOMS";
+        case REMOVE_ONLY_HETERO_H_ATOMS: return "REMOVE_ONLY_HETERO_H_ATOMS";
+        default: return "INVALID_H_ATOM_TAG";
+    }
+}
+
+HAtomTag to_h_atom_tag(const std::string &str) {
+    if (str == "0" || str == "KEEP_ALL_H_ATOMS") return KEEP_ALL_H_ATOMS;
+    if (str == "1" || str == "REMOVE_ALL_H_ATOMS") return REMOVE_ALL_H_ATOMS;
+    if (str == "2" || str == "REMOVE_ONLY_PROTEIN_H_ATOMS") return REMOVE_ONLY_PROTEIN_H_ATOMS;
+    if (str == "3" || str == "REMOVE_ONLY_HETERO_H_ATOMS") return REMOVE_ONLY_HETERO_H_ATOMS;
+    return INVALID_H_ATOM_TAG;
+}
+
+std::string to_str(HeteroAtomTag tag) {
+    switch (tag) {
+        case KEEP_ALL_HETERO_ATOMS: return "KEEP_ALL_HETERO_ATOMS";
+        case REMOVE_ALL_HETERO_ATOMS: return "REMOVE_ALL_HETERO_ATOMS";
+        case REMOVE_HETERO_ATOMS_EXCEPT_DUMMY: return "REMOVE_HETERO_ATOMS_EXCEPT_DUMMY";
+        case REMOVE_ONLY_DUMMY_HETERO_ATOMS: return "REMOVE_ONLY_DUMMY_HETERO_ATOMS";
+        default: return "INVALID_HETERO_ATOM_TAG";
+    }
+}
+
+HeteroAtomTag to_hetero_atom_tag(const std::string &str) {
+    if (str == "0" || str == "KEEP_ALL_HETERO_ATOMS") return KEEP_ALL_HETERO_ATOMS;
+    if (str == "1" || str == "REMOVE_ALL_HETERO_ATOMS") return REMOVE_ALL_HETERO_ATOMS;
+    if (str == "2" || str == "REMOVE_HETERO_ATOMS_EXCEPT_DUMMY") return REMOVE_HETERO_ATOMS_EXCEPT_DUMMY;
+    if (str == "3" || str == "REMOVE_ONLY_DUMMY_HETERO_ATOMS") return REMOVE_ONLY_DUMMY_HETERO_ATOMS;
+    return INVALID_HETERO_ATOM_TAG;
+}
+
 std::string to_str(const GateDifficulty difficulty) {
     switch (difficulty) {
-        case EASY:
-            return "EASY";
-        case MEDIUM:
-            return "MEDIUM";
-        case HARD:
-            return "HARD";
-        default:
-            return "DIFFICULTY_ERROR";
+        case EASY: return "EASY";
+        case MEDIUM: return "MEDIUM";
+        case HARD: return "HARD";
+        default: return "DIFFICULTY_ERROR";
     }
 }
 
 GateDifficulty to_gate_difficulty(const std::string &str) {
-    if (str == "EASY") return EASY;
-    if (str == "MEDIUM") return MEDIUM;
-    if (str == "HARD") return HARD;
+    if (str == "EASY" || str == "0") return EASY;
+    if (str == "MEDIUM" || str == "1") return MEDIUM;
+    if (str == "HARD" || str == "2") return HARD;
     return DIFFICULTY_ERROR;
 }
 
-std::string to_str(CylinderTag tag) {
+std::string to_str(ComputationMode tag) {
     switch (tag) {
+        case AUTODETECT: return "AUTODETECT";
         case RAY_TRACE: return "RAY_TRACE";
         case STANDALONE: return "STANDALONE";
-        default: return "AUTODETECT";
+        default: return "INVALID_COMPUTATION_MODE";
     }
+}
+
+ComputationMode  to_computation_mode(const std::string &str) {
+    if (str == "AUTODETECT" || str == "0") return AUTODETECT;
+    if (str == "RAY_TRACE" || str == "1") return RAY_TRACE;
+    if (str == "STANDALONE" || str == "2") return STANDALONE;
+    return INVALID_COMPUTATION_MODE;
 }
 
 std::string to_str(RemoveTag tag) {
     switch (tag) {
+        case REMOVE_NOTHING: return "REMOVE_NOTHING";
         case REMOVE_PORES: return "REMOVE_PORES";
         case REMOVE_CAVITIES: return "REMOVE_CAVITIES";
-        default: return "REMOVE_NOTHING";
+        default: return "INVALID_REMOVE_TAG";
     }
+}
+
+RemoveTag to_remove_tag(const std::string &str) {
+    if (str == "REMOVE_NOTHING" || str == "0") return REMOVE_NOTHING;
+    if (str == "REMOVE_PORES" || str == "1") return REMOVE_PORES;
+    if (str == "REMOVE_CAVITIES" || str == "2") return REMOVE_CAVITIES;
+    return INVALID_REMOVE_TAG;
+}
+
+std::string to_str(PreparationTag tag) {
+    switch (tag) {
+        case AXIS_AND_GATE: return "AXIS_AND_GATE";
+        case ONLY_AXIS: return "ONLY_AXIS";
+        case ONLY_GATE: return "ONLY_GATE";
+        case NO_PREPARATION: return "NO_PREPARATION";
+        default: return "INVALID_PREPARATION_TAG";
+    }
+}
+
+PreparationTag to_preparation_tag(const std::string &str) {
+    if (str == "AXIS_AND_GATE" || str == "0") return AXIS_AND_GATE;
+    if (str == "ONLY_AXIS" || str == "1") return ONLY_AXIS;
+    if (str == "ONLY_GATE" || str == "2") return ONLY_GATE;
+    if (str == "NO_PREPARATION" || str == "3") return NO_PREPARATION;
+    return INVALID_PREPARATION_TAG;
 }
 
 // map residue types to backbone definitions

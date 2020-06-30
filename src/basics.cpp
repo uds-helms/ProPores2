@@ -112,14 +112,26 @@ std::vector<std::string> split(const std::string &str, const char sep) {
 std::vector<std::string> wrap(const std::string &str, const size_t width) {
     std::vector<std::string> words = split(str);
     std::vector<std::string> rows;
+    bool new_line_encountered = false;
+    bool put_new_line = false;
     // construct the rows
-    for (const std::string &word: words) {
+    for (std::string &word: words) {
+        // treat '+' as a newline character
+        if (word.back() == '+') {
+            word.pop_back();
+            new_line_encountered = true;
+        }
         // create a new row for the first word and also for words that would push the current row past the width limit
-        if (rows.empty() || rows[rows.size() - 1].length() + word.length() >= width) {
+        if (rows.empty() || rows[rows.size() - 1].length() + word.length() >= width || put_new_line) {
             rows.push_back(word);
+            put_new_line = false;
             // otherwise just append the word to the current row
         } else {
             rows[rows.size() - 1].append(" " + word);
+        }
+        if (new_line_encountered && !put_new_line) {
+            new_line_encountered = false;
+            put_new_line = true;
         }
     }
     return rows;

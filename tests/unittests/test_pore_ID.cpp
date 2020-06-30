@@ -31,11 +31,11 @@
 class PoreIDTest : public ::testing::Test {
 public:
     PoreIDTest() :
-            g_psp("test_files/psp_scan.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true),
+            g_psp("test_files/psp_scan.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
             a_psp(g_psp.atoms[0]),
-            g_col("test_files/collision_detection.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true),
-            g_cyl("test_files/cylinder_completion.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true),
-            g_per("test_files/perpendicular.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true) {
+            g_col("test_files/collision_detection.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
+            g_cyl("test_files/cylinder_completion.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
+            g_per("test_files/perpendicular.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true) {
         g_psp.states = std::vector<BoxState>(g_psp.size());
 
         // perpendicular
@@ -367,7 +367,7 @@ TEST_F(PoreIDTest, seal_the_gaps_no_cavity) {
 
 
 TEST(pore_id_tests, seal_gaps_pore) {
-    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
     cylinder_completion(g_pore);
     perpendicularity_cylinder(g_pore);
@@ -400,7 +400,7 @@ TEST(pore_id_tests, seal_gaps_pore) {
 
 
 TEST(pore_id_tests, seal_gaps_cavity) {
-    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
     cylinder_completion(g_cav);
     perpendicularity_cylinder(g_cav);
@@ -423,7 +423,7 @@ TEST(pore_id_tests, seal_gaps_cavity) {
 
 
 TEST(pore_id_tests, identify_pore_nuclei) {
-    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
     cylinder_completion(g_cav);
     perpendicularity_cylinder(g_cav);
@@ -445,7 +445,7 @@ TEST(pore_id_tests, identify_pore_nuclei) {
 }
 
 TEST(pore_id_tests, compute_volumes_cavity) {
-    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
     cylinder_completion(g_cav);
     perpendicularity_cylinder(g_cav);
@@ -478,7 +478,7 @@ TEST(pore_id_tests, compute_volumes_cavity) {
 }
 
 TEST(pore_id_tests, compute_volumes_pore) {
-    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
     cylinder_completion(g_pore);
     perpendicularity_cylinder(g_pore);
@@ -517,7 +517,7 @@ TEST(pore_id_tests, compute_volumes_pore) {
 }
 
 TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
-    ProteinGrid g_pore = ProteinGrid("test_files/pore_plus_cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_pore = ProteinGrid("test_files/pore_plus_cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
     cylinder_completion(g_pore);
     perpendicularity_cylinder(g_pore);
@@ -580,7 +580,7 @@ TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
 }
 
 TEST(pore_id_tests, identify_pore_nuclei_standalone) {
-    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
     perpendicularity_standalone(g_cav);
     seal_gaps(g_cav);
@@ -601,7 +601,7 @@ TEST(pore_id_tests, identify_pore_nuclei_standalone) {
 }
 
 TEST(pore_id_tests, compute_volumes_cavity_standalone) {
-    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
     perpendicularity_standalone(g_cav);
     seal_gaps(g_cav);
@@ -630,7 +630,7 @@ TEST(pore_id_tests, compute_volumes_cavity_standalone) {
 }
 
 TEST(pore_id_tests, compute_volumes_pore_standalone) {
-    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
     perpendicularity_standalone(g_pore);
     seal_gaps(g_pore);
@@ -663,7 +663,7 @@ TEST(pore_id_tests, compute_volumes_pore_standalone) {
 }
 
 TEST(pore_id_tests, compute_volumes_pore_plus_standalone) {
-    ProteinGrid g_pore = ProteinGrid("test_files/pore_plus_cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true);
+    ProteinGrid g_pore = ProteinGrid("test_files/pore_plus_cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
     perpendicularity_standalone(g_pore);
     seal_gaps(g_pore);

@@ -30,7 +30,7 @@ TEST(reader_tests, parse_PDB) {
     PDBReaderStats stats = PDBReaderStats();
     // all
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
-              atoms, stats, false, false, true, true);
+              atoms, stats, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     EXPECT_EQ(4, atoms.size());
     EXPECT_EQ(12345, atoms[3]->PDB_id);
     EXPECT_EQ(C, atoms[3]->type);
@@ -48,15 +48,15 @@ TEST(reader_tests, parse_PDB) {
     }
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
-              atoms, stats, false, false, false, true);
+              atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, false, true);
     EXPECT_EQ(5, atoms.size());
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
-              atoms, stats, true, false, true, true);
+              atoms, stats, REMOVE_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     EXPECT_EQ(2, atoms.size());
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
-              atoms, stats, false, true, false, false);
+              atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
     EXPECT_EQ(10, atoms.size());
 }
 
@@ -64,7 +64,7 @@ TEST(reader_tests, parse_PDB_simple_coord) {
     std::vector<std::shared_ptr<Atom>> atoms;
     PDBReaderStats stats = PDBReaderStats();
     parse_PDB("test_files/simple_coord.pdb", "test_files/reader_output.pdb", "test_files/reader_output.pdb",
-              atoms, stats, false, false, false, false);
+              atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, false, false);
     EXPECT_EQ(3, atoms.size());
 }
 
@@ -81,7 +81,7 @@ TEST(reader_tests, parse_and_write) {
     std::vector<std::shared_ptr<Atom>> atoms;
     PDBReaderStats stats = PDBReaderStats();
     parse_PDB("test_files/real.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
-              atoms, stats, false, true, false, false);
+              atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
     EXPECT_EQ(4389, atoms.size());
 
     std::ifstream real_file("test_files/real.pdb");

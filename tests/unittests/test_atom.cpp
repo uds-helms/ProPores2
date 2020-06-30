@@ -164,34 +164,34 @@ TEST(atom_tests, atomic_mass) {
 
 TEST(atom_tests, parse_atom_type) {
     std::pair<AtomType, std::string> res = std::make_pair(H, "1HB");
-    EXPECT_EQ(res, parse_atom_type("1HB ", ATOM));
-    EXPECT_EQ(res, parse_atom_type(" 1HB", ATOM));
-    EXPECT_EQ(res, parse_atom_type("1HB ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("1HB ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type(" 1HB", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("1HB ", HETERO_RECORD));
     res = std::make_pair(H, "21HB");
-    EXPECT_EQ(res, parse_atom_type("21HB ", ATOM));
-    EXPECT_EQ(res, parse_atom_type("21HB ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("21HB ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("21HB ", HETERO_RECORD));
     res = std::make_pair(C, "CA");
-    EXPECT_EQ(res, parse_atom_type("CA  ", ATOM));
-    EXPECT_EQ(res, parse_atom_type(" CA ", ATOM));
-    EXPECT_EQ(res, parse_atom_type("  CA", ATOM));
-    EXPECT_EQ(res, parse_atom_type(" CA ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("CA  ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type(" CA ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("  CA", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type(" CA ", HETERO_RECORD));
     res = std::make_pair(Ca, "CA");
-    EXPECT_EQ(res, parse_atom_type("CA  ", HETATOM));
-    EXPECT_EQ(res, parse_atom_type("  CA", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("CA  ", HETERO_RECORD));
+    EXPECT_EQ(res, parse_atom_type("  CA", HETERO_RECORD));
     res = std::make_pair(I, "I");
-    EXPECT_EQ(res, parse_atom_type("I   ", ATOM));
-    EXPECT_EQ(res, parse_atom_type("   I", ATOM));
-    EXPECT_EQ(res, parse_atom_type(" I  ", ATOM));
-    EXPECT_EQ(res, parse_atom_type("  I ", ATOM));
-    EXPECT_EQ(res, parse_atom_type("I   ", HETATOM));
-    EXPECT_EQ(res, parse_atom_type("   I", HETATOM));
-    EXPECT_EQ(res, parse_atom_type(" I  ", HETATOM));
-    EXPECT_EQ(res, parse_atom_type("  I ", HETATOM));
+    EXPECT_EQ(res, parse_atom_type("I   ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("   I", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type(" I  ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("  I ", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("I   ", HETERO_RECORD));
+    EXPECT_EQ(res, parse_atom_type("   I", HETERO_RECORD));
+    EXPECT_EQ(res, parse_atom_type(" I  ", HETERO_RECORD));
+    EXPECT_EQ(res, parse_atom_type("  I ", HETERO_RECORD));
     res = std::make_pair(INVALID_ATOM, "");
-    EXPECT_EQ(res, parse_atom_type("1C", ATOM));
-    EXPECT_EQ(res, parse_atom_type("1CH", ATOM));
-    EXPECT_EQ(res, parse_atom_type("12HBB", ATOM));
-    EXPECT_EQ(res, parse_atom_type("", ATOM));
+    EXPECT_EQ(res, parse_atom_type("1C", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("1CH", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("12HBB", ATOM_RECORD));
+    EXPECT_EQ(res, parse_atom_type("", ATOM_RECORD));
 }
 
 TEST_F(AtomTest, sort_atoms) {

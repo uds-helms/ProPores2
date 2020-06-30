@@ -80,7 +80,7 @@ std::pair<AtomType, std::string> parse_atom_type(const std::string &input_str, c
 
     // ATOM records contain atoms of standard amino acids (C, H, N, O, S), if that is not the case, there is an error
     // (the hydrogen case with numbering at the beginning is taken care of above)
-    if (record == ATOM) {
+    if (record == ATOM_RECORD) {
         if (leftmost_type == C || leftmost_type == H || leftmost_type == N || leftmost_type == O || leftmost_type == S)
             return std::make_pair(leftmost_type, str);
 

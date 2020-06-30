@@ -20,6 +20,7 @@
 #ifndef PROPORES_READER_H
 #define PROPORES_READER_H
 
+#include <set>
 #include <vector>
 #include "atom.h"
 #include "basics.h"
@@ -62,9 +63,9 @@ struct PDBReaderStats {
 // of atoms in addition to the primary location
 void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
                std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats,
-               bool skip_H,
+               HAtomTag h_atom,
+               HeteroAtomTag hetero,
                bool keep_alternative,
-               bool skip_hetero_atoms,
                bool skip_non_standard_amino_acids);
 
 // wrapper that allows calling parse_PDB with the program settings
@@ -78,5 +79,8 @@ std::string PDB_atom_entry(const std::shared_ptr<Atom> &atom);
 
 // output the information of all atoms in a PDB file
 void write_PDB(const std::string &file_path, const std::vector<std::shared_ptr<Atom>> &atoms);
+
+// add a comment with comma separated elements to a file
+void add_comment(const std::string &file_path, const std::set<std::string> &elements);
 
 #endif //PROPORES_READER_H

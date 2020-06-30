@@ -198,13 +198,14 @@ struct Gate {
     std::shared_ptr<Atom> root;
 
     // constructor, no protein atoms are loaded initially
-    Gate(const size_t id_1, const size_t id_2, std::vector<std::tuple<std::string, size_t, ResidueType>> &gating_res) :
+    Gate(const size_t id_1, const size_t id_2, std::vector<std::tuple<std::string, size_t, std::string>> &gating_res) :
             pore_1(id_1),
             pore_2(id_2) {
         // add the gating residues to the gate
         size_t next_id = 0;
-        for (const auto &[chain, id, type]: gating_res) {
+        for (const auto &[chain, id, res]: gating_res) {
             // do not add invalid residues
+			ResidueType type = to_residue_type(res);
             if (type == INVALID_RESIDUE) continue;
             residues.emplace_back(next_id, chain, id, type);
             next_id++;

@@ -53,19 +53,20 @@ int main(int argc, char *argv[]) {
         // run pore/cavity identification
         pore_ID(grid, settings);
 
-        if (settings.run_axis_preparation || settings.run_gate_preparation || settings.run_gate_open) {
+        if (settings.preparation == AXIS_AND_GATE || settings.preparation == ONLY_AXIS
+            || settings.preparation == ONLY_GATE || settings.run_gate_open) {
             add_comment(settings.pore_log, 1, "preparation");
         }
 
         // compute a list of potential gate between two neighbouring pores/cavities for subsequent gate-opening and/or
         // as preparation for later manual or automated analysis
-        if (settings.run_gate_preparation || settings.run_gate_open) {
+        if (settings.preparation == AXIS_AND_GATE || settings.preparation == ONLY_GATE || settings.run_gate_open) {
             // extract the gates from the grid
             auto gate_preparation_start = std::chrono::high_resolution_clock::now();
             std::string gate_steps = "> prepared";
             gates_from_grid(grid, gates);
             // if gate preparation is enabled, write a file with shared lining residues for each potential gate
-            if (settings.run_gate_preparation) {
+            if (settings.preparation == AXIS_AND_GATE || settings.preparation == ONLY_GATE) {
                 output_gates(settings, gates);
                 gate_steps += " and wrote";
             }
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]) {
 
         // write a file with grid boxes of each pore/cavity cluster for subsequent gate-opening and/or as preparation
         // for later manual or automated analysis
-        if (settings.run_axis_preparation) {
+        if (settings.preparation == AXIS_AND_GATE || settings.preparation == ONLY_AXIS) {
             auto axis_preparation = std::chrono::high_resolution_clock::now();
             output_trace_cluster(settings, grid);
             print(1, axis_preparation,

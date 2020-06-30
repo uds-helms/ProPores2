@@ -27,10 +27,10 @@
 class ProteinGridTest : public ::testing::Test {
 public:
     ProteinGridTest() :
-            small("test_files/simple_coord.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, false, false, true, true),
-            small_05("test_files/simple_coord.pdb",  "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 0.5, 1.0, false, false, true, true),
-            kd("test_files/kd.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, false, false, true, true),
-            g_per("test_files/perpendicular.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, false, false, true, true) {
+            small("test_files/simple_coord.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
+            small_05("test_files/simple_coord.pdb",  "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 0.5, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
+            kd("test_files/kd.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true),
+            g_per("test_files/perpendicular.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml",  1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true) {
         atom_1 = std::make_shared<Atom>(Atom{0, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});
         atom_2 = std::make_shared<Atom>(Atom{0, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});
         atom_3 = std::make_shared<Atom>(Atom{1, "ATOM      3  C   SER A  17    0.123456 1.123452.123456"});

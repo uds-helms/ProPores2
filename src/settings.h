@@ -53,6 +53,7 @@ struct Settings {
     fs::path gate_preparation_dir;
     fs::path gate_single_input;
     fs::path gate_directory_input;
+    fs::path gate_merged_pdb;
     // logging
     fs::path kept_atoms;
     fs::path skipped_atoms;
@@ -61,7 +62,6 @@ struct Settings {
     fs::path gate_log;
     // static input
     fs::path rotamer_lib = fs::path("rotamer_lib");
-
 
     // PARAMETERS
     // PORE-ID and AXIS-TRACE
@@ -95,19 +95,18 @@ struct Settings {
     // false if only the main location of an atom should be considered, true if the alternative location should be kept
     bool keep_alternative = false;
     // true if H-atoms should be discarded from the input PDB file
-    bool skip_H = false;
+    HAtomTag h_atom_tag = KEEP_ALL_H_ATOMS;
     // true if HETATM records should be ignored
-    bool skip_hetero_atoms = false;
+    HeteroAtomTag hetero_atom_tag = KEEP_ALL_HETERO_ATOMS;
     // true if non-standard amino acids should be ignored
     bool skip_non_standard_amino_acids = false;
     // PORE-ID
     // whether to generate output files that can be used for axis-trace or gate-open
-    bool run_axis_preparation = false;
-    bool run_gate_preparation = false;
+    PreparationTag preparation = AXIS_AND_GATE;
     // whether to remove pores, cavities or keep both
-    RemoveTag remove_tag = REMOVE_NOTHING;
+    RemoveTag pore_filter = REMOVE_NOTHING;
     // whether to run cylinder trace, cylinder standalone or try to auto-detect the best approach
-    CylinderTag cylinder_tag = AUTODETECT;
+    ComputationMode computation_mode = AUTODETECT;
     // whether to load gates (gate-open) or pore/cavity clusters (axis-trace) from a single file or directory
     bool load_gate_from_single_file = false;
     bool load_gates_from_directory = false;
@@ -133,21 +132,6 @@ struct Settings {
         run_pore_id = option_exists("pore-id");
         run_axis_trace = option_exists("axis-trace");
         run_gate_open = option_exists("gate-open");
-        // extract flags
-        run_axis_preparation = option_exists("--axis-preparation");
-        run_gate_preparation = option_exists("--gate-preparation");
-        keep_alternative = option_exists("--keep-alternative");
-        skip_hetero_atoms = option_exists("--skip-hetatm");
-        skip_non_standard_amino_acids = option_exists("--skip-non-std-amino-acids");
-        re_estimate = option_exists("--re-estimate");
-        bool help_short = option_exists("-h");
-        bool help_long = option_exists("--help");
-        bool only_cavities = option_exists("--only-cavities");
-        bool only_pores = option_exists("--only-pores");
-        bool standalone = option_exists("--cylinder-standalone");
-        bool ray_trace = option_exists("--cylinder-ray-trace");
-        bool skip_hard_gates = option_exists("--skip-hard-gates");
-        bool skip_medium_gates = option_exists("--skip-medium-gates");
         // extract file paths and output specifications
         output_name = get_option("--name");
         std::string input_pdb = get_option("-i");
@@ -156,6 +140,20 @@ struct Settings {
         std::string axis_input_dir = get_option("-td");
         std::string gate_input_single = get_option("-gs");
         std::string gate_input_dir = get_option("-gd");
+        std::string custom_rotamer_path = get_option("--rotamers");
+        // extract simple flags
+        keep_alternative = option_exists("--keep-alternative");
+        skip_non_standard_amino_acids = option_exists("--skip-non-std-amino-acids");
+        re_estimate = option_exists("--re-estimate");
+        bool help_short = option_exists("-h");
+        bool help_long = option_exists("--help");
+        // extract complex flags
+        std::string h_atom_flag = get_option("--h-atom");
+        std::string hetero_flag = get_option("--hetero");
+        std::string mode_flag = get_option("--mode");
+        std::string pore_filter_flag = get_option("--pore-filter");
+        std::string preparation_flag = get_option("--preparation_flag");
+        std::string difficulty_flag = get_option("--difficulty");
 
         if (help_short || help_long) print_help("");
 
@@ -192,24 +190,47 @@ struct Settings {
         if (surface_patch_threshold < 0) print_help("The option '-spt <decimal>' was negative.");
         if (clash_tolerance < 0) print_help("The option '-ct <decimal>' was negative.");
 
-        // check if mutually exclusive options are used
-        if (only_pores && only_cavities) {
-            print_help("The options '--only-pores' and '--only-cavities' are mutually exclusive.");
-        } else if (only_pores) {
-            remove_tag = REMOVE_CAVITIES;
-        } else if (only_cavities) { remove_tag = REMOVE_PORES; }
+        // check and set complex flags
+        if (!h_atom_flag.empty()) {
+            h_atom_tag = to_h_atom_tag(h_atom_flag);
+            if (h_atom_tag == INVALID_H_ATOM_TAG) {print_help("The \"--h-atom\" option was invalid.");}
+        }
 
-        if (ray_trace && standalone) {
-            print_help("The options '--cylinder-ray-trace' and '--cylinder-standalone' are mutually exclusive.");
-        } else if (ray_trace) {
-            cylinder_tag = RAY_TRACE;
-        } else if (standalone) { cylinder_tag = STANDALONE; }
+        if (!hetero_flag.empty()) {
+            hetero_atom_tag = to_hetero_atom_tag(hetero_flag);
+            if (hetero_atom_tag == INVALID_HETERO_ATOM_TAG) {print_help("The \"--hetero\" option was invalid.");}
+        }
 
-        if (skip_hard_gates && skip_medium_gates) {
-            print_help("The options '--skip-medium-gates' and '--skip-hard-gates' are mutually exclusive.");
-        } else if (skip_hard_gates) {
-            difficulty_threshold = HARD;
-        } else if (skip_medium_gates) { difficulty_threshold = MEDIUM; }
+        if (!mode_flag.empty()) {
+            computation_mode = to_computation_mode(mode_flag);
+            if (computation_mode == INVALID_COMPUTATION_MODE) {print_help("The \"--mode\" option was invalid.");}
+        }
+
+        if (!pore_filter_flag.empty()) {
+            pore_filter = to_remove_tag(pore_filter_flag);
+            if (pore_filter == INVALID_REMOVE_TAG) {print_help("The \"--pore-filter\" option was invalid.");}
+        }
+
+        if (!preparation_flag.empty()) {
+            preparation = to_preparation_tag(preparation_flag);
+            if (preparation == INVALID_PREPARATION_TAG) {print_help("The \"--preparation\" option was invalid.");}
+        // if the preparation flag is not set and pore ID is run, run preparation for the not enabled program parts
+        } else if (run_pore_id) {
+            if (!run_axis_trace && !run_gate_open) {
+                preparation = AXIS_AND_GATE;
+            } else if (!run_axis_trace && run_gate_open) {
+                preparation = ONLY_AXIS;
+            } else if (run_axis_trace && !run_gate_open) {
+                preparation = ONLY_GATE;
+            } else {
+                preparation = NO_PREPARATION;
+            }
+        }
+
+        if (!difficulty_flag.empty()) {
+            difficulty_threshold = to_gate_difficulty(difficulty_flag);
+            if (difficulty_threshold == DIFFICULTY_ERROR) {print_help("The \"--difficulty\" option was invalid.");}
+        }
 
         // extract the PDB name
         pdb_name = pdb_path.stem().string();
@@ -226,6 +247,7 @@ struct Settings {
         gate_dir = out_dir / fs::path("gate_open");
         axis_preparation_dir = out_dir / fs::path("axis_trace_input");
         gate_preparation_dir = out_dir / fs::path("gate_open_input");
+        gate_merged_pdb = gate_dir / fs::path(output_name + "all_in_one.pdb");
 
         // process axis-trace file paths
         if (run_axis_trace) {
@@ -363,14 +385,21 @@ struct Settings {
         }
         if (run_axis_trace) fs::create_directories(axis_dir);
         if (run_gate_open) fs::create_directories(gate_dir);
-        if (run_axis_preparation) fs::create_directories(axis_preparation_dir);
-        if (run_gate_preparation) fs::create_directories(gate_preparation_dir);
+        if (preparation == AXIS_AND_GATE || preparation == ONLY_AXIS) fs::create_directories(axis_preparation_dir);
+        if (preparation == AXIS_AND_GATE || preparation == ONLY_GATE) fs::create_directories(gate_preparation_dir);
+
         // if gate-open is enabled, check if the rotamer library is where it should be
         if (run_gate_open) {
+            std::string flavour;
+            // check if a custom rotamer library path was specified
+            if (!custom_rotamer_path.empty()) {
+                rotamer_lib = fs::path(custom_rotamer_path);
+                flavour = "custom ";
+            }
             if (!fs::is_directory(rotamer_lib)) {
-                print_help("The rotamer library could not be found at: " + rotamer_lib.string());
+                print_help("The " + flavour + "rotamer library could not be found at: " + rotamer_lib.string());
             } else if (fs::is_empty(rotamer_lib)) {
-                print_help("The rotamer library at '" + rotamer_lib.string() + "' is empty.");
+                print_help("The " + flavour + " rotamer library at '" + rotamer_lib.string() + "' is empty.");
             }
         }
 
@@ -397,9 +426,9 @@ struct Settings {
 
 private:
     std::vector<std::string> args;
-    const size_t col = 21;
+    const size_t col = 26;
     const std::string sep = "  ";
-    const size_t line_width = 90;
+    const size_t line_width = 100;
 
     [[nodiscard]] bool option_exists(const std::string &opt) const {
         return std::find(args.begin(), args.end(), opt) != args.end();
@@ -458,11 +487,22 @@ private:
 
         std::cout << "General options:" << std::endl;
         print_option("-h, --help", "Show this help message.");
-        print_option("--name <string>", "Name for the output sub-directory and  all output files. [default: PDB name]");
-        print_option("--skip-H-atoms", "Ignore H-atoms in the input PDB file. [default: false]");
+        print_option("--name <string>", "Name for the output sub-directory and  all output files. "
+                                        "[default: PDB name]");
+        print_option("--h-atom <number>", "Filter H atoms in the PDB:+ "
+                                          "0: keep all H atoms+ "
+                                          "1: remove all H atoms+ "
+                                          "2: remove only H atoms in ATOM records+ "
+                                          "3: remove only H atoms in HETATM records+ "
+                                          "[default: keep all H atoms]");
+        print_option("--hetero <number>", "Filter HETATM records in the PDB:+ "
+                                          "0: keep all hetero atoms+ "
+                                          "1: remove all hetero atoms+ "
+                                          "2: remove all hetero atoms except dummy atoms+ "
+                                          "3: remove only dummy hetero atoms+ "
+                                          "[default: keep all hetero atoms]");
         print_option("--keep-alternative", "Load alternative locations of atoms in addition to the primary location. "
                                            "[default: false]");
-        print_option("--skip-hetatm", "Do not load hetero atoms (HETATM) records. [default: false]");
         print_option("--skip-non-std-amino-acids", "Do not load atoms of non-standard residues (= not one "
                                                    "of the 20 'classical' amino acids) from ATOM records. HETATM "
                                                    "records are unaffected by this setting. [default: false]");
@@ -473,16 +513,23 @@ private:
         print_option("-p <decimal>", "Probe radius in Angstrom. The higher the value, the deeper pore regions "
                                      "have to be on the protein surface. [default: 1.4]");
         print_option("-v <decimal>", "Volume threshold for pores/cavities in cubic Angstrom. [default: 50]");
-        print_option("--cylinder-ray-trace", "Faster for smaller proteins or larger grid box lengths. "
-                                             "Increased RAM usage. [default: autodetect]");
-        print_option("--cylinder-standalone", "Potentially faster for larger proteins or smaller grid box lengths. "
-                                              "Reduced RAM usage. [default: autodetect]");
-        print_option("--only-pores", "Only generate output and analyses for pores, not cavities. [default: both]");
-        print_option("--only-cavities", "Only generate output and analyses for cavities. [default: both]");
-        print_option("--axis-preparation", "Output files that can be used to trace the axis of individual "
-                                           "pores/cavities. [default: false]");
-        print_option("--gate-preparation", "Output files that can be used to open individual gates between "
-                                           "neighbouring pores/cavities. [default: false]");
+        print_option("--mode <number>", "Computation mode for pore identification:+ "
+                                        "0: autodetect+ "
+                                        "1: ray trace, which is faster for smaller proteins or larger grid box lengths, "
+                                        "but comes with increased RAM usage.+ "
+                                        "2: standalone, which has a low RAM usage but can be potentially a lot slower+ "
+                                        "[default: autodetect]");
+        print_option("--pore-filter <number>", "Generate output and analysis for+ "
+                                               "0: pores and cavities+ "
+                                               "1: only pores+ "
+                                               "2: only cavities+ "
+                                               "[default: all]");
+        print_option("--preparation <number>", "Output files that can later be used for+ "
+                                               "0: axis-trace and gate-open+ "
+                                               "1: only axis-trace+ "
+                                               "2: only gate-open+ "
+                                               "3: no preparation+ "
+                                               "[default: preparation for not enabled parts]");
 
         std::cout << std::endl << "Axis-trace options:" << std::endl;
         print_option("-spt <number>", "Minimum area of a pore surface patch  in Angstrom for it to count as a potential "
@@ -505,9 +552,12 @@ private:
         print_option("-gd <path>", "Path to a directory with file(s) with information for opening the gate between a "
                                    "single pair of two pores/cavities. Only needed if gate-open is not run together "
                                    "with pore ID. [default: none]");
-        print_option("--skip-hard-gates", "Skip very time intensive gates. [default: false]");
-        print_option("--skip-medium-gates", "Skip potentially time intensive gates. This will automatically enable "
-                                            "'--skip-hard-gates' as well. [default: false]");
+        print_option("--rotamers <path>", "Custom path to the rotamer library. [default: none]");
+        print_option("--difficulty <number>", "Filter gates by their (potential) difficulty+ "
+                                              "0: try to open all gates+ "
+                                              "1: skip very time intensive gates+ "
+                                              "2: skip potentially time intensive gates+ "
+                                              "[default: try top open all gates]");
         print_option("--re-estimate", "Re-estimate the difficulty after rotamers have been checked for "
                                       "collisions before applying the difficulty threshold. "
                                       "[default: false]");
@@ -545,20 +595,19 @@ private:
         add_entry(pore_log, 1, "output directory", out_dir.string());
         add_entry(pore_log, 1, "output name", output_name);
         add_comment(pore_log, 1, "PDB parsing");
-        add_entry(pore_log, 1, "skip hydrogen atoms", skip_H);
-        add_entry(pore_log, 1, "skip hetero atoms", skip_hetero_atoms);
+        add_entry(pore_log, 1, "H-atoms", to_str(h_atom_tag));
+        add_entry(pore_log, 1, "HETATM entries", to_str(hetero_atom_tag));
         add_entry(pore_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
         add_entry(pore_log, 1, "keep alternative atom locations", keep_alternative);
         add_comment(pore_log, 1, "run flags");
-        add_entry(pore_log, 1, "run axes trace preparation", run_axis_preparation);
-        add_entry(pore_log, 1, "run gate open preparation", run_gate_preparation);
+        add_entry(pore_log, 1, "output preparation", to_str(preparation));
         add_comment(pore_log, 1, "identification parameters");
         add_entry(pore_log, 1, "resolution", box_length);
         add_entry(pore_log, 1, "solvent radius", solvent_radius);
         add_entry(pore_log, 1, "probe radius", probe_radius);
         add_entry(pore_log, 1, "volume threshold", volume_threshold);
-        add_entry(pore_log, 1, "computation mode", to_str(cylinder_tag));
-        add_entry(pore_log, 1, "filter", to_str(remove_tag));
+        add_entry(pore_log, 1, "computation mode", to_str(computation_mode));
+        add_entry(pore_log, 1, "filter", to_str(pore_filter));
         // initialise log
         add_comment(pore_log, 0, "information about the pore ID run");
         add_entry(pore_log, 0, "log");
@@ -604,8 +653,8 @@ private:
         add_entry(gate_log, 1, "PDB path", pdb_path.string());
         add_entry(gate_log, 1, "output directory", gate_dir.string());
         add_comment(gate_log, 1, "PDB parsing");
-        add_entry(gate_log, 1, "skip hydrogen atoms", skip_H);
-        add_entry(gate_log, 1, "skip hetero atoms", skip_hetero_atoms);
+        add_entry(pore_log, 1, "HETATM entries", to_str(hetero_atom_tag));
+        add_entry(pore_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
         add_entry(gate_log, 1, "skip non-standard amino acids in ATOM records", skip_non_standard_amino_acids);
         add_entry(gate_log, 1, "keep alternative atom locations", keep_alternative);
         add_comment(gate_log, 1, "gate input");

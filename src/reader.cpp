@@ -32,9 +32,9 @@
 // of atoms in addition to the primary location
 void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
                std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats,
-               const bool skip_H,
+               HAtomTag h_atom,
+               HeteroAtomTag hetero,
                const bool keep_alternative,
-               const bool skip_hetero_atoms,
                const bool skip_non_standard_amino_acids) {
     // open the input PDB file, the file for logging the processed and kept atom lines and the file for skipped atoms
     std::ifstream pdb_file(pdb_path);
@@ -49,9 +49,9 @@ void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const 
         // record type: ATOM (protein atoms) or HETATM (non-protein atoms, including solvent molecules)
         RecordType record_type = to_record_type(remove_spaces(pdb_substr(line, 0, 6)));
         // skip all non-atom entries
-        if (record_type != ATOM && record_type != HETATOM) continue;
+        if (record_type != ATOM_RECORD && record_type != HETERO_RECORD) continue;
         // skip hetero atom entries if the corresponding flag is set
-        if (skip_hetero_atoms && record_type == HETATOM) {
+        if (record_type == HETERO_RECORD && hetero == REMOVE_ALL_HETERO_ATOMS) {
             skipped_file << line << std::endl;
             stats.skipped_hetero++;
             continue;
@@ -72,7 +72,7 @@ void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const 
             continue;
         }
         // make sure that ATOM records have a valid amino acid residue
-        if (atom->record == ATOM && skip_non_standard_amino_acids && atom->residue_type == INVALID_RESIDUE) {
+        if (atom->record == ATOM_RECORD && skip_non_standard_amino_acids && atom->residue_type == INVALID_RESIDUE) {
             skipped_file << line << std::endl;
             stats.skipped_non_standard_amino_acids++;
             continue;
@@ -89,9 +89,20 @@ void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const 
             continue;
         }
         // skip H atoms if specified
-        if (skip_H && atom->type == H) {
+        if (atom->type == H
+            && (h_atom == REMOVE_ALL_H_ATOMS
+                || (h_atom == REMOVE_ONLY_PROTEIN_H_ATOMS && atom->record == ATOM_RECORD)
+                || (h_atom == REMOVE_ONLY_HETERO_H_ATOMS && atom->record == HETERO_RECORD))) {
             skipped_file << line << std::endl;
             stats.skipped_H++;
+            continue;
+        }
+        if (atom->record == HETERO_RECORD
+            && (hetero == REMOVE_ALL_HETERO_ATOMS
+                || (hetero == REMOVE_HETERO_ATOMS_EXCEPT_DUMMY && atom->residue_name != "DUM")
+                || (hetero == REMOVE_ONLY_DUMMY_HETERO_ATOMS && atom->residue_name == "DUM"))) {
+            skipped_file << line << std::endl;
+            stats.skipped_hetero++;
             continue;
         }
         // skip alternative locations of atoms if keep-alternatives is not enabled
@@ -114,7 +125,7 @@ void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const 
 // wrapper that allows calling parse_PDB with the program settings
 void parse_PDB(const Settings &settings, std::vector<std::shared_ptr<Atom>> &atoms, PDBReaderStats &stats) {
     parse_PDB(settings.pdb_path.string(), settings.kept_atoms.string(), settings.skipped_atoms.string(), atoms, stats,
-              settings.skip_H, settings.keep_alternative, settings.skip_hetero_atoms,
+              settings.h_atom_tag, settings.hetero_atom_tag, settings.keep_alternative,
               settings.skip_non_standard_amino_acids);
 }
 
@@ -186,5 +197,28 @@ void write_PDB(const std::string &file_path, const std::vector<std::shared_ptr<A
     std::ofstream file;
     file.open(file_path);
     for (const std::shared_ptr<Atom> &atom: atoms) { file << PDB_atom_entry(atom) << "\n"; }
+    file.close();
+}
+
+// add a comment with comma separated elements to a file
+void add_comment(const std::string &file_path, const std::set<std::string> &elements) {
+    // nothing to do if there are no elements
+    if (elements.empty()) return;
+
+    std::ofstream file;
+    file.open(file_path, std::ofstream::app);
+    bool first_element = true;
+    // comment indicator
+    file << "# ";
+
+    for (const std::string &element: elements) {
+        if (first_element) {
+            file << element;
+            first_element = false;
+        } else {
+            file << ", " << element;
+        }
+    }
+    file << std::endl;
     file.close();
 }

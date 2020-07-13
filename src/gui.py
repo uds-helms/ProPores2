@@ -623,8 +623,12 @@ class AxisSection:
         :param row: start row of the section
         """
         self.title.show(row)
-        self.surface.show(row + 1)
-        self.input_sel.show(row + 2)
+        self.input_sel.show(row + 1)
+
+        sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
+        sep.grid(row=row + 4, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
+
+        self.surface.show(row + 5)
 
     def mouse_over(self, desc):
         """
@@ -667,7 +671,7 @@ class GateSection:
         # rotamer clash tolerance (float >= 0)
         self.clash = NInput(master, gui.key.clash, cfg.user.clash, pos=True)
 
-        # previously compute axis trace input
+        # previously compute gate open input
         # one input field for a file path and one for a directory path
         self.single_input = ReadFileInput(master, gui.key.gate_single, cfg.user.gate_single)
         self.directory_input = DirInput(master, gui.key.gate_dir, cfg.user.gate_dir)
@@ -687,6 +691,8 @@ class GateSection:
                                    cfg.options.difficulty_hard])
         # checkbutton for re-estimating the difficulty
         self.re_estimate = LCheckbutton(master, gui.key.re_estimate, cfg.user.reestimate)
+        # input for the rotamer library
+        self.rotamer = DirInput(master, gui.key.rotamer, cfg.user.rotamer)
 
         self.place(row)
         self.mouse_over(desc)
@@ -697,14 +703,19 @@ class GateSection:
         :param row: start row of the section
         """
         self.title.show(row)
-        self.clash.show(row + 1)
-        self.input_sel.show(row + 2)
+        self.input_sel.show(row + 1)
 
         sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
-        sep.grid(row=row + 5, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
+        sep.grid(row=row + 4, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
 
-        self.difficulty.show(row + 6)
-        self.re_estimate.place(row + 7)
+        self.clash.show(row + 5)
+        self.rotamer.show(row + 6)
+
+        sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
+        sep.grid(row=row + 7, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
+
+        self.difficulty.show(row + 8)
+        self.re_estimate.place(row + 9)
 
     def mouse_over(self, desc):
         """
@@ -716,6 +727,7 @@ class GateSection:
         self.input_sel.mouse_over(desc)
         self.re_estimate.mouse_over(desc)
         self.difficulty.mouse_over(desc)
+        self.rotamer.mouse_over(desc)
 
     def save(self):
         """
@@ -728,6 +740,7 @@ class GateSection:
         cfg.user.gate_single = adjust_file_path(self.single_input.var.get())
         cfg.user.skip_difficulty = self.difficulty.var.get()
         cfg.user.re_estimate = bool(self.re_estimate.var.get())
+        cfg.user.rotamer = adjust_dir_path(self.rotamer.var.get())
 
     def update(self):
         """
@@ -739,6 +752,7 @@ class GateSection:
         self.directory_input.var.set(adjust_dir_path(cfg.user.gate_dir))
         self.difficulty.var.set(cfg.user.skip_difficulty)
         self.re_estimate.var.set(bool(cfg.user.reestimate))
+        self.rotamer.var.set(adjust_dir_path(cfg.user.rotamer))
         self.master.update()
 
 
@@ -756,16 +770,15 @@ class PoreIDSection:
         self.probe = NInput(master, gui.key.probe, cfg.user.probe, pos=True)
         self.volume = NInput(master, gui.key.volume, cfg.user.volume, pos=True)
 
-        # run flags
-        self.gate_prep = LCheckbutton(master, gui.key.gate_prep, cfg.user.gate_prep)
-        self.axis_prep = LCheckbutton(master, gui.key.axis_prep, cfg.user.axis_prep)
-
         # computation mode and pore type selection
-        self.computation_mode = Options(master, gui.key.cylinder_mode, cfg.user.cylinder_mode,
-                                        [cfg.options.cylinder_autodetect, cfg.options.cylinder_ray_trace,
-                                          cfg.options.cylinder_standalone])
-        self.pore_type = Options(master, gui.key.pore_type, cfg.user.pore_type,
+        self.computation_mode = Options(master, gui.key.computation_mode, cfg.user.computation_mode,
+                                        [cfg.options.mode_autodetect, cfg.options.mode_ray_trace,
+                                         cfg.options.mode_standalone])
+        self.pore_type = Options(master, gui.key.pore_filter, cfg.user.pore_filter,
                                  [cfg.options.pore_all, cfg.options.pore_only, cfg.options.cavity_only])
+        self.preparation = Options(master, gui.key.preparation, cfg.user.prep,
+                                   [cfg.options.prep_auto, cfg.options.prep_both, cfg.options.prep_only_axis,
+                                    cfg.options.prep_only_gate, cfg.options.prep_none])
 
         self.place(row)
         self.mouse_over(desc)
@@ -785,17 +798,11 @@ class PoreIDSection:
         sep.grid(row=row + 5, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
 
         self.computation_mode.show(row + 6)
-        self.pore_type.show(row + 7)
+        self.preparation.show(row + 7)
+        self.pore_type.show(row + 8)
 
         sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
-        sep.grid(row=row + 8, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
-
-        self.gate_prep.place(row + 9)
-        self.axis_prep.place(row + 10)
-
-        # separator between the input fields and the run button
-        sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
-        sep.grid(row=row + 11, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
+        sep.grid(row=row + 9, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
 
     def mouse_over(self, desc):
         """
@@ -807,10 +814,9 @@ class PoreIDSection:
         self.solvent.mouse_over(desc)
         self.probe.mouse_over(desc)
         self.volume.mouse_over(desc)
-        self.gate_prep.mouse_over(desc)
-        self.axis_prep.mouse_over(desc)
         self.computation_mode.mouse_over(desc)
         self.pore_type.mouse_over(desc)
+        self.preparation.mouse_over(desc)
 
     def save(self):
         """
@@ -824,10 +830,9 @@ class PoreIDSection:
             cfg.user.probe = float(self.probe.var.get())
         if self.volume.validate():
             cfg.user.volume = float(self.volume.var.get())
-        cfg.user.gate_prep = bool(self.gate_prep.var.get())
-        cfg.user.axis_prep = bool(self.axis_prep.var.get())
         cfg.user.cylinder_mode = self.computation_mode.var.get()
-        cfg.user.pore_type = self.pore_type.var.get()
+        cfg.user.pore_filter = self.pore_type.var.get()
+        cfg.user.prep = self.preparation.var.get()
 
     def update(self):
         """
@@ -838,10 +843,9 @@ class PoreIDSection:
         self.probe.var.set(cfg.user.probe)
         self.volume.var.set(cfg.user.volume)
 
-        self.axis_prep.var.set(cfg.user.axis_prep)
-        self.gate_prep.var.set(cfg.user.gate_prep)
-        self.computation_mode.var.set(cfg.user.cylinder_mode)
-        self.pore_type.var.set(cfg.user.pore_type)
+        self.computation_mode.var.set(cfg.user.computation_mode)
+        self.pore_type.var.set(cfg.user.pore_filter)
+        self.preparation.var.set(cfg.user.prep)
 
         self.master.update()
 
@@ -876,9 +880,13 @@ class GeneralSection:
 
         # PROPORES executable
         self.exe = ExeInput(master, gui.key.exe, cfg.user.exe, 'propores')
-        self.skip_h = LCheckbutton(master, gui.key.h_atoms, cfg.user.skip_h)
+        self.h_atoms = Options(master, gui.key.h_atoms, cfg.user.h_atom,
+                               [cfg.options.h_atom_keep_all, cfg.options.h_atom_remove_all,
+                                cfg.options.h_atom_remove_only_protein, cfg.options.h_atom_remove_only_hetero])
+        self.hetero = Options(master, gui.key.hetero, cfg.user.hetero,
+                              [cfg.options.hetero_keep_all, cfg.options.hetero_remove_all,
+                               cfg.options.hetero_remove_except_dummy, cfg.options.hetero_remove_only_dummy])
         self.keep_alternative = LCheckbutton(master, gui.key.keep_alt, cfg.user.keep_alternative)
-        self.skip_hetero = LCheckbutton(master, gui.key.skip_hetero, cfg.user.skip_hetero)
         self.skip_non_std = LCheckbutton(master, gui.key.skip_non_std, cfg.user.skip_non_std)
 
         self.mouse_over(desc)
@@ -897,9 +905,9 @@ class GeneralSection:
 
         sep = ttk.Separator(self.master, orient=tk.HORIZONTAL)
         sep.grid(row=row + 8, column=1, columnspan=4, pady=gui.sp_pady, padx=gui.sp_padx, sticky=tk.EW)
-        self.skip_h.place(row + 9)
-        self.keep_alternative.place(row + 10)
-        self.skip_hetero.place(row + 11)
+        self.h_atoms.show(row + 9)
+        self.hetero.show(row + 10)
+        self.keep_alternative.place(row + 11)
         self.skip_non_std.place(row + 12)
 
     def mouse_over(self, desc):
@@ -916,8 +924,8 @@ class GeneralSection:
         self.out_dir.mouse_over(desc)
         self.exe.mouse_over(desc)
         self.keep_alternative.mouse_over(desc)
-        self.skip_h.mouse_over(desc)
-        self.skip_hetero.mouse_over(desc)
+        self.h_atoms.mouse_over(desc)
+        self.hetero.mouse_over(desc)
         self.skip_non_std.mouse_over(desc)
         self.out_name.mouse_over(desc)
 
@@ -933,9 +941,9 @@ class GeneralSection:
         cfg.user.pdb_batch_cores = int(self.pdb_batch_cores.var.get())
         cfg.user.input_selection = int(self.selection.get())
         cfg.user.keep_alternative = bool(self.keep_alternative.var.get())
-        cfg.user.skip_h = bool(self.skip_h.var.get())
+        cfg.user.h_atom = self.h_atoms.var.get()
+        cfg.user.hetero = self.hetero.var.get()
         cfg.user.skip_non_std = bool(self.skip_non_std.var.get())
-        cfg.user.skip_hetero = bool(self.skip_hetero.var.get())
         cfg.save_config()
 
     def update(self):
@@ -950,8 +958,8 @@ class GeneralSection:
         self.selection.set(cfg.user.input_selection)
         self.exe.var.set(adjust_file_path(cfg.user.exe))
         self.keep_alternative.var.set(cfg.user.keep_alternative)
-        self.skip_h.var.set(cfg.user.skip_h)
-        self.skip_hetero.var.set(cfg.user.skip_hetero)
+        self.h_atoms.var.set(cfg.user.h_atom)
+        self.hetero.var.set(cfg.user.hetero)
         self.skip_non_std.var.set(cfg.user.skip_non_std)
         self.master.update()
 
@@ -1185,6 +1193,9 @@ class GUI:
             if not self.gate.clash.validate():
                 return False
 
+            if not self.gate.rotamer.validate():
+                return False
+
             # only check gate input if pore ID is not enabled
             if not self.pore_id.title.var.get():
                 # single file input
@@ -1236,15 +1247,17 @@ class GUI:
             out_name = ''
 
         # set the flag for skipping H-atoms during PDB parsing, if specified
-        if self.general.skip_h.var.get():
-            args += ['--skip-H-atoms']
+        h_atom = {cfg.options.h_atom_keep_all: '0', cfg.options.h_atom_remove_all: '1',
+                  cfg.options.h_atom_remove_only_protein: '2', cfg.options.h_atom_remove_only_hetero: '3'}
+        args += ['--hatom', h_atom[self.general.h_atoms.var.get()]]
 
         # set the flag for keeping during PDB parsing, if specified
         if self.general.keep_alternative.var.get():
             args += ['--keep-alternative']
 
-        if self.general.skip_hetero.var.get():
-           args += ['--skip-hetatm']
+        hetero = {cfg.options.hetero_keep_all: '0', cfg.options.hetero_remove_all: '1',
+                  cfg.options.hetero_remove_except_dummy: '2', cfg.options.hetero_remove_only_dummy: '3'}
+        args += ['--hetero', hetero[self.general.hetero.var.get()]]
 
         if self.general.skip_non_std.var.get():
             args += ['--skip-non-std-amino-acids']
@@ -1259,22 +1272,18 @@ class GUI:
                      '-v', quote(self.pore_id.volume.var.get())]
 
             # check preparation flags for axis trace and gate opening
-            if self.pore_id.axis_prep.var.get():
-                args += ['--axis-preparation']
-            if self.pore_id.gate_prep.var.get():
-                args += ['--gate-preparation']
+            if self.pore_id.preparation.var.get() != cfg.options.prep_auto:
+                preparation = {cfg.options.prep_both: '0', cfg.options.prep_only_axis: '1',
+                               cfg.options.prep_only_gate: '2', cfg.options.prep_none: '3'}
+                args += ['--preparation', preparation[self.pore_id.preparation.var.get()]]
 
             # set mutually exclusive computation mode flag, if auto-detect is disabled
-            if self.pore_id.computation_mode.var.get() == cfg.options.cylinder_ray_trace:
-                args += ['--cylinder-ray-trace']
-            elif self.pore_id.computation_mode.var.get() == cfg.options.cylinder_standalone:
-                args += ['--cylinder-standalone']
+            mode = {cfg.options.mode_autodetect: '0', cfg.options.mode_ray_trace: '1', cfg.options.mode_standalone: '2'}
+            args += ['--mode', mode[self.pore_id.computation_mode.var.get()]]
 
             # set pore type flag, if only a specific type is selected
-            if self.pore_id.pore_type.var.get() == cfg.options.pore_only:
-                args += ['--only-pores']
-            elif self.pore_id.pore_type.var.get() == cfg.options.cavity_only:
-                args += ['--only-cavities']
+            pore_filter = {cfg.options.pore_all: '0', cfg.options.pore_only: '1', cfg.options.cavity_only: '2'}
+            args += ['--pore-filter', pore_filter[self.pore_id.pore_type.var.get()]]
 
         # check if axis trace is enabled
         if self.axis.title.var.get():
@@ -1307,19 +1316,21 @@ class GUI:
                     args += ['-gd', quote(adjust_dir_path(self.gate.directory_input.var.get(), abs=True))]
 
             # check if difficulty restrictions are applied and if yes, if difficulty re-estimation is desired
-            if self.gate.difficulty.var.get() == cfg.options.difficulty_medium:
-                args += ['--skip-medium-gates']
-                if self.gate.re_estimate.var.get():
-                    args += ['--re-estimate']
-            elif self.gate.difficulty.var.get() == cfg.options.difficulty_hard:
-                args += ['--skip-hard-gates']
-                if self.gate.re_estimate.var.get():
-                    args += ['--re-estimate']
+            difficulty = {cfg.options.difficulty_all: '0', cfg.options.difficulty_medium: '1',
+                          cfg.options.difficulty_hard: '2'}
+            args += ['--difficulty', difficulty[self.gate.difficulty.var.get()]]
+
+            if self.gate.re_estimate.var.get() and self.gate.difficulty.var.get() != cfg.options.difficulty_all:
+                args += ['--re-estimate']
+
+            args += ['--rotamers', adjust_dir_path(self.gate.rotamer.var.get())]
+
+            if not os.path.isdir(self.gate.rotamer.var.get()):
+                messagebox.showerror('Input Error', 'The rotamer library path does not point to an existing directory.')
 
         # run PROPORES with the command line options and report errors
         try:
             run(args=' '.join(args), shell=platform.system() == 'Windows')
-
             # try to open the specific result directory
             if out_name:
                 directory = adjust_dir_path(os.path.join(self.general.out_dir.var.get(), out_name), abs=True)

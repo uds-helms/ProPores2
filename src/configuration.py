@@ -202,9 +202,9 @@ class Options:
     Constants for option menus.
     """
     # pore ID computation mode
-    cylinder_autodetect = 'autodetect'                      # type: str
-    cylinder_standalone = 'standalone'                      # type: str
-    cylinder_ray_trace = 'ray-trace'                        # type: str
+    mode_autodetect = 'autodetect'                      # type: str
+    mode_standalone = 'standalone'                      # type: str
+    mode_ray_trace = 'ray-trace'                        # type: str
     # pore ID cavity/pore type selection
     pore_all = 'all'                                        # type: str
     pore_only = 'only pores'                                # type: str
@@ -213,6 +213,22 @@ class Options:
     difficulty_all = 'run all'                              # type: str
     difficulty_medium = 'skip medium and hard gates'        # type: str
     difficulty_hard = 'skip hard gates'                     # type: str
+    # H atom processing
+    h_atom_keep_all = 'keep all'                                    # type: str
+    h_atom_remove_all = 'remove all'                                # type: str
+    h_atom_remove_only_protein = 'remove only in ATOM records'      # type: str
+    h_atom_remove_only_hetero = 'remove only in HETATM records'     # type: str
+    # hetero atoms
+    hetero_keep_all = 'keep all'                                    # type: str
+    hetero_remove_all = 'remove all'                                # type: str
+    hetero_remove_except_dummy = 'remove all except dummy atoms'    # type: str
+    hetero_remove_only_dummy = 'remove only dummy atoms'            # type: str
+    # preparation
+    prep_both = 'prepare both'                                      # type: str
+    prep_only_axis = 'only axis trace preparation'                  # type: str
+    prep_only_gate = 'only gate open preparation'                   # type: str
+    prep_none = 'no preparation'                                    # type: str
+    prep_auto = 'autodetect'                                        # type: str
 
 
 class GuiEntity:
@@ -236,9 +252,9 @@ class GuiKeys:
     pdb_batch = 'Protein PDB batch'
     cores = 'Number of cores'
     input_selection = 'Input selection'
-    h_atoms = 'Skip H-atoms'
+    h_atoms = 'H-atoms'
     keep_alt = 'Keep alternative atom locations'
-    skip_hetero = 'Skip HETATM entries (hetero atoms)'
+    hetero = 'HETATM entries (hetero atoms)'
     skip_non_std = 'Skip non-standard amino acids in ATOM records'
     exe = 'PROPORES executable'
 
@@ -248,10 +264,9 @@ class GuiKeys:
     solvent = 'Solvent radius'
     probe = 'Probe radius'
     volume = 'Volume threshold'
-    gate_prep = 'Gate preparation'
-    axis_prep = 'Axis preparation'
-    cylinder_mode = 'Cylinder mode'
-    pore_type = 'Pore type'
+    preparation = 'Preparation'
+    computation_mode = 'Computation mode'
+    pore_filter = 'Pore filter'
 
     """ AXIS """
     axis_title = 'Axis determination'
@@ -268,6 +283,7 @@ class GuiKeys:
     gate_selection = 'Gate selection'
     gate_single = 'Gate single'
     gate_dir = 'Gate directory'
+    rotamer = 'Rotamer library'
 
     """ MENU BAR """
     # settings
@@ -302,9 +318,9 @@ class UserConfig:
         self.pdb_path = adjust_file_path(cfg_dict['General']['PDB path'])                   # type: str
         self.out_dir = adjust_dir_path(cfg_dict['General']['output directory'])             # type: str
         self.out_name = cfg_dict['General']['output name']                                  # type: str
-        self.skip_h = bool(cfg_dict['General']['skip H atoms'])                             # type: bool
+        self.h_atom = str(cfg_dict['General']['H atoms'])                                   # type: str
         self.keep_alternative = bool(cfg_dict['General']['keep alternative locations'])     # type: bool
-        self.skip_hetero = bool(cfg_dict['General']['skip hetero atoms'])                   # type: bool
+        self.hetero = str(cfg_dict['General']['hetero atoms'])                              # type: str
         self.skip_non_std = bool(cfg_dict['General']['skip non-std amino acids'])           # type: bool
         self.exe = adjust_file_path(cfg_dict['General']['PROPORES executable'])             # type: str
         self.pdb_batch_dir = adjust_dir_path(cfg_dict['General']['batch input'])            # type: str
@@ -317,10 +333,9 @@ class UserConfig:
         self.solvent = float(cfg_dict['Pore ID']['solvent radius'])                         # type: float
         self.probe = float(cfg_dict['Pore ID']['probe radius'])                             # type: float
         self.volume = float(cfg_dict['Pore ID']['volume threshold'])                        # type: float
-        self.cylinder_mode = cfg_dict['Pore ID']['computation mode']                        # type: str
-        self.axis_prep = bool(cfg_dict['Pore ID']['axis preparation'])                      # type: bool
-        self.gate_prep = bool(cfg_dict['Pore ID']['gate preparation'])                      # type: bool
-        self.pore_type = cfg_dict['Pore ID']['pore types']                                  # type: str
+        self.computation_mode = cfg_dict['Pore ID']['computation mode']                     # type: str
+        self.prep = str(cfg_dict['Pore ID']['preparation'])                                 # type: str
+        self.pore_filter = cfg_dict['Pore ID']['pore filter']                               # type: str
 
         # axis trace
         self.run_axis = bool(cfg_dict['Axis trace']['run'])                                 # type: bool
@@ -338,6 +353,7 @@ class UserConfig:
         self.reestimate = bool(cfg_dict['Gate open']['re-estimate difficulty'])             # type: bool
         self.skip_difficulty = cfg_dict['Gate open']['difficulty']                          # type: str
         self.gate_selection = int(cfg_dict['Gate open']['input selection'])                 # type: int
+        self.rotamer = adjust_dir_path(cfg_dict['Gate open']['rotamer library'])            # type: str
 
     def update_cfg_dict(self):
         """
@@ -348,10 +364,10 @@ class UserConfig:
         self.cfg_dict['General']['PDB path'] = adjust_file_path(self.pdb_path)
         self.cfg_dict['General']['output directory'] = adjust_dir_path(self.out_dir)
         self.cfg_dict['General']['output name'] = self.out_name
-        self.cfg_dict['General']['skip H atoms'] = bool(self.skip_h)
+        self.cfg_dict['General']['H atoms'] = self.h_atom
         self.cfg_dict['General']['keep alternative locations'] = bool(self.keep_alternative)
         self.cfg_dict['General']['PROPORES executable'] = adjust_file_path(self.exe)
-        self.cfg_dict['General']['skip hetero atoms'] = bool(self.skip_hetero)
+        self.cfg_dict['General']['hetero atoms'] = self.hetero
         self.cfg_dict['General']['skip non-std amino acids'] = bool(self.skip_non_std)
         self.cfg_dict['General']['batch input'] = adjust_dir_path(self.pdb_batch_dir)
         self.cfg_dict['General']['cores'] = int(self.pdb_batch_cores)
@@ -363,10 +379,9 @@ class UserConfig:
         self.cfg_dict['Pore ID']['solvent radius'] = float(self.solvent)
         self.cfg_dict['Pore ID']['probe radius'] = float(self.probe)
         self.cfg_dict['Pore ID']['volume threshold'] = float(self.volume)
-        self.cfg_dict['Pore ID']['computation mode'] = self.cylinder_mode
-        self.cfg_dict['Pore ID']['axis preparation'] = bool(self.axis_prep)
-        self.cfg_dict['Pore ID']['gate preparation'] = bool(self.gate_prep)
-        self.cfg_dict['Pore ID']['pore types'] = self.pore_type
+        self.cfg_dict['Pore ID']['computation mode'] = self.computation_mode
+        self.cfg_dict['Pore ID']['preparation'] = self.prep
+        self.cfg_dict['Pore ID']['pore types'] = self.pore_filter
 
         # axis trace
         self.cfg_dict['Axis trace']['run'] = bool(self.run_axis)
@@ -384,6 +399,7 @@ class UserConfig:
         self.cfg_dict['Gate open']['re-estimate difficulty'] = self.reestimate
         self.cfg_dict['Gate open']['difficulty'] = self.skip_difficulty
         self.cfg_dict['Gate open']['input selection'] = int(self.gate_selection)
+        self.cfg_dict['Gate open']['rotamer library'] = adjust_dir_path(self.rotamer)
 
         return deepcopy(self.cfg_dict)
 
@@ -509,7 +525,7 @@ class GuiConfig:
         self.sf_pady = tuple(cfg_dict['y-margins']['status box frame'])         # type: (int, int)
 
         """ CONSTANTS """
-        self.key = GuiKeys                  # type: GuiKeys
+        self.key = GuiKeys()                # type: GuiKeys
         self.desc = self.descriptions()     # type: dict
         # application title
         self.title = 'PROPORES'             # type: str
@@ -563,20 +579,23 @@ class GuiConfig:
                                          '\n\nThis settings can be used to set the path manually, in case the '
                                          'executable was saved in a different location or was renamed, or PROPORES is '
                                          'unable to find the executable for other reasons.')
-        d[self.key.h_atoms] = GuiEntity(label='Skip H-atoms',
-                                        desc='Ignore H-atoms when parsing the input protein file. This means that '
-                                             'H-atoms will not be considered for pore identification, axis '
-                                             'determination or gate-open.')
+        d[self.key.h_atoms] = GuiEntity(label='Hydrogen processing',
+                                        desc='This setting allows to fine-tune how hydrogen atoms should be dealt with '
+                                             'when reading in the input protein file, and can distinguish between '
+                                             'hydrogen atoms in PDB protein atom records (ATOM) and hydrogen atoms in '
+                                             'non-protein atom records (HETATM).')
+        d[self.key.hetero] = GuiEntity(label='Hetero atom processing',
+                                       desc='Hetero atoms are non-protein atoms listed under "HETATM" in a PDB file. '
+                                            'Some PDB files also contain dummy atoms as HETATM records, for example '
+                                            'membrane dummy atoms in PDBs from the OPM database.'
+                                            '\n\nThis settings can be used to specify how hetero atoms should be dealt '
+                                            'with when reading in the input protein file.')
         d[self.key.keep_alt] = GuiEntity(label='Keep alternative locations',
                                          desc='Some atoms have multiple possible locations in the input protein file. '
                                               'By default, only the primary location is considered and the other '
                                               'locations are ignored. If enabled, all locations will be kept, which '
                                               'means that all alternative locations will be loaded as additional '
                                               'atoms.')
-        d[self.key.skip_hetero] = GuiEntity(label='Skip hetero atoms',
-                                            desc='Hetero atoms are non-protein atoms listed under "HETATM" in a PDB '
-                                                 'file. If enabled, all HETATM lines will be ignored when loading '
-                                                 'the PDB file.')
         d[self.key.skip_non_std] = GuiEntity(label='Skip non-standard amino acids',
                                              desc='Protein atoms are listed under "ATOM" in a PDB file. If enabled, '
                                                   'all "ATOM" records with non-standard resiue names (ALA, ARG, ASN, '
@@ -584,7 +603,7 @@ class GuiConfig:
                                                   'THR, TRP, TYR, VAl) will be ignored when loading the PDB file. '
                                                   'Atoms in "HETATM" records are not affected by this.')
 
-        """ PORE ID """
+        # PORE ID
         d[self.key.pore_title] = GuiEntity(label='Pore ID',
                                            desc='Identifies all pores in a given protein PDB file, and for each pore '
                                                 'generates a tab-separated file with lining residues and a pseudo PDB '
@@ -614,28 +633,25 @@ class GuiConfig:
                                        desc='Minimum volume (size) of pores and cavities. Smaller potential pores and '
                                             'cavities are not included in the results or further analysis steps.'
                                             '\n\nUnit: cubic Ångström (Å³)')
-        d[self.key.axis_prep] = GuiEntity(label='Axis trace preparation',
-                                          desc='Enable this option to generate result files that can be used at a '
-                                               'later point to determine pore and cavity axes without having to re-run '
-                                               'Pore ID.')
-        d[self.key.gate_prep] = GuiEntity(label='Gate opening preparation',
-                                          desc='Enable this option to generate result files that can be used at a '
-                                               'later point to open potential gates between neighbouring pores and '
-                                               'cavities without having to re-run Pore ID.')
-        d[self.key.cylinder_mode] = GuiEntity(label='Computation mode',
-                                              desc='Enclosed spaces within the protein or on its surface can be '
-                                                   'computed in several ways. By default, Pore ID tries to guess the '
-                                                   'most efficient version for each run (autodetect).'
-                                                   '\n\nRay-trace: Faster for smaller proteins or higher resolution '
-                                                   'values; increased RAM usage.'
-                                                   '\n\nStandalone: Potentially faster for larger proteins or lower '
-                                                   'resolution values; reduced RAM usage.')
-        d[self.key.pore_type] = GuiEntity(label='Pore types',
-                                          desc='By default, Pore ID generates results for pores and cavities. This can '
-                                               'be restricted to only pores (accessible from the protein surface) or '
-                                               'to only cavities (completely enclosed by the protein).')
+        d[self.key.preparation] = GuiEntity(label='Preparation',
+                                            desc='By default, Pore ID prepares files for gate open or axis trace when '
+                                                 'they are not currently enabled so that they can be run at a later '
+                                                 'point without having to re-run Pore ID. This behaviour can be '
+                                                 'controlled with this option.')
+        d[self.key.computation_mode] = GuiEntity(label='Computation mode',
+                                                 desc='Enclosed spaces within the protein or on its surface can be '
+                                                      'computed in several ways. By default, Pore ID tries to guess '
+                                                      'the most efficient version for each run (autodetect).'
+                                                      '\n\nRay-trace: Faster for smaller proteins or higher resolution '
+                                                      'values; increased RAM usage.'
+                                                      '\n\nStandalone: Potentially faster for larger proteins or lower '
+                                                      'resolution values; reduced RAM usage.')
+        d[self.key.pore_filter] = GuiEntity(label='Pore type',
+                                            desc='By default, Pore ID generates results for pores and cavities. This '
+                                                 'can be restricted to only pores (accessible from the protein '
+                                                 'surface) or to only cavities (completely enclosed by the protein).')
 
-        """ AXIS """
+        # AXIS TRACE
         d[self.key.axis_title] = GuiEntity(label='Axis Trace',
                                            desc='Determines the axis of a pore or cavity and writes it into a pseudo '
                                                 'PDB file for visualisation. Some pores have multiple axes, in which '
@@ -657,7 +673,7 @@ class GuiConfig:
                                          desc='Path to a directory with one or more axis trace input files from a '
                                               'previous Pore ID run with enabled "axis trace preparation".')
 
-        """ GATE """
+        # GATE OPEN
         d[self.key.gate_title] = GuiEntity(label='Gate Opening',
                                            desc='Rotates the shared lining residues of two neighbouring pores in an '
                                                 'effort to open the gate between them as much as possible. The result '
@@ -691,6 +707,13 @@ class GuiConfig:
                                                     'enabled, this setting is ignored and internally generated data is '
                                                     'used instead to open all potential gates of sufficiently low '
                                                     'difficulty.')
+        d[self.key.rotamer] = GuiEntity(label='Rotamer library',
+                                        desc='Running gate opening requires a library of viable rotamer conformations '
+                                             'for each standard amino acid. PROPORES comes with a rotamer library that '
+                                             'it will try to automatically load.'
+                                             '\n\nThis settings can be used to set the path manually, in case the '
+                                             'library was saved in a different location or was renamed, or PROPORES is '
+                                             'unable to find it for other reasons.')
 
         """ MENU BAR """
         # settings
@@ -739,7 +762,7 @@ class Config:
         # get the user, default and GUI configuration depending on the operating system
         self.user = UserConfig(self.cfg[self.os]['User'])                                   # type: UserConfig
         self.gui = GuiConfig(self.cfg[self.os]['GUI'])                                      # type: GuiConfig
-        self.options = Options                                                              # type: Options
+        self.options = Options()                                                            # type: Options
 
     def _get_os(self):
         """

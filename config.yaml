@@ -13,26 +13,29 @@ Linux:
       difficulty: run all
       directory input: ''
       input selection: 0
+      intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
       PROPORES executable: ./propores
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
-      pore types: all
+      pore filter: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true
@@ -227,26 +230,29 @@ Linux:
       difficulty: run all
       directory input: ''
       input selection: 0
+      intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
-      PROPORES executable: propores
+      PROPORES executable: ./propores
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
-      pore types: all
+      pore filter: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true
@@ -269,25 +275,27 @@ Mac OS X:
       input selection: 0
       intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
-      pore types: all
+      pore filter: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true
@@ -482,26 +490,29 @@ Mac OS X:
       difficulty: run all
       directory input: ''
       input selection: 0
+      intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
-      pore types: all
+      pore filter: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true
@@ -524,25 +535,27 @@ Windows:
       input selection: 0
       intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores.exe
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
-      pore types: all
+      pore filter: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true
@@ -739,25 +752,28 @@ Windows:
       input selection: 0
       intput selection: 0
       re-estimate difficulty: false
+      rotamer library: rotamer_lib/
       run: false
       single input: ''
     General:
+      H atoms: keep all
       PDB path: input/1EA5_R.pdb
       PROPORES executable: propores.exe
       batch input: input/
       cores: 1
+      hetero atoms: keep all
       input selection: 0
       keep alternative locations: false
       output directory: results/
       output name: ''
-      skip H atoms: false
-      skip hetero atoms: false
       skip non-std amino acids: false
     Pore ID:
       axis preparation: false
       computation mode: autodetect
       gate preparation: false
+      pore filter: all
       pore types: all
+      preparation: autodetect
       probe radius: 1.4
       resolution: 1.0
       run: true

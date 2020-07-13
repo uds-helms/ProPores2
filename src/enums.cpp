@@ -447,8 +447,8 @@ std::string to_str(RemoveTag tag) {
 
 RemoveTag to_remove_tag(const std::string &str) {
     if (str == "REMOVE_NOTHING" || str == "0") return REMOVE_NOTHING;
-    if (str == "REMOVE_PORES" || str == "1") return REMOVE_PORES;
-    if (str == "REMOVE_CAVITIES" || str == "2") return REMOVE_CAVITIES;
+    if (str == "REMOVE_CAVITIES" || str == "1") return REMOVE_CAVITIES;
+    if (str == "REMOVE_PORES" || str == "2") return REMOVE_PORES;
     return INVALID_REMOVE_TAG;
 }
 

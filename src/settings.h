@@ -152,7 +152,7 @@ struct Settings {
         std::string hetero_flag = get_option("--hetero");
         std::string mode_flag = get_option("--mode");
         std::string pore_filter_flag = get_option("--pore-filter");
-        std::string preparation_flag = get_option("--preparation_flag");
+        std::string preparation_flag = get_option("--preparation");
         std::string difficulty_flag = get_option("--difficulty");
 
         if (help_short || help_long) print_help("");

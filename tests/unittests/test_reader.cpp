@@ -49,15 +49,44 @@ TEST(reader_tests, parse_PDB) {
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
               atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, false, true);
-    EXPECT_EQ(5, atoms.size());
+    EXPECT_EQ(7, atoms.size());
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
               atoms, stats, REMOVE_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
+
     EXPECT_EQ(2, atoms.size());
     atoms.clear();
     parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
               atoms, stats, KEEP_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
+    EXPECT_EQ(13, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, REMOVE_ONLY_PROTEIN_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
     EXPECT_EQ(10, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, REMOVE_ONLY_HETERO_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
+    EXPECT_EQ(12, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, REMOVE_ALL_H_ATOMS, KEEP_ALL_HETERO_ATOMS, true, false);
+    EXPECT_EQ(9, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, true, false);
+    EXPECT_EQ(10, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, KEEP_ALL_H_ATOMS, REMOVE_HETERO_ATOMS_EXCEPT_DUMMY, true, false);
+    EXPECT_EQ(11, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, KEEP_ALL_H_ATOMS, REMOVE_ONLY_DUMMY_HETERO_ATOMS, true, false);
+    EXPECT_EQ(12, atoms.size());
+    atoms.clear();
+    parse_PDB("test_files/reader_test.pdb", "test_files/kept.pdb", "test_files/skipped.pdb",
+              atoms, stats, KEEP_ALL_H_ATOMS, REMOVE_ONLY_DUMMY_HETERO_ATOMS, true, true);
+    EXPECT_EQ(7, atoms.size());
 }
 
 TEST(reader_tests, parse_PDB_simple_coord) {

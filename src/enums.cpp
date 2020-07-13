@@ -414,9 +414,9 @@ std::string to_str(const GateDifficulty difficulty) {
 }
 
 GateDifficulty to_gate_difficulty(const std::string &str) {
-    if (str == "EASY" || str == "0") return EASY;
-    if (str == "MEDIUM" || str == "1") return MEDIUM;
-    if (str == "HARD" || str == "2") return HARD;
+    if (str == "0") return HARD;
+    if (str == "1") return MEDIUM;
+    if (str == "2") return EASY;
     return DIFFICULTY_ERROR;
 }
 

@@ -1193,9 +1193,6 @@ class GUI:
             if not self.gate.clash.validate():
                 return False
 
-            if not self.gate.rotamer.validate():
-                return False
-
             # only check gate input if pore ID is not enabled
             if not self.pore_id.title.var.get():
                 # single file input

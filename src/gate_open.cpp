@@ -542,7 +542,7 @@ void gate_open(Settings &settings, std::vector<Gate> &gates) {
     // process each gate
     for (Gate &gate: gates) {
         // skip the gate if the difficulty is too high and a re-assessment is not desired
-        if (!settings.re_estimate && gate.difficulty >= settings.difficulty_threshold) {
+        if (!settings.re_estimate && gate.difficulty > settings.difficulty_threshold) {
             print(1, "> gate between pores " + std::to_string(gate.pore_1) + " and "
                      + std::to_string(gate.pore_2) + ": difficulty higher than threshold");
             continue;
@@ -570,7 +570,7 @@ void gate_open(Settings &settings, std::vector<Gate> &gates) {
                 print(2, "> no residues with valid rotamers");
                 continue;
             }
-            if (gate.difficulty >= settings.difficulty_threshold) {
+            if (gate.difficulty > settings.difficulty_threshold) {
                 print(2, "> re-assessed difficulty still higher than threshold");
                 continue;
             }

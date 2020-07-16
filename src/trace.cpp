@@ -19,6 +19,7 @@
 
 #include <stack>
 #include <cmath>
+#include <algorithm>
 #include "trace.h"
 #include "grid.h"
 #include "vector.h"
@@ -101,6 +102,7 @@ void compute_starting_points(PoreGrid &grid, const size_t min_size) {
     std::vector<uint8_t> in_patch(grid.size());
     Vec<int> max_dist_vec = grid.min;
     double max_dist = 0.0;
+    size_t count = 1;
 
     for (int x = grid.min.x; x < grid.max.x; x++) {
         for (int y = grid.min.y; y < grid.max.y; y++) {
@@ -151,15 +153,18 @@ void compute_starting_points(PoreGrid &grid, const size_t min_size) {
                     }
                 }
                 // add the box as an axes starting point
-                grid.starting_points.push_back(max_radius_vec);
-                grid.has_surface_patch = true;
+                AxisPoint point = AxisPoint(grid.index(max_radius_vec), max_radius_vec,
+                        "surface patch " + std::to_string(count));
+                grid.starting_points.push_back(point);
+                count++;
             }
         }
     }
     // if there were no sufficiently large surface patches, use the box with the largest distance from the protein
     // centre of mass as the only axes starting point
     if (grid.starting_points.empty()) {
-        grid.starting_points.push_back(max_dist_vec);
+        AxisPoint point = AxisPoint(grid.index(max_dist_vec), max_dist_vec, "furthest away from centre of mass");
+        grid.starting_points.push_back(point);
     }
 }
 
@@ -183,7 +188,7 @@ int min_index(const std::vector<double> &scores, const std::vector<uint8_t> &vis
 }
 
 // use Dijkstra to compute the pore/cavity axes from the given starting point
-void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start) {
+void trace(PoreGrid &grid, const size_t start_idx) {
     // DIJKSTRA DATA
     // initialise the scores to infinity
     std::vector<double> scores(grid.size(), INFINITY);
@@ -195,13 +200,12 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
     std::vector<double> lengths(grid.size(), INFINITY);
 
     // STARTING POINT INITIALISATION
-    // 1D index of the starting point box (start = the index of the starting point in the starting point list)
-    size_t start_index = grid.index(grid.starting_points[start]);
+    AxisPoint start = grid.starting_points[start_idx];
     // the starting point has the smallest score of 0.0
-    scores[start_index] = 0.0;
+    scores[start.index] = 0.0;
     // the starting point has no previous box in the trace back
-    trace_back[start_index] = start_index;
-    lengths[start_index] = 0;
+    trace_back[start.index] = start.index;
+    lengths[start.index] = 0;
 
     // mark grid boxes that are not part of the pore/cavity als already visited, so that their scores stay at infinity
     // and they will not get considered as part of the axis
@@ -210,7 +214,7 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
     }
 
     // start with the starting point (int and not size_t because min_index returns -1 if there is no next box)
-    int current_index = start_index;
+    int current_index = start.index;
     // perform Dijkstra's algorithm as long as there are still not yet visited boxes left
     while (current_index >= 0) {
         // get the 3D coordinates, score and path length of the current box
@@ -240,64 +244,78 @@ void trace(PoreGrid &grid, const std::string &out_path_base, const size_t start)
         current_index = min_index(scores, visited);
     }
 
-    // if there is only one axis starting point, then there was either no sufficiently large surface patch at all or
-    // only one. in that case, find the box on the outside of the pore/cavity with the lowest score as the end point of
-    // the axis.
-    if (grid.starting_points.size() == 1) {
-        // initialise the minimum score as infinity
-        double min_score = INFINITY;
-        int min_index = -1;
-        // iterate over all boxes that are part of the pore/cavity and lay on its outer layer. make sure they are not
-        // the start point and do not have a score of infinity
-        for (size_t i = 0; i < grid.size(); i++) {
-            if (grid.at(i) == UNCLASSIFIED || grid.at(i) == ON_CLUSTER_INSIDE || i == start_index
-                || std::isinf(scores[i])) {
-                continue;
-            }
-            // adjusted the box score by dividing it by the length of the path to the power of 1.5 to favour longer
-            // paths, which avoids selecting boxes directly adjacent to the start point
-            double adjusted_score = scores[i] / pow(lengths[i], 1.5);
-            // if the adjusted score is lower than the current minimum, set the box as the candidate for the end point
-            if (adjusted_score < min_score) {
-                min_score = adjusted_score;
-                min_index = i;
-            }
+    // find the box on the outside of the pore/cavity with the lowest score as the end point of the axis
+    // initialise the minimum score as infinity
+    double min_score = INFINITY;
+    int min_index = -1;
+    // iterate over all boxes that are part of the pore/cavity and lay on its outer layer. make sure they are not
+    // the start point and do not have a score of infinity
+    for (size_t i = 0; i < grid.size(); i++) {
+        if (grid.at(i) == UNCLASSIFIED || grid.at(i) == ON_CLUSTER_INSIDE || i == start.index
+            || std::isinf(scores[i])) {
+            continue;
         }
-        // if no such box exists, an error must have occurred
-        if (min_index == -1) {
-            throw std::runtime_error("Dijkstra: starting point has no matching end point.");
-        }
-        // add the end point to the list of starting points. that it is automatically used as the new axis end point in
-        // the next step
-        grid.starting_points.push_back(grid.coordinates[min_index]);
-        // if the start point was part of the only valid surface patch, run trace again now that the end point is
-        // determined. this allows to run trace as in the 2+ surface patches case.
-        if (grid.has_surface_patch) {
-            trace(grid, out_path_base, start);
-            return;
+        // adjusted the box score by dividing it by the length of the path to the power of 1.5 to favour longer
+        // paths, which avoids selecting boxes directly adjacent to the start point
+        double adjusted_score = scores[i] / pow(lengths[i], 1.5);
+        // if the adjusted score is lower than the current minimum, set the box as the candidate for the end point
+        if (adjusted_score < min_score) {
+            min_score = adjusted_score;
+            min_index = i;
         }
     }
 
-    // in the case of 2+ starting points, compute the axes to the remaining start points (avoids duplicates)
-    // [in the case of only 1 initial starting point, the end point has been added to the starting points in the
-    //  previous step and the axis is now computed]
-    for (size_t i = start + 1; i < grid.starting_points.size(); i++) {
-        // generate the file name and open the file
-        std::ofstream file;
-        std::stringstream name;
-        name << start << "_to_" << i << ".pdb";
-        file.open(out_path_base + name.str());
+    // add all not yet processed start points from surface patches to the list of possible axis end points
+    std::vector<AxisPoint> end_points;
+    for (size_t i = start_idx + 1; i < grid.starting_points.size(); i++) {end_points.push_back(grid.starting_points[i]);}
+    // add the end point with the lowest score to the list of end points if such a point could be found
+    if (min_index > -1) {
+        AxisPoint end = AxisPoint(min_index, grid.coordinates[min_index], "lowest score point");
+        end_points.push_back(end);
+    }
+
+    // compute the axes between the current start point and all identified possible end points
+    for (const AxisPoint &end: end_points) {
+        Axis axis = Axis(start.type, end.type);
+        axis.distance = distance(grid.centre(start.grid), grid.centre(end.grid));
+        axis.length = lengths[end.index] * grid.box_length;
+        axis.score = scores[end.index];
+        size_t index = end.index;
         // start the trace back with end point and stop when the start point is reached
-        size_t id = 0;
-        size_t index = grid.index(grid.starting_points[i]);
-        while (index != start_index) {
-            file << pseudo_pdb(id, grid.centre(grid.coordinates[index])) << std::endl;
+        while (index != start.index) {
+            axis.axis.push_back(grid.centre(grid.coordinates[index]));
             index = trace_back[index];
-            id++;
         }
         // finally, add the start point
-        file << pseudo_pdb(id, grid.centre(grid.coordinates[start_index])) << std::endl;
-        // make sure to close the file
+        axis.axis.push_back(grid.centre(grid.coordinates[start.index]));
+        // add the axis to the pore/cavity
+        grid.axes.push_back(axis);
+    }
+}
+
+// generates an output file for each axis of a pore/cavity
+void write_axes(PoreGrid &grid, const std::string &path_base) {
+    // sort axis by distance between start and end point in descending order
+    sort(grid.axes.begin(), grid.axes.end(),
+            [](const Axis &lhs, const Axis &rhs) {return lhs.distance >= rhs.distance;});
+    // generate an output file for each axis
+    for (size_t i = 0; i < grid.axes.size(); i++) {
+        // get the current axis
+        const Axis &axis = grid.axes[i];
+        // open the output file for the current axis
+        std::ofstream file(path_base + std::to_string(i) + ".pdb");
+        // write the header
+        file << "# start (last point in the list): " << axis.start << std::endl;
+        file << "# end (first point in the list): " << axis.end << std::endl;
+        file << "# axis length: " << axis.length << " Angstrom" << std::endl;
+        file << "# axis score: " << axis.score << std::endl;
+        file << "# distance between axis start and end: " << axis.distance << " Angstrom" << std::endl;
+        // write the boxes constituting the current axis
+        size_t id = 0;
+        for (const Vec<double> &coordinate: grid.axes[i].axis) {
+            file << pseudo_pdb(id, coordinate) << std::endl;
+            id++;
+        }
         file.close();
     }
 }
@@ -311,13 +329,14 @@ void axis_trace(const Settings &settings, const std::vector<PoreCluster> &cluste
         PoreGrid pore = PoreGrid(cluster, settings.perturb_value);
         // determine the starting point(s) of the axis (or axes)
         compute_starting_points(pore, settings.surface_patch_threshold);
+        // trace the axis or axes
+        for (size_t i = 0; i < pore.starting_points.size(); i++) {
+            trace(pore, i);
+        }
         // construct the base of the output file(s)
         std::string base = (settings.axis_dir / fs::path(settings.output_name + cluster.name() + "_axis_")).string();
-        // trace the axis or axes
-        size_t end = std::max(size_t(1), pore.starting_points.size() - 1);
-        for (size_t i = 0; i < end; i++) {
-            trace(pore, base, i);
-        }
+        // generate output for each axis
+        write_axes(pore, base);
         print(1, start, "> " + cluster.name() + ": computed axes in");
     }
 }

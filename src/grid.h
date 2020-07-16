@@ -396,6 +396,34 @@ struct ProteinGrid : Grid {
     }
 };
 
+struct AxisPoint {
+    size_t index;
+    Vec<int> grid;
+    std::string type;
+
+    AxisPoint(const size_t &idx, const Vec<int> &vec, const std::string &name) :
+            index(idx),
+            grid(vec),
+            type(name)
+    {}
+};
+
+struct Axis {
+    // type of the start and end point
+    std::string start;
+    std::string end;
+    // length of the axis in Angstrom
+    double length = 0.0;
+    // score of the axis as computed by Dijkstra's algorithm
+    double score = INFINITY;
+    // distance between the start and end box
+    double distance = 0.0;
+    // indices of the boxes constituting the axis
+    std::vector<Vec<double>> axis;
+
+    Axis(const std::string &s, const std::string &e) : start(s), end(e) {}
+};
+
 struct PoreGrid : Grid {
     // DATA
     // maximum sphere radius fitting at each box without touching the closest van der Waals radius
@@ -403,17 +431,15 @@ struct PoreGrid : Grid {
     // distance of the box to the protein centre of mass
     std::vector<double> distance_to_centre;
     // starting points for axes determination with Dijkstra
-    std::vector<Vec<int>> starting_points;
+    std::vector<AxisPoint> starting_points;
     // 3D coordinates
     std::vector<Vec<int>> coordinates;
+    // axes going through the pore
+    std::vector<Axis> axes;
 
     // HELP
     // small number to avoid divisions by 0
     const double perturb;
-    // true if the pore has at least one large enough surface patch exposed to the solvent, false otherwise
-    bool has_surface_patch = false;
-    // number of boxes belonging to the pore/cavity
-    size_t n_pore_boxes;
 
     // constructor
     PoreGrid(const PoreCluster &cluster, const double perturb) :
@@ -424,8 +450,6 @@ struct PoreGrid : Grid {
         if (cluster.boxes.empty()) throw std::invalid_argument("PoreGrid: no pore boxes given.");
 
         // GRID CONSTRUCTION
-        // number of pore boxes in the grid
-        n_pore_boxes = cluster.size();
         // determine the minimum and maximum box coordinates; since the input coordinates are already grid coordinates,
         // the minimum and maximum can be compute directly
         min = cluster.boxes[0].coord;

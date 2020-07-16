@@ -38,7 +38,10 @@ void compute_starting_points(PoreGrid &grid, size_t min_size);
 int min_index(const std::vector<double> &scores, const std::vector<uint8_t> &visited);
 
 // use Dijkstra to compute the pore/cavity axes from the given starting point
-void trace(PoreGrid &grid, const std::string &output_path_base, size_t start);
+void trace(PoreGrid &grid, size_t start);
+
+// generates an output file for each axis of a pore/cavity
+void write_axes(const PoreGrid &grid, const std::string &path_base);
 
 void axis_trace(const Settings &settings, const std::vector<PoreCluster> &clusters);
 

@@ -440,6 +440,8 @@ struct PoreGrid : Grid {
     // HELP
     // small number to avoid divisions by 0
     const double perturb;
+    // true if the pore has a sufficiently large patch at the surface
+    bool has_surface_patch = false;
 
     // constructor
     PoreGrid(const PoreCluster &cluster, const double perturb) :

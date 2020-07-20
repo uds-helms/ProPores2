@@ -156,6 +156,7 @@ void compute_starting_points(PoreGrid &grid, const size_t min_size) {
                 AxisPoint point = AxisPoint(grid.index(max_radius_vec), max_radius_vec,
                         "surface patch " + std::to_string(count));
                 grid.starting_points.push_back(point);
+                grid.has_surface_patch = true;
                 count++;
             }
         }
@@ -248,6 +249,10 @@ void trace(PoreGrid &grid, const size_t start_idx) {
     // initialise the minimum score as infinity
     double min_score = INFINITY;
     int min_index = -1;
+    // find the box on the outside of the pore/cavity with the best balance of closeness to the centre of mass and
+    // path length, that should hopefully go to and through the centre of the protein
+    double min_COM = INFINITY;
+    int COM_index = -1;
     // iterate over all boxes that are part of the pore/cavity and lay on its outer layer. make sure they are not
     // the start point and do not have a score of infinity
     for (size_t i = 0; i < grid.size(); i++) {
@@ -263,6 +268,13 @@ void trace(PoreGrid &grid, const size_t start_idx) {
             min_score = adjusted_score;
             min_index = i;
         }
+        // divide the distance to the centre of mass by the length of the path to identify the best balance
+        double COM_score = grid.distance_to_centre[i] / lengths[i];
+        // if the score is lower than the current minimum, set the bo as the candidate for the end point
+        if (COM_score < min_COM) {
+            min_COM = COM_score;
+            COM_index = i;
+        }
     }
 
     // add all not yet processed start points from surface patches to the list of possible axis end points
@@ -271,6 +283,11 @@ void trace(PoreGrid &grid, const size_t start_idx) {
     // add the end point with the lowest score to the list of end points if such a point could be found
     if (min_index > -1) {
         AxisPoint end = AxisPoint(min_index, grid.coordinates[min_index], "lowest score point");
+        end_points.push_back(end);
+    }
+    // add the end point with the best balance of length and closeness to centre of mass
+    if (COM_index > -1) {
+        AxisPoint end = AxisPoint(COM_index, grid.coordinates[COM_index], "centre of mass point");
         end_points.push_back(end);
     }
 

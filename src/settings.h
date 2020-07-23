@@ -415,6 +415,9 @@ struct Settings {
         if (run_axis_trace) write_axes_trace_parameters();
         if (run_gate_open) write_gate_open_parameters();
 
+        // copy input PDB to output folder for convenience
+        fs::copy(pdb_path, out_dir / fs::path(pdb_name + ".pdb"));
+
     }
 
     // generates the file path with all rotamer definitions for the given residue type

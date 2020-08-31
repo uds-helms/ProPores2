@@ -21,8 +21,10 @@
 #define PROPORES_READER_H
 
 #include <set>
+#include <map>
 #include <vector>
 #include "atom.h"
+#include "enums.h"
 #include "basics.h"
 #include "settings.h"
 
@@ -59,6 +61,18 @@ struct PDBReaderStats {
     }
 };
 
+struct PoreInfo {
+    size_t id = 0;
+    bool is_pore = true;
+    double volume = 0.0;
+    std::map<ResidueType, size_t> lining;
+    size_t axis_count = 0;
+    double axis_length = 0.0;
+    double axis_distance = 0.0;
+    double axis_score = 0.0;
+
+};
+
 // extract all valid atom entries from a given PDB input file, allow to skip H-atoms and to load alternative locations
 // of atoms in addition to the primary location
 void parse_PDB(const std::string &pdb_path, const std::string &kept_path, const std::string &skipped_path,
@@ -82,5 +96,7 @@ void write_PDB(const std::string &file_path, const std::vector<std::shared_ptr<A
 
 // add a comment with comma separated elements to a file
 void add_comment(const std::string &file_path, const std::set<std::string> &elements);
+
+void generate_overview(const Settings &settings);
 
 #endif //PROPORES_READER_H

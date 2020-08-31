@@ -582,7 +582,7 @@ TEST(pore_id_tests, compute_volumes_pore_plus_cavity) {
 TEST(pore_id_tests, identify_pore_nuclei_standalone) {
     ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
-    perpendicularity_standalone(g_cav);
+    perpendicularity_standalone(g_cav, 1);
     seal_gaps(g_cav);
     remove_shallow_regions(g_cav, 1.0);
     identify_pore_nuclei(g_cav);
@@ -603,7 +603,7 @@ TEST(pore_id_tests, identify_pore_nuclei_standalone) {
 TEST(pore_id_tests, compute_volumes_cavity_standalone) {
     ProteinGrid g_cav = ProteinGrid("test_files/cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_cav);
-    perpendicularity_standalone(g_cav);
+    perpendicularity_standalone(g_cav, 1);
     seal_gaps(g_cav);
     remove_shallow_regions(g_cav, 1.0);
     identify_pore_nuclei(g_cav);
@@ -632,7 +632,7 @@ TEST(pore_id_tests, compute_volumes_cavity_standalone) {
 TEST(pore_id_tests, compute_volumes_pore_standalone) {
     ProteinGrid g_pore = ProteinGrid("test_files/pore.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
-    perpendicularity_standalone(g_pore);
+    perpendicularity_standalone(g_pore, 1);
     seal_gaps(g_pore);
     remove_shallow_regions(g_pore, 1.0);
     identify_pore_nuclei(g_pore);
@@ -665,7 +665,7 @@ TEST(pore_id_tests, compute_volumes_pore_standalone) {
 TEST(pore_id_tests, compute_volumes_pore_plus_standalone) {
     ProteinGrid g_pore = ProteinGrid("test_files/pore_plus_cavity.pdb", "test_files/kept.pdb", "test_files/skipped.pdb", "test_files/log.yaml", 1.0, 1.0, KEEP_ALL_H_ATOMS, REMOVE_ALL_HETERO_ATOMS, false, true);
     collision_detection(g_pore);
-    perpendicularity_standalone(g_pore);
+    perpendicularity_standalone(g_pore, 1);
     seal_gaps(g_pore);
     remove_shallow_regions(g_pore, 1.0);
     identify_pore_nuclei(g_pore);

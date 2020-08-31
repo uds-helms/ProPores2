@@ -18,10 +18,16 @@ pyinstaller.bat
 /tests/unittests/test_files/skipped.pdb
 /tests/unittests/propores_tests.exe
 overview.tsv
+/publication/
 
 # Notes
 *.pdf
 *.xls
+*.docx
+*.doc
+*.png
+*.jpg
+*.jpeg
 
 # Prerequisites
 *.d

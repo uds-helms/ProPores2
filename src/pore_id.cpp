@@ -25,6 +25,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <filesystem>
+#include <omp.h>
 #include "grid.h"
 #include "atom.h"
 #include "basics.h"
@@ -254,7 +255,7 @@ void perpendicularity_cylinder(ProteinGrid &grid) {
 }
 
 // compute which atom pair cylinders are perpendicular to each other
-void perpendicularity_standalone(ProteinGrid &grid) {
+void perpendicularity_standalone(ProteinGrid &grid, const size_t cores) {
     for (const std::shared_ptr<AtomPair> &pair_1: grid.pairs) {
         for (const std::shared_ptr<AtomPair> &pair_2: grid.pairs) {
             // only consider combinations once
@@ -631,7 +632,7 @@ void pore_ID(ProteinGrid &grid, const Settings &settings) {
     sub_start = std::chrono::high_resolution_clock::now();
     if (switch_to_standalone(grid, settings)) {
         add_entry(log, 1, "used computation mode", to_str(STANDALONE));
-        perpendicularity_standalone(grid);
+        perpendicularity_standalone(grid, settings.cores);
     // otherwise run cylinder trace
     } else {
         add_entry(log, 1, "used computation mode", to_str(RAY_TRACE));

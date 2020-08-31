@@ -76,6 +76,8 @@ struct Settings {
     size_t box_threshold = 1500000;
     // highest number of atoms before switching from cylinder trace to cylinder standalone
     size_t atom_pair_threshold = 30000;
+    // number of cores for standalone pore-ID
+    size_t cores = 1;
     // AXIS-TRACE
     // threshold for the minimum number of grid boxes in a pore surface patch
     size_t surface_patch_threshold = 30;
@@ -182,6 +184,7 @@ struct Settings {
         set_option("-v", volume_threshold, "volume threshold (-v)");
         set_option("-spt", surface_patch_threshold, "surface patch threshold (-spt)");
         set_option("-ct", clash_tolerance, "clash tolerance (-ct)");
+        set_option("--cores", cores, "number of multi-threading cores (--cores)");
         // check if the numerical parameters are within the expected value range
         if (box_length < 0) print_help("The option '-b <decimal>' was negative.");
         if (solvent_radius < 0) print_help("The option '-s <decimal>' was negative.");
@@ -415,8 +418,9 @@ struct Settings {
         if (run_axis_trace) write_axes_trace_parameters();
         if (run_gate_open) write_gate_open_parameters();
 
-        // copy input PDB to output folder for convenience
-        fs::copy(pdb_path, out_dir / fs::path(pdb_name + ".pdb"));
+        // copy input PDB to output folder for convenience, if it's not already in there
+        fs::path pdb_copy = out_dir / fs::path(pdb_name + ".pdb");
+        if (!fs::exists(pdb_copy)) fs::copy(pdb_path, out_dir / fs::path(pdb_name + ".pdb"));
 
     }
 

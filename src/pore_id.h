@@ -46,7 +46,7 @@ void cylinder_completion(ProteinGrid &grid);
 void perpendicularity_cylinder(ProteinGrid &grid);
 
 // compute which atom pairs are perpendicular to each other without computing PSP events or cylinders
-void perpendicularity_standalone(ProteinGrid &grid);
+void perpendicularity_standalone(ProteinGrid &grid, size_t cores);
 
 // mark grid boxes as part of the background if they are accessible from the solvent without passing through occupied
 // boxes or boxes that are (potentially) part of a pore

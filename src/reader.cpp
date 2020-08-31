@@ -17,6 +17,7 @@
  * <https://www.gnu.org./licenses/>.
 */
 
+#include <map>
 #include <vector>
 #include <cctype>
 #include <fstream>
@@ -221,4 +222,58 @@ void add_comment(const std::string &file_path, const std::set<std::string> &elem
     }
     file << std::endl;
     file.close();
+}
+
+void generate_overview(const Settings &settings) {
+    std::map<size_t, PoreInfo> pores;
+    if (!fs::exists(settings.pore_dir) || fs::is_empty(settings.pore_dir)) return;
+    for (auto &p: fs::directory_iterator(settings.pore_dir)) {
+        if (fs::is_directory(p)) continue;
+        std::string stem = p.path().stem().string();
+        std::vector<std::string> elements = split(stem, '_');
+        size_t id = stoi(elements[elements.size() - 2]);
+        pores[id].id = id;
+        pores[id].is_pore = elements[elements.size() - 1] == "pore";
+
+        std::ifstream file(p);
+        std::string line;
+        // get the first line, which contains the IDs of the two neighbouring pores/cavities
+        std::getline(file, line);
+        pores[id].volume = stod(split(r_strip(line))[4]);
+        file.close();
+    }
+
+    if (fs::exists(settings.lining_dir) && !fs::is_empty(settings.lining_dir)) {
+        for (auto &p: fs::directory_iterator(settings.lining_dir)) {
+            if (fs::is_directory(p)) continue;
+            std::ifstream file(p);
+            std::string line;
+            std::string stem = p.path().stem().string();
+            std::vector<std::string> elements = split(stem, '_');
+            size_t id = stoi(elements[elements.size() - 2]);
+            while (std::getline(file, line)) {
+                std::vector<std::string> cols = split(r_strip(line), '\t');
+                if (cols.size() < 3) continue;
+                pores[id].lining[to_residue_type(cols[2])]++;
+            }
+            file.close();
+        }
+    }
+
+    if (fs::exists(settings.axis_dir) && !fs::is_empty(settings.axis_dir)) {
+        for (auto &p: fs::directory_iterator(settings.axis_dir)) {
+            if (fs::is_directory(p)) continue;
+            std::ifstream file(p);
+            std::string line;
+            std::string stem = p.path().stem().string();
+            std::vector<std::string> elements = split(stem, '_');
+            size_t id = stoi(elements[elements.size() - 4]);
+            while (std::getline(file, line)) {
+                std::vector<std::string> cols = split(r_strip(line), '\t');
+                if (cols.size() < 3) continue;
+                pores[id].lining[to_residue_type(cols[2])]++;
+            }
+            file.close();
+        }
+    }
 }

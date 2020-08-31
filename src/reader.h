@@ -97,6 +97,6 @@ void write_PDB(const std::string &file_path, const std::vector<std::shared_ptr<A
 // add a comment with comma separated elements to a file
 void add_comment(const std::string &file_path, const std::set<std::string> &elements);
 
-void generate_overview(const Settings &settings);
+//void generate_overview(const Settings &settings);
 
 #endif //PROPORES_READER_H

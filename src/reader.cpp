@@ -224,6 +224,7 @@ void add_comment(const std::string &file_path, const std::set<std::string> &elem
     file.close();
 }
 
+/*
 void generate_overview(const Settings &settings) {
     std::map<size_t, PoreInfo> pores;
     if (!fs::exists(settings.pore_dir) || fs::is_empty(settings.pore_dir)) return;
@@ -276,4 +277,4 @@ void generate_overview(const Settings &settings) {
             file.close();
         }
     }
-}
+}*/

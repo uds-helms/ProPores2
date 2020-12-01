@@ -1239,8 +1239,10 @@ class GUI:
                     adjust_dir_path(self.general.pdb_batch_dir.var.get(), abs=True),
                     adjust_dir_path(self.general.out_dir.var.get(), abs=True),
                     adjust_file_path(self.general.exe.var.get(), abs=True),
-                    '--cores', quote(self.general.pdb_batch_cores.var.get()),
-                    '--args']
+                    '--cores',
+                    quote(self.general.pdb_batch_cores.var.get()),
+                    '--args'
+                    ]
             out_name = ''
 
         # set the flag for skipping H-atoms during PDB parsing, if specified

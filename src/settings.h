@@ -217,17 +217,6 @@ struct Settings {
         if (!preparation_flag.empty()) {
             preparation = to_preparation_tag(preparation_flag);
             if (preparation == INVALID_PREPARATION_TAG) {print_help("The \"--preparation\" option was invalid.");}
-        // if the preparation flag is not set and pore ID is run, run preparation for the not enabled program parts
-        } else if (run_pore_id) {
-            if (!run_axis_trace && !run_gate_open) {
-                preparation = AXIS_AND_GATE;
-            } else if (!run_axis_trace && run_gate_open) {
-                preparation = ONLY_AXIS;
-            } else if (run_axis_trace && !run_gate_open) {
-                preparation = ONLY_GATE;
-            } else {
-                preparation = NO_PREPARATION;
-            }
         }
 
         if (!difficulty_flag.empty()) {
@@ -536,7 +525,7 @@ private:
                                                "1: only axis-trace+ "
                                                "2: only gate-open+ "
                                                "3: no preparation+ "
-                                               "[default: preparation for not enabled parts]");
+                                               "[default: axis-trace and gate-open]");
 
         std::cout << std::endl << "Axis-trace options:" << std::endl;
         print_option("-spt <number>", "Minimum area of a pore surface patch  in Angstrom for it to count as a potential "

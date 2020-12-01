@@ -598,7 +598,7 @@ class GuiConfig:
                                               'atoms.')
         d[self.key.skip_non_std] = GuiEntity(label='Skip non-standard amino acids',
                                              desc='Protein atoms are listed under "ATOM" in a PDB file. If enabled, '
-                                                  'all "ATOM" records with non-standard resiue names (ALA, ARG, ASN, '
+                                                  'all "ATOM" records with not standard residue names (ALA, ARG, ASN, '
                                                   'ASP, CYS, GLN, GLU, GLY, HIS, ILE, LEU, LYS, MET, PHE, PRO, SER, '
                                                   'THR, TRP, TYR, VAl) will be ignored when loading the PDB file. '
                                                   'Atoms in "HETATM" records are not affected by this.')
@@ -610,7 +610,7 @@ class GuiConfig:
                                                 'file with the empty space within the pore. The pseudo PDB file can be '
                                                 'used for visualising the pore together with the protein.')
         d[self.key.res] = GuiEntity(label='Resolution',
-                                    desc='Pore ID moves the protein on a 3D grid. The resolution specifies the '
+                                    desc='Pore ID places the protein on a 3D grid. The resolution specifies the '
                                          'length of a single grid box. The smaller the resolution value, the more '
                                          'fine-grained the computed pores, but also the potentially longer the '
                                          'required runtime.'

@@ -1,7 +1,7 @@
-# PPROPORS 2.0
+# ProPores2
 
 ## Introduction
-PROPORES 2.0 is a C++ command line tool for analysing pores (and cavities) in proteins. It provides three components that can be run together or individually:
+ProPores2 is a C++ command line tool for analysing pores (and cavities) in proteins. It provides three components that can be run together or individually:
 
 **Pore Identification:** Identifies all pores in a given protein PDB file, and for each pore generates a tab-separated file with lining residues and a pseudo PDB file with the empty space within the pore. The pseudo PDB file can be used for visualising the pore together with the protein. 
 
@@ -16,7 +16,7 @@ The installation requires a C++17 compiler and CMake 3.13 or newer.
 1. Install a C++17 compiler, or update an existing C++ compiler if necessary. [Microsoft provides a tutorial for installing the Visual C++ compiler.](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2019) Make sure to tick "Desktop development in C++" during the isntallation of Visual Studio.
 2. Install CMake 3.13 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install) This should add `cmake` to the environment variables but might require a restart of the computer to take effect.
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
-4. Open the PROPORES folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the PROPORES folder.
+4. Open the ProPores2 folder where you have extracted or cloned it, right-click on `install_windows.bat` and select `Run as administrator`. This creates the executable `propores.exe` in the ProPores2 folder.
 
    If `Run as administrator` does not work, try simply double-clicking `install_windows.bat`. 
 
@@ -44,12 +44,12 @@ The installation requires a C++17 compiler and CMake 3.13 or newer.
    ```
 2. Install CMake 3.13 or newer, or update an existing CMake if necessary. [CMake.org provides a guide for installing CMake on your computer.](https://cmake.org/install)
 3. Download this repository as a ZIP file and extract it to a location of your choice, or use Git to clone the repository.
-4. Open the PROPORES folder in the terminal and run 
+4. Open the ProPores2 folder in the terminal and run 
    ```
    sh install_linux_macOS.sh
    ```
-   This creates the executable `propores` in the PROPORES folder.
-5. (Optional) If you want to use the user interface, install Python3 with the packages `tkinter` and `pyyaml`. Open the PROPORES folder in the terminal and run
+   This creates the executable `propores` in the ProPores2 folder.
+5. (Optional) If you want to use the user interface, install Python3 with the packages `tkinter` and `pyyaml`. Open the ProPores2 folder in the terminal and run
    ```
    sh install_python_ubuntu_debian.sh
    ```
@@ -59,8 +59,8 @@ The installation requires a C++17 compiler and CMake 3.13 or newer.
    ```
 
 
-## Step 2: Running PROPORES on the Command Line
-Open the terminal (or command prompt) and navigate to the PROPORES folder with the `propores` executable. The general command setup on Windows is
+## Step 2: Running ProPores2 on the Command Line
+Open the terminal (or command prompt) and navigate to the ProPores2 folder with the `propores` executable. The general command setup on Windows is
 ```
 propores.exe <run command(s)> -i <path> -o <path> [options...]
 ```
@@ -75,7 +75,7 @@ Running only pore identification with 0.5 Angstrom resolution, with the option t
 ```
 propores.exe pore-id -i input/1EA5_R.pdb -o output --name example -b 0.5 --axis-preparation --gate-preparation
 ```
-This writes the pore identification output, as well as files for independent axis trace and gate opening, to the folder `output/example/` in the PROPORES folder.
+This writes the pore identification output, as well as files for independent axis trace and gate opening, to the folder `output/example/` in the ProPores2 folder.
 
 ### Example 2: Only Axis Trace
 Running only axis trace based on previously generated files. For a single pore:
@@ -97,7 +97,7 @@ and for all pores in a directory:
 ```
 propores.exe gate-open -i input/1EA5_R.pdb -o output --name example -td output/example/gate_open_input
 ```
-While most gates can be opened within seconds, some gates have a very large number of possible residue configurations and can therefore take a lot longer. PROPORES estimates the difficulty of each gate based on the residue composition, and gates can be skipped based on that difficulty:
+While most gates can be opened within seconds, some gates have a very large number of possible residue configurations and can therefore take a lot longer. ProPores2 estimates the difficulty of each gate based on the residue composition, and gates can be skipped based on that difficulty:
 ```
 propores.exe gate-open -i input/1EA5_R.pdb -o output --name example -td output/example/gate_open_input --skip-hard-gates
 ```
@@ -108,24 +108,24 @@ This writes the protein versions with open gates to the folder `output/example/g
 propores.exe pore-id axis-trace gate-open -i input/1EA5_R.pdb -o output --name example -b 0.5 --skip-hard-gates
 ```
 
-## Step 2: Running PROPORES via the Graphical User Interface
-PROPORES 2.0 comes with a graphical user interface that can be used instead of the command line. After installing PROPORES as described in Step 1, the user interface can be opened as follows:
+## Step 2: Running ProPores2 via the Graphical User Interface
+ProPores2 comes with a graphical user interface that can be used instead of the command line. After installing ProPores2 as described in Step 1, the user interface can be opened as follows:
 
 ### Windows 7 and 10
 Double-click on `ProporesGUI_32.exe` or `ProporesGUI_64.exe` depending on whether you have a 32-bit or 64-bit Windows version. If in doubt, select the 32-bit version.
 
 ### MacOS and Linux
-Open the terminal and navigate to the PROPORES folder with the `propores` executable. Run
+Open the terminal and navigate to the ProPores2 folder with the `propores` executable. Run
 ```
 python3 propores_gui.py
 ```
 
 ### Avoiding Errors
-Make sure that `ProporesGUI_32.exe`, `ProporesGUI_64.exe` or `propores_gui.py` are in the same folder as the `config.yaml` file and the `src` folder, otherwise the user interface will not open. Check if the automatically detected path to the PROPORES executable is correct, otherwise set it manually under `General → PROPORES executable`.
+Make sure that `ProporesGUI_32.exe`, `ProporesGUI_64.exe` or `propores_gui.py` are in the same folder as the `config.yaml` file and the `src` folder, otherwise the user interface will not open. Check if the automatically detected path to the ProPores2 executable is correct, otherwise set it manually under `General → ProPores executable`.
 
 ## Attribution
 The approach was designed by Po-Hsien Lee and published as:
 
 >Lee, PH, Helms, V (2012). Identifying continuous pores in protein structures with PROPORES by computational repositioning of gating residues. Proteins, 80, 2:421-32. https://www.ncbi.nlm.nih.gov/pubmed/22095919
 
-The original version was implemented by Po-Hsien Lee (2011) in Perl. PROPORES 2.0 is a faster and more memory-efficient C++ implementation by Markus Hollander and Moomal Aziz.
+The original version was implemented by Po-Hsien Lee (2011) in Perl. ProPores2 is a faster and more memory-efficient C++ implementation by Markus Hollander and Moomal Aziz.

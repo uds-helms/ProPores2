@@ -19,6 +19,10 @@ pyinstaller.bat
 /tests/unittests/propores_tests.exe
 overview.tsv
 /publication/
+propores.exe
+ProporesGUI_32.exe
+ProporesGUI_64.exe
+input_own/
 
 # Notes
 *.pdf

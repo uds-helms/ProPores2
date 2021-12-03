@@ -9,6 +9,9 @@ ProPores2 is a C++ command line tool for analysing pores (and cavities) in prote
 
 **Gate Opening:** Rotates the shared lining residues of two neighbouring pores in an effort to open the gate between them as much as possible. The result is a PDB file of the entire protein with the rotated residues.
 
+## Webservice
+ProPores2 is also available as a webservice: https://service.bioinformatik.uni-saarland.de/propores/index.html
+
 ## Citation
 
 >Hollander, M., Rasp, D., Aziz, M., Helms, V. (2021). ProPores2: Web Service and Stand-Alone Tool for Identifying, Manipulating, and Visualizing Pores in Protein Structures. Journal of Chemical Information and Modeling 2021 61 (4), 1555-1559. DOI: 10.1021/acs.jcim.1c00154. https://pubs.acs.org/doi/10.1021/acs.jcim.1c00154
